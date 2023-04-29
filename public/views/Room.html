@@ -2,16 +2,17 @@
 <html lang="en">
     <head>
         <!-- https://github.com/mikecao/umami -->
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QDQNY8YQ4T"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDQNY8YQ4T"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
 
-  gtag('config', 'G-QDQNY8YQ4T');
-</script>
-
+            gtag('config', 'G-QDQNY8YQ4T');
+        </script>
 
         <!-- Title and Icon -->
 
@@ -58,7 +59,7 @@
 
         <!-- Bootstrap 5 -->
 
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3--bod.css" />
 
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -95,49 +96,128 @@
         <noscript>You need to enable JavaScript to run this app.</noscript>
 
         <div id="loadingDiv" class="center pulsate">
-            <h1>Loading</h1>
+            <!-- <h1>Loading</h1>
             <img src="../images/loader.gif" />
             <pre>
 Please allow the camera or microphone
 access to use this app.
-            </pre>
+            </pre> -->
         </div>
 
         <section>
-            <div id="initUser" class="init-user hidden">
+            <div id="initUser" class="init-user">
                 <!-- <p>Please allow the camera & microphone access to use this app.</p> -->
-                <video
-                    id="initVideo"
-                    playsinline="true"
-                    autoplay=""
-                    poster="../images/loader.gif"
-                    class="mirror"
-                    style="object-fit: var(--videoObjFit)"
-                ></video>
-                <button id="initAudioButton" class="fas fa-microphone" onclick="handleAudio(event)"></button>
-                <button id="initVideoButton" class="fas fa-video" onclick="handleVideo(event)"></button>
-                <button id="initAudioVideoButton" class="fas fa-eye" onclick="handleAudioVideo(event)"></button>
-                <select id="initVideoSelect" class="form-select text-light bg-dark"></select>
+                <div class="video-box">
+                    <video
+                        id="initVideo"
+                        playsinline="true"
+                        autoplay=""
+                        class="mirror"
+                        style="object-fit: var(--videoObjFit)"
+                    ></video>
+                    <div class="init-buttons-box">
+                        <button
+                            id="initAudioButton"
+                            class="fas fa-microphone circle-button"
+                            onclick="handleAudio(event)"
+                        ></button>
+                        <button
+                            id="initVideoButton"
+                            class="fas fa-video circle-button"
+                            onclick="handleVideo(event)"
+                        ></button>
+                        <!-- <button id="initAudioVideoButton" class="fas fa-eye" onclick="handleAudioVideo(event)"></button> -->
+                    </div>
+                    <button id="initSettingButton" class="fa-solid fa-gear circle-button"></button>
+                </div>
+                <input type="text" name="name" id="init-input-name" class="init-common" placeholder="Enter your name" />
+                <button id="init-submit-button" class="init-common">Create Feat</button>
+                <!-- <select id="initVideoSelect" class="form-select text-light bg-dark"></select>
                 <select id="initMicrophoneSelect" class="form-select text-light bg-dark"></select>
-                <select id="initSpeakerSelect" class="form-select text-light bg-dark"></select>
+                <select id="initSpeakerSelect" class="form-select text-light bg-dark"></select> -->
+
+                <span class="init-limit-text">Up to 10 members. No time limit</span>
+
+                <span class="init-terms-text"
+                    >By starting to use the Featly service, you agree to the <a href="#">Terms of Use</a></span
+                >
             </div>
         </section>
 
-        <div id="control" class="fadein">
-            <button id="shareButton" class="hidden"><i class="fas fa-share-alt"></i></button>
-            <button id="startAudioButton" class="hidden"><i class="fas fa-microphone-slash"></i></button>
-            <button id="stopAudioButton" class="hidden"><i class="fas fa-microphone"></i></button>
-            <button id="startVideoButton" class="hidden"><i class="fas fa-video-slash"></i></button>
-            <button id="stopVideoButton" class="hidden"><i class="fas fa-video"></i></button>
-            <button id="startScreenButton" class="hidden"><i class="fas fa-desktop"></i></button>
-            <button id="stopScreenButton" class="hidden"><i class="fas fa-stop-circle"></i></button>
-            <button id="swapCameraButton" class="hidden"><i class="fas fa-camera-rotate"></i></button>
-            <button id="chatButton" class="hidden"><i class="fas fa-comments"></i></button>
-            <button id="participantsButton" class="hidden"><i class="fas fa-users"></i></button>
-            <button id="whiteboardButton" class="hidden"><i class="fas fa-chalkboard-teacher"></i></button>
-            <button id="settingsButton" class="hidden"><i class="fas fa-cogs"></i></button>
-            <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button>
-            <button id="exitButton" class="hidden"><i class="fas fa-right-from-bracket"></i></button>
+        <header id="header" class="fadein">
+            <img id="header-logo" src="../images/featlyLogo.svg" alt="logo" />
+            <div id="header-center-block">
+                <h1>Videomeeting</h1>
+                <span>12:53</span>
+            </div>
+        </header>
+
+        <div id="control" class="hidden">
+            <div class="control-buttons-box">
+                <div class="button-box">
+                    <button id="startAudioButton" class="hidden"><i class="fas fa-microphone-slash"></i></button>
+                    <button id="stopAudioButton" class="hidden"><i class="fas fa-microphone"></i></button>
+                    <span>Voice</span>
+                </div>
+                <div class="button-box">
+                    <button id="startVideoButton" class="hidden"><i class="fas fa-video-slash"></i></button>
+                    <button id="stopVideoButton" class="hidden"><i class="fas fa-video"></i></button>
+                    <span>Video</span>
+                </div>
+            </div>
+            <div class="control-buttons-box">
+                <div class="button-box">
+                    <button id="participantsButton" class="hidden"><i class="fa-solid fa-user-group"></i></button>
+                    <span>Members</span>
+                </div>
+
+                <div class="button-box">
+                    <button id="chatButton" class="hidden">
+                        <i class="fa-sharp fa-solid fa-comment-dots fa-flip-horizontal"></i>
+                    </button>
+                    <span>Chat</span>
+                </div>
+
+                <div class="button-box">
+                    <button id="shareButton" class="hidden">
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <span>Share</span>
+                </div>
+
+                <div class="button-box">
+                    <button id="startScreenButton" class="hidden">
+                        <i class="fa-solid fa-users-rectangle"></i>
+                    </button>
+                    <button id="stopScreenButton" class="hidden"><i class="fas fa-stop-circle"></i></button>
+                    <button id="swapCameraButton" class="hidden"><i class="fas fa-camera-rotate"></i></button>
+                    <span>View</span>
+                </div>
+
+                <div class="button-box">
+                    <button id="reactionButton" class="hidden">
+                        <i class="fa-regular fa-face-smile-beam"></i>
+                    </button>
+                    <span>Reaction</span>
+                </div>
+
+                <div class="button-box">
+                    <button id="whiteboardButton" class="hidden"><i class="fa-solid fa-pencil"></i></button>
+                    <span>Board</span>
+                </div>
+
+                <div class="button-box">
+                    <button id="settingsButton" class="hidden"><i class="fa-solid fa-ellipsis"></i></button>
+                    <span>More</span>
+                </div>
+
+                <!-- <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button> -->
+            </div>
+            <div class="exit-button control-buttons-box">
+                <button id="exitButton" class="hidden">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Exit</span>
+                </button>
+            </div>
         </div>
 
         <section id="mySettings" class="fadein center hidden">

@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Comfortaa:wght@500&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Comfortaa:wght@500&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
 /*--------------------------------------------------------------
 # Keyframes
@@ -31,8 +32,16 @@
     }
 }
 
+html[data-theme='dark'] {
+    --body-bg: #0d0e10;
+}
+
 :root {
-    --body-bg: radial-gradient(#393939, #000000);
+    /* --body-bg: #151519; */
+    --body-bg: #0d0e10;
+    --control-bg: #0d0e10;
+    --main-color: #8c6be6;
+
     --border: 1px solid rgb(255 255 255 / 32%);
     --border-radius: 1rem;
     --msger-top: 50%;
@@ -50,21 +59,12 @@
     --box-shadow: 0px 8px 16px 0px rgb(0 0 0);
     --btns-hover-scale: scale(1.1);
     --settings-bg: radial-gradient(#393939, #000000);
-    /* buttons bar horizontal */
-    --btns-top: 50%;
+    --btns-bottom: 0%;
     --btns-right: 0%;
-    --btns-left: 10px;
+    --btns-left: 0%;
     --btns-margin-left: 0px;
-    --btns-width: 60px;
-    --btns-flex-direction: column;
-    /* buttons bar horizontal
-    --btns-top: 95%;
-    --btns-right: 25%;
-    --btns-left: 50%;
-    --btns-margin-left: -160px;
-    --btns-width: 320px;
+    --btns-width: 100%;
     --btns-flex-direction: row;
-    */
     --vmi-wh: 15vw;
     /* https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit */
     --videoObjFit: cover;
@@ -72,7 +72,7 @@
 
 * {
     outline: none;
-    font-family: 'Comfortaa';
+    font-family: 'Plus Jakarta Sans';
 }
 
 html,
@@ -81,8 +81,13 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    /* background: var(--body-bg); */
-    background: url('../images/background.jpg');
+    background: var(--body-bg) !important;
+    /* background: url('../images/background.jpg'); */
+}
+
+a {
+    color: var(--main-color);
+    text-decoration: none !important;
 }
 
 /*--------------------------------------------------------------
@@ -112,7 +117,7 @@ body {
 #loadingDiv h1 {
     padding: 10px;
     font-size: 60px;
-    font-family: 'Comfortaa';
+    font-family: 'Plus Jakarta Sans';
     border-radius: 10px;
 }
 #loadingDiv img {
@@ -122,7 +127,7 @@ body {
 }
 #loadingDiv pre {
     padding: 10px;
-    font-family: 'Comfortaa';
+    font-family: 'Plus Jakarta Sans';
     border-radius: 10px;
 }
 
@@ -131,8 +136,89 @@ body {
 --------------------------------------------------------------*/
 
 .init-user {
-    display: block;
-    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    max-width: 688px;
+    width: 90%;
+    top: 105px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.init-user video {
+    height: 376px;
+    width: 100%;
+    background: #141418;
+    border-radius: 12px;
+}
+
+.video-box {
+    position: relative;
+    margin-bottom: 48px;
+}
+
+.init-common {
+    border-radius: 12px;
+    height: 56px;
+    width: 100%;
+    padding: 13px 18px;
+}
+
+#init-input-name {
+    background: #141418;
+    border: none;
+    color: #f8f8f8;
+    margin-bottom: 24px;
+}
+
+#init-submit-button {
+    background: linear-gradient(105.88deg, #4f22c8 0%, #8c6be6 100%, #8c6be6 100%), #2e2e36;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #f8f8f8;
+}
+
+#init-input-name:placeholder {
+    color: #828282;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.init-buttons-box {
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#initSettingButton {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
+
+.init-user span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.init-limit-text {
+    color: #ffffff;
+    margin: 16px 0 48px;
+}
+.init-terms-text {
+    color: #828282;
+}
+.init-terms-text a {
+    color: var(--main-color);
 }
 
 .init-user select {
@@ -146,11 +232,14 @@ body {
     cursor: pointer;
 }
 
-.init-user button {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 50px;
-    background-color: transparent;
+.circle-button {
+    width: 48px;
+    height: 48px;
+    transition: all 0.3s ease-in-out;
+    background: #2c2c39;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .init-user button:hover {
@@ -160,40 +249,128 @@ body {
 }
 
 /*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+
+#header {
+    height: 88px;
+    width: 100%;
+    padding: 12px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: var(--control-bg);
+}
+
+#header-logo {
+    width: 160px;
+    height: auto;
+}
+
+#header-center-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    justify-content: center;
+}
+
+#header-center-block h1 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+#header-center-block span {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: -0.02em;
+    color: #ababaf;
+}
+
+/*--------------------------------------------------------------
 # Buttons bar
 --------------------------------------------------------------*/
 
-#control {
+#control:not(.hidden) {
     z-index: 3;
     position: absolute;
-    display: flex;
-    padding: 5px;
-
-    top: var(--btns-top);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    background: var(--control-bg);
+    padding: 12px 24px;
+    height: 126px;
+    bottom: var(--btns-bottom);
     right: var(--btns-right);
     left: var(--btns-left);
     margin-left: var(--btns-margin-left);
     width: var(--btns-width);
-    flex-direction: var(--btns-flex-direction);
-
-    justify-content: space-around;
-    grid-gap: 0.4rem;
-
-    -webkit-transform: translate(0%, -50%);
-    -ms-transform: translate(0%, -50%);
-    transform: translate(0%, -50%);
-
-    /* border: var(--border); */
     border-radius: 10px;
 }
 
+.control-buttons-box {
+    display: flex;
+    flex-direction: var(--btns-flex-direction);
+    gap: 24px;
+}
+
+.button-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    max-width: 48px;
+}
+
+.control-buttons-box #exitButton i,
+.button-box i {
+    font-size: 20px;
+    max-width: 24px;
+}
+
+.exit-button {
+    justify-self: end;
+}
+
+.control-buttons-box #exitButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 12px;
+    background: #2c2c39;
+    border-radius: 12px;
+    width: 105px;
+    height: 48px;
+}
+
+#exitButton span {
+    font-weight: 700;
+}
+
+.button-box > span {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
 #control button {
-    font-size: 1.2rem;
-    padding: 10px;
+    /* font-size: 1.2rem; */
+    /* padding: 10px; */
+    width: 48px;
+    height: 48px;
     transition: all 0.3s ease-in-out;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    border: var(--border);
+    background: #2c2c39;
+    border-radius: 50%;
+    /* border: var(--border); */
     /* box-shadow: var(--box-shadow); */
 }
 
@@ -213,10 +390,10 @@ body {
 #initAudioButton,
 #initVideoButton,
 #initAudioVideoButton {
-    font-size: 1.2rem;
+    /* font-size: 1.2rem;
     padding: 10px;
     border: var(--border);
-    border-radius: 5px;
+    border-radius: 5px; */
 }
 
 /*--------------------------------------------------------------

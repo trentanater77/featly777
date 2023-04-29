@@ -14,6 +14,8 @@ const BUTTONS = {
         startAudioButton: true,
         startVideoButton: true,
         startScreenButton: true,
+        reactionButton: true,
+        control: true,
         swapCameraButton: true,
         chatButton: true,
         participantsButton: true,

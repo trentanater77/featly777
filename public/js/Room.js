@@ -9,7 +9,7 @@ if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.h
  * @link    Official Live demo: https://talk.featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfok@featly.app or purchase directly via CodeCanyon
- * @license CodeCanyon: 
+ * @license CodeCanyon:
  * @author  Featly Inc. - dmitry.lazarev@featly.app
  * @version 2.0.1
  *
@@ -126,6 +126,7 @@ function initClient() {
         setTippy('startVideoButton', 'Start the video', 'right');
         setTippy('stopVideoButton', 'Stop the video', 'right');
         setTippy('startScreenButton', 'Start screen share', 'right');
+        setTippy('reactionButton', 'Reaction', 'right');
         setTippy('stopScreenButton', 'Stop screen share', 'right');
         setTippy('swapCameraButton', 'Swap the camera', 'right');
         setTippy('chatButton', 'Toggle the chat', 'right');
@@ -704,7 +705,9 @@ function roomIsReady() {
     } else {
         hide(tabRecordingBtn);
     }
+    BUTTONS.main.control && show(control);
     BUTTONS.main.chatButton && show(chatButton);
+    BUTTONS.main.reactionButton && show(reactionButton);
     BUTTONS.main.participantsButton && show(participantsButton);
     !BUTTONS.chat.chatSaveButton && hide(chatSaveButton);
     BUTTONS.chat.chatEmojiButton && show(chatEmojiButton);
@@ -1484,7 +1487,7 @@ function showButtons() {
     )
         return;
     toggleClassElements('videoMenuBar', 'inline');
-    control.style.display = 'flex';
+    control.style.display = 'grid';
     isButtonsVisible = true;
 }
 
@@ -2123,7 +2126,7 @@ function setTheme(theme) {
     switch (theme) {
         case 'dark':
             swalBackground = 'radial-gradient(#393939, #000000)';
-            document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#393939, #000000)');
+            // document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#393939, #000000)');
             document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#393939, #000000)');
             document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#393939, #000000)');
             document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#393939, #000000)');
@@ -2131,7 +2134,7 @@ function setTheme(theme) {
             break;
         case 'grey':
             swalBackground = 'radial-gradient(#666, #333)';
-            document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#666, #333)');
+            // document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#666, #333)');
             document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#666, #333)');
             document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#666, #333)');
             document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#797979, #000)');
