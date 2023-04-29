@@ -104,6 +104,8 @@ access to use this app.
             </pre> -->
         </div>
 
+        <!-- loadingDiv и initUser были разными блоками, но в новом макете это один блок -->
+
         <section>
             <div id="initUser" class="init-user">
                 <!-- <p>Please allow the camera & microphone access to use this app.</p> -->
@@ -132,6 +134,7 @@ access to use this app.
                 </div>
                 <input type="text" name="name" id="init-input-name" class="init-common" placeholder="Enter your name" />
                 <button id="init-submit-button" class="init-common">Create Feat</button>
+
                 <!-- <select id="initVideoSelect" class="form-select text-light bg-dark"></select>
                 <select id="initMicrophoneSelect" class="form-select text-light bg-dark"></select>
                 <select id="initSpeakerSelect" class="form-select text-light bg-dark"></select> -->
@@ -146,17 +149,17 @@ access to use this app.
 
         <header class="fadein header">
             <img class="header-logo" src="../images/featlyLogo.svg" alt="logo" />
-            <nav id="header-nav">
+            <!-- <nav id="header-nav">
                 <a href="#">What is Featly?</a>
                 <a href="#"> Examples of using</a>
-            </nav>
-            <!-- <div id="header-center-block">
+            </nav> -->
+            <div id="header-center-block">
                 <h1>Videomeeting</h1>
                 <span>12:53</span>
-            </div> -->
+            </div>
         </header>
 
-        <div id="control" class="hidden">
+        <div id="control">
             <div class="control-buttons-box">
                 <div class="button-box">
                     <button id="startAudioButton" class="hidden"><i class="fas fa-microphone-slash"></i></button>
