@@ -1,0 +1,51 @@
+{
+    "name": "featlytalksfu",
+    "version": "2.0.1",
+    "description": "WebRTC SFU browser-based video calls",
+    "main": "Server.js",
+    "engines": {
+    "node": "18.x"
+},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app/src/Server.js",
+        "compile": "npx browserify public/sfu/MediasoupClientCompile.js -o public/sfu/MediasoupClient.js",
+        "lint": "npx prettier --write ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/featly-inc/talk"
+    },
+    "keywords": [
+        "webrtc",
+        "socket.io",
+        "sfu",
+        "nodejs",
+        "video"
+    ],
+    "author": "Featly Inc",
+    "license": "AGPL-3.0",
+    "dependencies": {
+        "body-parser": "1.20.1",
+        "compression": "1.7.4",
+        "colors": "1.4.0",
+        "cors": "2.8.5",
+        "crypto-js": "4.1.1",
+        "express": "4.18.2",
+        "httpolyglot": "0.1.2",
+        "mediasoup": "3.11.8",
+        "mediasoup-client": "3.6.75",
+        "ngrok": "4.3.3",
+        "qs": "6.11.0",
+        "@sentry/node": "7.36.0",
+        "@sentry/integrations": "7.36.0",
+        "socket.io": "4.5.4",
+        "swagger-ui-express": "4.6.0",
+        "uuid": "9.0.0",
+        "yamljs": "0.3.0"
+    },
+    "devDependencies": {
+        "node-fetch": "^2.6.7",
+        "prettier": "2.8.3"
+    }
+}
