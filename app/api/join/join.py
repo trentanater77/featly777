@@ -3,8 +3,8 @@ import requests
 import json
 
 API_KEY = "featlytalksfu_default_secret"
-FEATLYTALK_URL = "https://talk.featly.io/api/v1/join"
-# FEATLYTALK_URL = "http://localhost:3010/api/v1/join"
+# FEATLYTALK_URL = "https://talk.featly.io/api/v1/join"
+FEATLYTALK_URL = "https://localhost:3010/api/v1/join"
 
 headers = {
     "authorization": API_KEY,

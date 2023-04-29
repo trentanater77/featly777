@@ -7,7 +7,7 @@
  * @link    Official Live demo: https://talk.featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfok@featly.app or purchase directly via CodeCanyon
- * @license CodeCanyon: 
+ * @license CodeCanyon:
  * @author  Featly Inc. - dmitry.lazarev@featly.app
  * @version 2.0.1
  *
@@ -172,7 +172,7 @@ class RoomClient {
         this.sendInProgress = false;
         this.receiveInProgress = false;
         this.fileSharingInput = '*';
-        this.chunkSize = 1024 * 16; // 16kb/s
+        this.chunkSize = 1024 * 220; // .1mb/s
 
         this.myVideoEl = null;
         this.myAudioEl = null;

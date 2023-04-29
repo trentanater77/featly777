@@ -1,7 +1,7 @@
 'use strict';
 
 /*
-███████ ███████ ██████  ██    ██ ███████ ██████  
+███████ ███████ ██████  ██    ██ ███████ ██████ 
 ██      ██      ██   ██ ██    ██ ██      ██   ██ 
 ███████ █████   ██████  ██    ██ █████   ██████  
      ██ ██      ██   ██  ██  ██  ██      ██   ██ 
@@ -35,7 +35,7 @@ dependencies: {
  * @link    Official Live demo: https://talk.featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfo@featly.app or purchase directly via CodeCanyon
- * @license CodeCanyon: 
+ * @license CodeCanyon:
  * @author  Featly Inc. - dmitry.lazarev@featly.app
  * @version 2.0.1
  *
@@ -83,7 +83,7 @@ const io = require('socket.io')(httpsServer, {
     maxHttpBufferSize: 1e7,
     transports: ['websocket'],
 });
-const host = 'https://talk.featly.io' // config.listenIp
+const host = config.listenIp // config.listenIp
 
 const hostCfg = {
     protected: config.hostProtected,
