@@ -566,8 +566,8 @@ a {
     min-height: calc(var(--msger-height) - 126px);
     min-width: var(--msger-width);
     /*background: var(--msger-bg);*/
-    border: var(--border);
-    border-radius: 10px;
+    /*border: var(--border);*/
+    /*border-radius: 10px;*/
     resize: both;
     overflow: hidden;
     background: #151519;
