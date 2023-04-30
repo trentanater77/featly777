@@ -936,9 +936,9 @@ function handleButtons() {
     chatButton.onclick = () => {
         rc.toggleChat();
     };
-    chatGhostButton.onclick = (e) => {
-        rc.chatToggleBg();
-    };
+    // chatGhostButton.onclick = (e) => {
+    //     rc.chatToggleBg();
+    // };
     // chatCleanButton.onclick = () => {
     //     rc.chatClean();
     // };
