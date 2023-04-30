@@ -8,6 +8,16 @@ let isPresenter = false;
 
 const isRulesActive = true;
 
+const BLOCKS = {
+    header: {
+        headerNav: true,
+        headerCenterBlock: true,
+    },
+    control: {
+        control: true,
+    },
+};
+
 const BUTTONS = {
     main: {
         shareButton: true,
@@ -15,7 +25,6 @@ const BUTTONS = {
         startVideoButton: true,
         startScreenButton: true,
         reactionButton: true,
-        control: true,
         swapCameraButton: true,
         chatButton: true,
         participantsButton: true,

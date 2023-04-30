@@ -21,7 +21,7 @@ if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.h
 
 const RoomURL = window.location.href;
 
-const socket = io({transports: ['websocket']});
+const socket = io({ transports: ['websocket'] });
 
 const surveyActive = true;
 
@@ -108,7 +108,7 @@ let wbIsBgTransparent = false;
 let wbPop = [];
 
 let isButtonsVisible = false;
-let isButtonsBarOver = false;
+let isButtonsBarOver = true;
 
 let isRoomLocked = false;
 
@@ -227,6 +227,9 @@ function makeId(length) {
 // ENUMERATE DEVICES
 // ####################################################
 
+const initVideoButtonDOM = document.getElementById('initVideoButton');
+const initAudioButtonDOM = document.getElementById('initAudioButton');
+
 async function initEnumerateDevices() {
     console.log('01 ----> init Enumerate Devices');
     await initEnumerateVideoDevices();
@@ -234,12 +237,12 @@ async function initEnumerateDevices() {
     whoAreYou();
     if (!isVideoAllowed) {
         hide(initVideo);
-        hide(initVideoSelect);
+        // hide(initVideoSelect);
     }
-    if (!isAudioAllowed) {
-        hide(initMicrophoneSelect);
-        hide(initSpeakerSelect);
-    }
+    // if (!isAudioAllowed) {
+    //     hide(initMicrophoneSelect);
+    //     hide(initSpeakerSelect);
+    // }
     if (!isAudioAllowed && !isVideoAllowed && !joinRoomWithoutAudioVideo) {
         openURL(`/permission?room_id=${room_id}&message=Not allowed both Audio and Video`);
     } else {
@@ -254,7 +257,7 @@ async function initEnumerateVideoDevices() {
     if (isEnumerateVideoDevices) return;
     // allow the video
     await navigator.mediaDevices
-        .getUserMedia({video: true})
+        .getUserMedia({ video: true })
         .then((stream) => {
             enumerateVideoDevices(stream);
             isVideoAllowed = true;
@@ -265,7 +268,7 @@ async function initEnumerateVideoDevices() {
 }
 
 function enumerateVideoDevices(stream) {
-    console.log('03 ----> Get Video Devices');
+    console.log('02 ----> Get Video Devices');
     navigator.mediaDevices
         .enumerateDevices()
         .then((devices) =>
@@ -284,6 +287,7 @@ function enumerateVideoDevices(stream) {
         .then(() => {
             stopTracks(stream);
             isEnumerateVideoDevices = true;
+            initVideoButtonDOM.className = 'fas fa-video';
         });
 }
 
@@ -291,7 +295,7 @@ async function initEnumerateAudioDevices() {
     if (isEnumerateAudioDevices) return;
     // allow the audio
     await navigator.mediaDevices
-        .getUserMedia({audio: true})
+        .getUserMedia({ audio: true })
         .then((stream) => {
             enumerateAudioDevices(stream);
             isAudioAllowed = true;
@@ -302,7 +306,7 @@ async function initEnumerateAudioDevices() {
 }
 
 function enumerateAudioDevices(stream) {
-    console.log('02 ----> Get Audio Devices');
+    console.log('03 ----> Get Audio Devices');
     navigator.mediaDevices
         .enumerateDevices()
         .then((devices) =>
@@ -325,6 +329,7 @@ function enumerateAudioDevices(stream) {
         .then(() => {
             stopTracks(stream);
             isEnumerateAudioDevices = true;
+            initAudioButtonDOM.className = 'fas fa-microphone';
             const sinkId = 'sinkId' in HTMLMediaElement.prototype;
             speakerSelect.disabled = !sinkId;
             if (!sinkId) hide(initSpeakerSelect);
@@ -344,19 +349,28 @@ function addChild(device, els) {
         option.value = device.deviceId;
         switch (kind) {
             case 'videoinput':
-                option.innerHTML = `📹 ` + device.label || `📹 camera ${el.length + 1}`;
+                // option.innerHTML = `📹 ` + device.label || `📹 camera ${el.length + 1}`;
+                option.innerHTML = device.label || `camera ${el.length + 1}`;
                 break;
             case 'audioinput':
-                option.innerHTML = `🎤 ` + device.label || `🎤 microphone ${el.length + 1}`;
+                // option.innerHTML = `🎤 ` + device.label || `🎤 microphone ${el.length + 1}`;
+                option.innerHTML = device.label || `microphone ${el.length + 1}`;
+
                 break;
             case 'audiooutput':
-                option.innerHTML = `🔈 ` + device.label || `🔈 speaker ${el.length + 1}`;
+                // option.innerHTML = `🔈 ` + device.label || `🔈 speaker ${el.length + 1}`;
+                option.innerHTML = device.label || `speaker ${el.length + 1}`;
                 break;
             default:
                 break;
         }
         el.appendChild(option);
     });
+}
+
+function showInitSetting() {
+    const initSettingPopup = document.getElementById('initSettingPopup');
+    initSettingPopup.classList.toggle('hidden');
 }
 
 // ####################################################
@@ -447,10 +461,10 @@ function whoAreYou() {
     console.log('04 ----> Who are you');
     sound('open');
 
-    hide(loadingDiv);
+    // hide(loadingDiv);
     document.body.style.background = 'var(--body-bg)';
 
-    console.log(peer_name, 'custom peer name')
+    console.log(peer_name, 'custom peer name');
 
     if (peer_name) {
         checkMedia();
@@ -459,119 +473,116 @@ function whoAreYou() {
         return;
     }
 
-
     let default_name = window.localStorage.peer_name ? window.localStorage.peer_name : '';
 
-    console.log(default_name, 'custom default_name')
+    console.log(default_name, 'custom default_name');
 
     if (getCookie(room_id + '_name')) {
         default_name = getCookie(room_id + '_name');
     }
 
     const initUser = document.getElementById('initUser');
-    // const inputUserSubmitEl = document.querySelector("#initUser #init-submit-button");
-    // const nameEl = document.querySelector("#initUser #init-input-name");
-    //
-    // if (inputUserSubmitEl) {
-    //     if (nameEl) {
-    //         nameEl.value = default_name
-    //     }
-    //
-    //     inputUserSubmitEl.onclick = () => {
-    //         const name = nameEl ?  nameEl.value : ''
-    //
-    //         if (!name) return 'Please enter your name';
-    //         if (!getCookie(room_id + '_name')) {
-    //             window.localStorage.peer_name = name;
-    //         }
-    //         setCookie(room_id + '_name', name, 30);
-    //         peer_name = name;
-    //
-    //         initUser.classList.toggle('hidden');
-    //
-    //
-    //         if (initStream) {
-    //             stopTracks(initStream);
-    //             hide(initVideo);
-    //         }
-    //         getPeerInfo();
-    //         joinRoom(peer_name, room_id);
-    //         initUser.classList.toggle('hidden');
-    //     };
-    // }
 
+    const inputUserSubmitEl = document.querySelector('#initUser #init-submit-button');
+    const nameEl = document.querySelector('#initUser #init-input-name');
 
-    initUser.classList.toggle('hidden');
+    if (inputUserSubmitEl) {
+        if (nameEl) {
+            nameEl.value = default_name;
+        }
 
-    Swal.fire({
-        allowOutsideClick: false,
-        allowEscapeKey: true,
-        background: swalBackground,
-        title: 'FeatlyTalk SFU',
-        input: 'text',
-        inputPlaceholder: 'Enter your name',
-        inputValue: default_name,
-        html: initUser, // Inject HTML
-        confirmButtonText: `Join meeting`,
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-        },
-        inputValidator: (name) => {
+        inputUserSubmitEl.onclick = () => {
+            console.log('!!!!!!');
+            const name = nameEl ? nameEl.value : '';
+
             if (!name) return 'Please enter your name';
             if (!getCookie(room_id + '_name')) {
                 window.localStorage.peer_name = name;
             }
             setCookie(room_id + '_name', name, 30);
             peer_name = name;
-        },
-    }).then(() => {
-        if (initStream) {
-            stopTracks(initStream);
-            hide(initVideo);
-        }
-        getPeerInfo();
-        joinRoom(peer_name, room_id);
-    });
+
+            if (initStream) {
+                stopTracks(initStream);
+                hide(initVideo);
+            }
+            getPeerInfo();
+            joinRoom(peer_name, room_id);
+            initUser.classList.toggle('hidden');
+        };
+    }
+
+    // initUser.classList.toggle('hidden');
+
+    // Swal.fire({
+    //     allowOutsideClick: false,
+    //     allowEscapeKey: true,
+    //     background: swalBackground,
+    //     title: 'FeatlyTalk SFU',
+    //     input: 'text',
+    //     inputPlaceholder: 'Enter your name',
+    //     inputValue: default_name,
+    //     html: initUser, // Inject HTML
+    //     confirmButtonText: `Join meeting`,
+    //     showClass: {
+    //         popup: 'animate__animated animate__fadeInDown',
+    //     },
+    //     hideClass: {
+    //         popup: 'animate__animated animate__fadeOutUp',
+    //     },
+    //     inputValidator: (name) => {
+    //         if (!name) return 'Please enter your name';
+    //         if (!getCookie(room_id + '_name')) {
+    //             window.localStorage.peer_name = name;
+    //         }
+    //         setCookie(room_id + '_name', name, 30);
+    //         peer_name = name;
+    //     },
+    // }).then(() => {
+    //     if (initStream) {
+    //         stopTracks(initStream);
+    //         hide(initVideo);
+    //     }
+    //     getPeerInfo();
+    //     joinRoom(peer_name, room_id);
+    // });
 }
 
 function handleAudio(e) {
     isAudioAllowed = isAudioAllowed ? false : true;
     e.target.className = 'fas fa-microphone' + (isAudioAllowed ? '' : '-slash');
-    setColor(e.target, isAudioAllowed ? 'white' : 'red');
-    setColor(startAudioButton, isAudioAllowed ? 'white' : 'red');
+    setColor(e.target, isAudioAllowed ? 'white' : 'var(--main-color)');
+    setColor(startAudioButton, isAudioAllowed ? 'white' : 'var(--main-color)');
     checkInitAudio(isAudioAllowed);
 }
 
 function handleVideo(e) {
     isVideoAllowed = isVideoAllowed ? false : true;
     e.target.className = 'fas fa-video' + (isVideoAllowed ? '' : '-slash');
-    setColor(e.target, isVideoAllowed ? 'white' : 'red');
-    setColor(startVideoButton, isVideoAllowed ? 'white' : 'red');
+    setColor(e.target, isVideoAllowed ? 'white' : 'var(--main-color)');
+    setColor(startVideoButton, isVideoAllowed ? 'white' : 'var(--main-color)');
     checkInitVideo(isVideoAllowed);
 }
 
-function handleAudioVideo(e) {
-    isAudioVideoAllowed = isAudioVideoAllowed ? false : true;
-    isAudioAllowed = isAudioVideoAllowed;
-    isVideoAllowed = isAudioVideoAllowed;
-    initAudioButton.className = 'fas fa-microphone' + (isAudioVideoAllowed ? '' : '-slash');
-    initVideoButton.className = 'fas fa-video' + (isAudioVideoAllowed ? '' : '-slash');
-    if (!isAudioVideoAllowed) {
-        hide(initAudioButton);
-        hide(initVideoButton);
-    }
-    e.target.className = 'fas fa-eye' + (isAudioVideoAllowed ? '' : '-slash');
-    setColor(e.target, isAudioVideoAllowed ? 'white' : 'red');
-    setColor(initAudioButton, isAudioAllowed ? 'white' : 'red');
-    setColor(initVideoButton, isVideoAllowed ? 'white' : 'red');
-    setColor(startAudioButton, isAudioAllowed ? 'white' : 'red');
-    setColor(startVideoButton, isVideoAllowed ? 'white' : 'red');
-    checkInitVideo(isVideoAllowed);
-    checkInitAudio(isAudioAllowed);
-}
+// function handleAudioVideo(e) {
+//     isAudioVideoAllowed = isAudioVideoAllowed ? false : true;
+//     isAudioAllowed = isAudioVideoAllowed;
+//     isVideoAllowed = isAudioVideoAllowed;
+//     initAudioButton.className = 'fas fa-microphone' + (isAudioVideoAllowed ? '' : '-slash');
+//     initVideoButton.className = 'fas fa-video' + (isAudioVideoAllowed ? '' : '-slash');
+//     if (!isAudioVideoAllowed) {
+//         hide(initAudioButton);
+//         hide(initVideoButton);
+//     }
+//     e.target.className = 'fas fa-eye' + (isAudioVideoAllowed ? '' : '-slash');
+//     setColor(e.target, isAudioVideoAllowed ? 'white' : 'red');
+//     setColor(initAudioButton, isAudioAllowed ? 'white' : 'red');
+//     setColor(initVideoButton, isVideoAllowed ? 'white' : 'red');
+//     setColor(startAudioButton, isAudioAllowed ? 'white' : 'red');
+//     setColor(startVideoButton, isVideoAllowed ? 'white' : 'red');
+//     checkInitVideo(isVideoAllowed);
+//     checkInitAudio(isAudioAllowed);
+// }
 
 function checkInitVideo(isVideoAllowed) {
     if (isVideoAllowed) {
@@ -616,7 +627,7 @@ function checkMedia() {
 async function shareRoom(useNavigator = false) {
     if (navigator.share && useNavigator) {
         try {
-            await navigator.share({url: RoomURL});
+            await navigator.share({ url: RoomURL });
             userLog('info', 'Room Shared successfully', 'top-end');
         } catch (err) {
             // share();
@@ -736,17 +747,22 @@ function joinRoom(peer_name, room_id) {
 }
 
 function roomIsReady() {
-    console.log(roomIsReady, 'roomIsReady')
+    console.log(roomIsReady, 'roomIsReady');
+
+    BLOCKS.header.headerNav && hide(headerNav);
+    BLOCKS.header.headerCenterBlock && show(headerCenterBlock);
+    BLOCKS.control.control && show(control);
 
     setTheme('dark');
     BUTTONS.main.exitButton && show(exitButton);
     BUTTONS.main.shareButton && show(shareButton);
+
     if (BUTTONS.settings.tabRecording) {
         show(startRecButton);
     } else {
         hide(tabRecordingBtn);
     }
-    BUTTONS.main.control && show(control);
+
     BUTTONS.main.chatButton && show(chatButton);
     BUTTONS.main.reactionButton && show(reactionButton);
     BUTTONS.main.participantsButton && show(participantsButton);
@@ -811,11 +827,11 @@ function roomIsReady() {
 }
 
 function hide(elem) {
-    elem.className = 'hidden';
+    elem.classList.add('hidden');
 }
 
 function show(elem) {
-    elem.className = '';
+    elem.classList.remove('hidden');
 }
 
 function setColor(elem, color) {
@@ -891,15 +907,14 @@ function stopRecordingTimer() {
 // ####################################################
 
 function handleButtons() {
+    console.log(control, 'custom control');
 
-    console.log(control, 'custom control')
-
-    control.onmouseover = () => {
-        isButtonsBarOver = true;
-    };
-    control.onmouseout = () => {
-        isButtonsBarOver = false;
-    };
+    // control.onmouseover = () => {
+    //     isButtonsBarOver = true;
+    // };
+    // control.onmouseout = () => {
+    //     isButtonsBarOver = false;
+    // };
     exitButton.onclick = () => {
         rc.exitRoom();
     };
@@ -1190,7 +1205,7 @@ function changeCamera(deviceId) {
         show(initVideo);
     }
     navigator.mediaDevices
-        .getUserMedia({video: {deviceId: deviceId}})
+        .getUserMedia({ video: { deviceId: deviceId } })
         .then((camStream) => {
             initVideo.className = 'mirror';
             initVideo.srcObject = camStream;
@@ -1536,19 +1551,19 @@ function showButtons() {
     )
         return;
     toggleClassElements('videoMenuBar', 'inline');
-    control.style.display = 'grid';
+    // control.style.display = 'grid';
     isButtonsVisible = true;
 }
 
 function checkButtonsBar() {
-    if (!isButtonsBarOver) {
-        toggleClassElements('videoMenuBar', 'none');
-        control.style.display = 'none';
-        isButtonsVisible = false;
-    }
-    setTimeout(() => {
-        checkButtonsBar();
-    }, 10000);
+    // if (!isButtonsBarOver) {
+    //     toggleClassElements('videoMenuBar', 'none');
+    //     control.style.display = 'none';
+    //     isButtonsVisible = false;
+    // }
+    // setTimeout(() => {
+    //     checkButtonsBar();
+    // }, 10000);
 }
 
 function toggleClassElements(className, displayState) {
@@ -1757,7 +1772,7 @@ function whiteboardAddObj(type) {
                             imgObj.src = event.target.result;
                             imgObj.onload = function () {
                                 let image = new fabric.Image(imgObj);
-                                image.set({top: 0, left: 0}).scale(0.3);
+                                image.set({ top: 0, left: 0 }).scale(0.3);
                                 addWbCanvasObj(image);
                             };
                         };
