@@ -759,8 +759,8 @@ function roomIsReady() {
     } else {
         BUTTONS.chat.chatSpeechStartButton = false;
     }
-    show(chatCleanTextButton);
-    show(chatPasteButton);
+    // show(chatCleanTextButton);
+    // show(chatPasteButton);
     show(chatSendButton);
     if (DetectRTC.isMobileDevice && BUTTONS.main.swapCameraButton) {
         show(swapCameraButton);
@@ -939,40 +939,40 @@ function handleButtons() {
     chatGhostButton.onclick = (e) => {
         rc.chatToggleBg();
     };
-    chatCleanButton.onclick = () => {
-        rc.chatClean();
-    };
-    chatSaveButton.onclick = () => {
-        rc.chatSave();
-    };
+    // chatCleanButton.onclick = () => {
+    //     rc.chatClean();
+    // };
+    // chatSaveButton.onclick = () => {
+    //     rc.chatSave();
+    // };
     chatCloseButton.onclick = () => {
         rc.toggleChat();
     };
-    chatCleanTextButton.onclick = () => {
-        rc.cleanMessage();
-    };
-    chatPasteButton.onclick = () => {
-        rc.pasteMessage();
-    };
+    // chatCleanTextButton.onclick = () => {
+    //     rc.cleanMessage();
+    // };
+    // chatPasteButton.onclick = () => {
+    //     rc.pasteMessage();
+    // };
     chatSendButton.onclick = () => {
         rc.sendMessage();
     };
-    chatEmojiButton.onclick = () => {
-        rc.toggleChatEmoji();
-    };
-    chatMarkdownButton.onclick = () => {
-        isChatMarkdownOn = !isChatMarkdownOn;
-        setColor(chatMarkdownButton, isChatMarkdownOn ? 'lime' : 'white');
-    };
+    // chatEmojiButton.onclick = () => {
+    //     rc.toggleChatEmoji();
+    // };
+    // chatMarkdownButton.onclick = () => {
+    //     isChatMarkdownOn = !isChatMarkdownOn;
+    //     setColor(chatMarkdownButton, isChatMarkdownOn ? 'lime' : 'white');
+    // };
     chatShareFileButton.onclick = () => {
         fileShareButton.click();
     };
-    chatSpeechStartButton.onclick = () => {
-        startSpeech(true);
-    };
-    chatSpeechStopButton.onclick = () => {
-        startSpeech(false);
-    };
+    // chatSpeechStartButton.onclick = () => {
+    //     startSpeech(true);
+    // };
+    // chatSpeechStopButton.onclick = () => {
+    //     startSpeech(false);
+    // };
     fullScreenButton.onclick = () => {
         rc.toggleFullScreen();
     };
@@ -1251,15 +1251,15 @@ function handleSelects() {
         rc.togglePin(pinVideoPosition.value);
     };
     // chat
-    showChatOnMsg.onchange = (e) => {
-        sound('click');
-        rc.showChatOnMessage = e.currentTarget.checked;
-        if (rc.showChatOnMessage) {
-            userLog('info', "Chat will be shown, when I'm receive a new message", 'top-end');
-        } else {
-            userLog('info', "Chat not will be shown, when I'm receive a new message", 'top-end');
-        }
-    };
+    // showChatOnMsg.onchange = (e) => {
+    //     sound('click');
+    //     rc.showChatOnMessage = e.currentTarget.checked;
+    //     if (rc.showChatOnMessage) {
+    //         userLog('info', "Chat will be shown, when I'm receive a new message", 'top-end');
+    //     } else {
+    //         userLog('info', "Chat not will be shown, when I'm receive a new message", 'top-end');
+    //     }
+    // };
     // whiteboard options
     wbDrawingColorEl.onchange = () => {
         wbCanvas.freeDrawingBrush.color = wbDrawingColorEl.value;

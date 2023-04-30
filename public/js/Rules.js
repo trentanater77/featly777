@@ -57,10 +57,10 @@ const BUTTONS = {
     },
     chat: {
         chatSaveButton: true,
-        chatEmojiButton: true,
-        chatMarkdownButton: true,
+        chatEmojiButton: false,
+        chatMarkdownButton: false,
         chatShareFileButton: true,
-        chatSpeechStartButton: true,
+        chatSpeechStartButton: false,
     },
     //...
 };
