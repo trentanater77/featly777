@@ -789,7 +789,7 @@ a {
 }
 
 #chatSendButton {
-    position: absolute;
+    /*position: absolute;*/
     right: 10px;
 }
 
