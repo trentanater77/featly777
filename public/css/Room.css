@@ -555,18 +555,19 @@ a {
 # Chat Room
 --------------------------------------------------------------*/
 
+.video-with-chat--wrapper {
+    display: flex;
+}
+
 .chat-room {
-    z-index: 5;
     display: none;
-    position: fixed;
-    height: var(--msger-height);
+    height: calc(var(--msger-height) - 126px);
     width: var(--msger-width);
-    min-height: var(--msger-height);
+    min-height: calc(var(--msger-height) - 126px);
     min-width: var(--msger-width);
     background: var(--msger-bg);
     border: var(--border);
     border-radius: 10px;
-    box-shadow: var(--box-shadow);
     resize: both;
     overflow: hidden;
 }

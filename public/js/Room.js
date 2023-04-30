@@ -21,7 +21,7 @@ if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.h
 
 const RoomURL = window.location.href;
 
-const socket = io({ transports: ['websocket'] });
+const socket = io({transports: ['websocket']});
 
 const surveyActive = true;
 
@@ -254,7 +254,7 @@ async function initEnumerateVideoDevices() {
     if (isEnumerateVideoDevices) return;
     // allow the video
     await navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({video: true})
         .then((stream) => {
             enumerateVideoDevices(stream);
             isVideoAllowed = true;
@@ -291,7 +291,7 @@ async function initEnumerateAudioDevices() {
     if (isEnumerateAudioDevices) return;
     // allow the audio
     await navigator.mediaDevices
-        .getUserMedia({ audio: true })
+        .getUserMedia({audio: true})
         .then((stream) => {
             enumerateAudioDevices(stream);
             isAudioAllowed = true;
@@ -450,6 +450,8 @@ function whoAreYou() {
     hide(loadingDiv);
     document.body.style.background = 'var(--body-bg)';
 
+    console.log(peer_name, 'custom peer name')
+
     if (peer_name) {
         checkMedia();
         getPeerInfo();
@@ -457,12 +459,48 @@ function whoAreYou() {
         return;
     }
 
+
     let default_name = window.localStorage.peer_name ? window.localStorage.peer_name : '';
+
+    console.log(default_name, 'custom default_name')
+
     if (getCookie(room_id + '_name')) {
         default_name = getCookie(room_id + '_name');
     }
 
     const initUser = document.getElementById('initUser');
+    // const inputUserSubmitEl = document.querySelector("#initUser #init-submit-button");
+    // const nameEl = document.querySelector("#initUser #init-input-name");
+    //
+    // if (inputUserSubmitEl) {
+    //     if (nameEl) {
+    //         nameEl.value = default_name
+    //     }
+    //
+    //     inputUserSubmitEl.onclick = () => {
+    //         const name = nameEl ?  nameEl.value : ''
+    //
+    //         if (!name) return 'Please enter your name';
+    //         if (!getCookie(room_id + '_name')) {
+    //             window.localStorage.peer_name = name;
+    //         }
+    //         setCookie(room_id + '_name', name, 30);
+    //         peer_name = name;
+    //
+    //         initUser.classList.toggle('hidden');
+    //
+    //
+    //         if (initStream) {
+    //             stopTracks(initStream);
+    //             hide(initVideo);
+    //         }
+    //         getPeerInfo();
+    //         joinRoom(peer_name, room_id);
+    //         initUser.classList.toggle('hidden');
+    //     };
+    // }
+
+
     initUser.classList.toggle('hidden');
 
     Swal.fire({
@@ -578,14 +616,15 @@ function checkMedia() {
 async function shareRoom(useNavigator = false) {
     if (navigator.share && useNavigator) {
         try {
-            await navigator.share({ url: RoomURL });
+            await navigator.share({url: RoomURL});
             userLog('info', 'Room Shared successfully', 'top-end');
         } catch (err) {
-            share();
+            // share();
         }
     } else {
-        share();
+        // share();
     }
+
     function share() {
         sound('open');
 
@@ -697,6 +736,8 @@ function joinRoom(peer_name, room_id) {
 }
 
 function roomIsReady() {
+    console.log(roomIsReady, 'roomIsReady')
+
     setTheme('dark');
     BUTTONS.main.exitButton && show(exitButton);
     BUTTONS.main.shareButton && show(shareButton);
@@ -742,16 +783,20 @@ function roomIsReady() {
         };
         show(fullScreenButton);
     }
+
     BUTTONS.main.whiteboardButton && show(whiteboardButton);
     BUTTONS.main.settingsButton && show(settingsButton);
     show(raiseHandButton);
     isAudioAllowed ? show(stopAudioButton) : BUTTONS.main.startAudioButton && show(startAudioButton);
     isVideoAllowed ? show(stopVideoButton) : BUTTONS.main.startVideoButton && show(startVideoButton);
     show(fileShareButton);
+
     BUTTONS.settings.lockRoomButton && show(lockRoomButton);
     BUTTONS.settings.lobbyButton && show(lobbyButton);
-    BUTTONS.main.aboutButton && show(aboutButton);
+    // BUTTONS.main.aboutButton && show(aboutButton);
+
     if (!DetectRTC.isMobileDevice) show(pinUnpinGridDiv);
+
     handleButtons();
     handleSelects();
     handleInputs();
@@ -836,6 +881,7 @@ function startRecordingTimer() {
         }
     }, 1000);
 }
+
 function stopRecordingTimer() {
     clearInterval(recTimer);
 }
@@ -845,6 +891,9 @@ function stopRecordingTimer() {
 // ####################################################
 
 function handleButtons() {
+
+    console.log(control, 'custom control')
+
     control.onmouseover = () => {
         isButtonsBarOver = true;
     };
@@ -1050,9 +1099,9 @@ function handleButtons() {
     unlockRoomButton.onclick = () => {
         rc.roomAction('unlock');
     };
-    aboutButton.onclick = () => {
-        showAbout();
-    };
+    // aboutButton.onclick = () => {
+    //     showAbout();
+    // };
 }
 
 // ####################################################
@@ -1141,7 +1190,7 @@ function changeCamera(deviceId) {
         show(initVideo);
     }
     navigator.mediaDevices
-        .getUserMedia({ video: { deviceId: deviceId } })
+        .getUserMedia({video: {deviceId: deviceId}})
         .then((camStream) => {
             initVideo.className = 'mirror';
             initVideo.srcObject = camStream;
@@ -1708,7 +1757,7 @@ function whiteboardAddObj(type) {
                             imgObj.src = event.target.result;
                             imgObj.onload = function () {
                                 let image = new fabric.Image(imgObj);
-                                image.set({ top: 0, left: 0 }).scale(0.3);
+                                image.set({top: 0, left: 0}).scale(0.3);
                                 addWbCanvasObj(image);
                             };
                         };
@@ -2160,7 +2209,7 @@ function handleAspectRatio() {
 }
 
 function adaptAspectRatio(participantsCount) {
-    /* 
+    /*
         ['0:0', '4:3', '16:9', '1:1', '1:2'];
     */
     let desktop,
