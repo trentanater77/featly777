@@ -565,11 +565,12 @@ a {
     width: var(--msger-width);
     min-height: calc(var(--msger-height) - 126px);
     min-width: var(--msger-width);
-    background: var(--msger-bg);
+    /*background: var(--msger-bg);*/
     border: var(--border);
     border-radius: 10px;
     resize: both;
     overflow: hidden;
+    background: #151519;
 }
 
 .msger {
@@ -578,7 +579,7 @@ a {
     display: flex;
     flex-flow: column wrap;
     justify-content: space-between;
-    background: var(--msger-bg);
+    /*background: var(--msger-bg);*/
 }
 
 /*--------------------------------------------------------------
@@ -608,11 +609,15 @@ a {
 # Chat room output area
 --------------------------------------------------------------*/
 
+.chat-content {
+    padding: 24px;
+}
+
 .chat-msger {
     flex: 1;
     overflow-y: auto;
     padding: 10px;
-    background: var(--msger-bg);
+    /*background: var(--msger-bg);*/
     max-width: 100%;
 }
 
@@ -748,23 +753,43 @@ a {
 # Chat room input area
 --------------------------------------------------------------*/
 
-.chat-msger-inputarea {
+.chat-msger-block {
     display: flex;
-    padding: 10px;
+    border: none;
+}
+
+.chat-msger-wrapper {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: 8px 8px 8px 16px;
+    background: #0D0E10;
+    border-radius: 12px;
+    min-height: 120px;
+}
+
+.chat-message-label {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #828282;
 }
 
 .chat-msger-input {
     flex: 1;
-    padding: 10px;
     height: 43px;
     font-size: 14px;
     color: #fff;
-    border: none;
-    border: var(--border);
-    border-top-left-radius: 10px;
-    background: rgb(7 7 7);
     transition: height 1s;
+    background: transparent;
     resize: none;
+    border: none;
+}
+
+.chat-msger-controls {
+    align-self: flex-end;
 }
 
 .chat-msger-input::-webkit-scrollbar {
