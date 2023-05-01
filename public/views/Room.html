@@ -61,19 +61,19 @@
 
         <!-- Bootstrap 5 -->
 
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3--bod.css" />
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3--bod.css" /> -->
 
-        <link
+        <!-- <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
-        />
-        <script
+        /> -->
+        <!-- <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"
-        ></script>
+        ></script> -->
 
         <!-- Js scripts https://cdn.jsdelivr.net -->
 
@@ -96,52 +96,46 @@
     </head>
     <body onload="initClient()">
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <section>
-            <div id="initUser" class="init-user">
-                <div class="video-box">
-                    <span>No camera or camera turned off</span>
-                    <video
-                        id="initVideo"
-                        playsinline="true"
-                        autoplay=""
-                        class="mirror"
-                        style="object-fit: var(--videoObjFit)"
-                    ></video>
-                    <div class="init-buttons-box">
-                        <button
-                            id="initAudioButton"
-                            class="fas fa-microphone-slash"
-                            onclick="handleAudio(event)"
-                        ></button>
-                        <button id="initVideoButton" class="fas fa-video-slash" onclick="handleVideo(event)"></button>
-                        <!-- <button
-                                id="initAudioVideoButton"
-                                class="fas fa-eye"
-                                onclick="handleAudioVideo(event)"
-                            ></button> -->
-                    </div>
-                    <button
-                        id="initSettingButton"
-                        onclick="showInitSetting()"
-                        class="fa-solid fa-gear circle-button"
-                    ></button>
+
+        <div id="initUser" class="init-user">
+            <div class="video-box">
+                <span>No camera or camera turned off</span>
+                <video
+                    id="initVideo"
+                    playsinline="true"
+                    autoplay=""
+                    class="mirror"
+                    style="object-fit: var(--videoObjFit)"
+                ></video>
+
+                <div class="init-buttons-box">
+                    <button id="initAudioButton" class="fas fa-microphone-slash" onclick="handleAudio(event)"></button>
+                    <button id="initVideoButton" class="fas fa-video-slash" onclick="handleVideo(event)"></button>
+                    <!-- <button id="initAudioVideoButton" class="fas fa-eye" onclick="handleAudioVideo(event)"></button> -->
                 </div>
-                <input type="text" name="name" id="init-input-name" class="init-common" placeholder="Enter your name" />
-                <button id="init-submit-button" class="init-common">Create Feat</button>
-
-                <span class="init-limit-text">Up to 10 members. No time limit</span>
-
-                <span class="init-terms-text"
-                    >By starting to use the Featly service, you agree to the <a href="#">Terms of Use</a></span
-                >
+                <button
+                    id="initSettingButton"
+                    onclick="showInitSetting()"
+                    class="fa-solid fa-gear circle-button"
+                ></button>
             </div>
-        </section>
+
+            <div class="init-input-error-box">
+                <input id="initInputName" type="text" name="name" class="init-common" placeholder="Your name" />
+            </div>
+            <button id="initSubmitButton" class="init-common">Create Feat</button>
+            <span class="init-limit-text">Up to 10 members. No time limit</span>
+            <span class="init-terms-text"
+                >By starting to use the Featly service, you agree to the <a href="#">Terms of Use</a></span
+            >
+        </div>
 
         <div id="initSettingPopup" class="popup hidden">
             <div class="popup-title">
                 <h2>Settings</h2>
                 <div class="close-icon" onclick="showInitSetting()"><span></span></div>
             </div>
+
             <div class="dropdown-box">
                 <h3>Camera</h3>
                 <select id="initVideoSelect" class="dropdown-select"></select>

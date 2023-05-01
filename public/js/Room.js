@@ -461,8 +461,7 @@ function whoAreYou() {
     console.log('04 ----> Who are you');
     sound('open');
 
-    // hide(loadingDiv);
-    document.body.style.background = 'var(--body-bg)';
+    document.body.style.background = 'var(--control-bg)';
 
     console.log(peer_name, 'custom peer name');
 
@@ -473,7 +472,7 @@ function whoAreYou() {
         return;
     }
 
-    let default_name = window.localStorage.peer_name ? window.localStorage.peer_name : '';
+    let default_name = window.localStorage.peer_name ?? '';
 
     console.log(default_name, 'custom default_name');
 
@@ -482,9 +481,9 @@ function whoAreYou() {
     }
 
     const initUser = document.getElementById('initUser');
-
-    const inputUserSubmitEl = document.querySelector('#initUser #init-submit-button');
-    const nameEl = document.querySelector('#initUser #init-input-name');
+    const inputUserSubmitEl = initUser.querySelector('#initSubmitButton');
+    const nameEl = initUser.querySelector('#initInputName');
+    const nameElError = initUser.querySelector('.init-input-error-box');
 
     if (inputUserSubmitEl) {
         if (nameEl) {
@@ -492,10 +491,10 @@ function whoAreYou() {
         }
 
         inputUserSubmitEl.onclick = () => {
-            console.log('!!!!!!');
             const name = nameEl ? nameEl.value : '';
 
-            if (!name) return 'Please enter your name';
+            if (!name) return nameElError.classList.add('empty-field');
+
             if (!getCookie(room_id + '_name')) {
                 window.localStorage.peer_name = name;
             }
@@ -511,41 +510,6 @@ function whoAreYou() {
             initUser.classList.toggle('hidden');
         };
     }
-
-    // initUser.classList.toggle('hidden');
-
-    // Swal.fire({
-    //     allowOutsideClick: false,
-    //     allowEscapeKey: true,
-    //     background: swalBackground,
-    //     title: 'FeatlyTalk SFU',
-    //     input: 'text',
-    //     inputPlaceholder: 'Enter your name',
-    //     inputValue: default_name,
-    //     html: initUser, // Inject HTML
-    //     confirmButtonText: `Join meeting`,
-    //     showClass: {
-    //         popup: 'animate__animated animate__fadeInDown',
-    //     },
-    //     hideClass: {
-    //         popup: 'animate__animated animate__fadeOutUp',
-    //     },
-    //     inputValidator: (name) => {
-    //         if (!name) return 'Please enter your name';
-    //         if (!getCookie(room_id + '_name')) {
-    //             window.localStorage.peer_name = name;
-    //         }
-    //         setCookie(room_id + '_name', name, 30);
-    //         peer_name = name;
-    //     },
-    // }).then(() => {
-    //     if (initStream) {
-    //         stopTracks(initStream);
-    //         hide(initVideo);
-    //     }
-    //     getPeerInfo();
-    //     joinRoom(peer_name, room_id);
-    // });
 }
 
 function handleAudio(e) {
@@ -748,6 +712,7 @@ function joinRoom(peer_name, room_id) {
 
 function roomIsReady() {
     console.log(roomIsReady, 'roomIsReady');
+    document.body.style.background = 'var(--body-bg)';
 
     BLOCKS.header.headerNav && hide(headerNav);
     BLOCKS.header.headerCenterBlock && show(headerCenterBlock);

@@ -37,10 +37,10 @@ html[data-theme='dark'] {
 }
 
 :root {
-    /* --body-bg: #151519; */
-    --body-bg: #0d0e10;
+    --body-bg: #151519;
     --control-bg: #0d0e10;
     --main-color: #8c6be6;
+    --error-color: #e63b2a;
 
     --border: 1px solid rgb(255 255 255 / 32%);
     --border-radius: 1rem;
@@ -72,7 +72,8 @@ html[data-theme='dark'] {
 
 * {
     outline: none;
-    font-family: 'Plus Jakarta Sans';
+    font-family: 'Plus Jakarta Sans', 'Roboto', 'Noto Sans', sans-serif, 'Helvetica Neue', Helvetica;
+    box-sizing: border-box;
 }
 
 html,
@@ -81,8 +82,15 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: var(--body-bg) !important;
+    background: var(--control-bg);
     /* background: url('../images/background.jpg'); */
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
 }
 
 a {
@@ -142,7 +150,7 @@ a {
     position: absolute;
     max-width: 640px;
     width: 90%;
-    top: 105px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -183,21 +191,44 @@ a {
     padding: 13px 18px;
 }
 
-#init-input-name {
+#initInputName {
     background: #141418;
     border: none;
     color: #f8f8f8;
     margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 24px;
 }
 
-#init-input-name:placeholder {
+.init-input-error-box {
+    position: relative;
+    width: 100%;
+}
+
+.init-input-error-box.empty-field #initInputName {
+    border: 1px solid var(--error-color);
+}
+
+.init-input-error-box.empty-field::before {
+    content: 'Enter your name';
+    color: var(--error-color);
+    position: absolute;
+    left: 0;
+    top: -25px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+}
+
+#initInputName:placeholder {
     color: #828282;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
 }
 
-#init-submit-button {
+#initSubmitButton {
     background: linear-gradient(105.88deg, #4f22c8 0%, #8c6be6 100%, #8c6be6 100%), #2e2e36;
     font-weight: 700;
     font-size: 16px;
@@ -373,12 +404,15 @@ a {
     display: block;
     border: none;
     color: #fff;
-    padding: 16px;
+    padding-left: 16px;
     padding-right: 45px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .dropdown-box h3 {
@@ -393,9 +427,6 @@ a {
 /*--------------------------------------------------------------
 # Switch
 --------------------------------------------------------------*/
-
-.init-switch-text {
-}
 
 .init-switch-text h3 {
     font-weight: 500;
@@ -504,12 +535,19 @@ input:checked + .slider:before {
     display: flex;
 }
 
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+}
+
 .header-nav a {
     font-weight: 500;
     font-size: 24px;
     line-height: 32px;
     letter-spacing: -0.02em;
     color: #ffffff;
+    white-space: nowrap;
 }
 
 .header-center-block {
