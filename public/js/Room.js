@@ -229,6 +229,8 @@ function makeId(length) {
 
 const initVideoButtonDOM = document.getElementById('initVideoButton');
 const initAudioButtonDOM = document.getElementById('initAudioButton');
+const initAudioButtonText = document.querySelector('.init-audio-button-box p span');
+const initVideoButtonText = document.querySelector('.init-video-button-box p span');
 
 async function initEnumerateDevices() {
     console.log('01 ----> init Enumerate Devices');
@@ -288,6 +290,7 @@ function enumerateVideoDevices(stream) {
             stopTracks(stream);
             isEnumerateVideoDevices = true;
             initVideoButtonDOM.className = 'fas fa-video';
+            initVideoButtonText.innerHTML = 'off';
         });
 }
 
@@ -330,6 +333,7 @@ function enumerateAudioDevices(stream) {
             stopTracks(stream);
             isEnumerateAudioDevices = true;
             initAudioButtonDOM.className = 'fas fa-microphone';
+            initAudioButtonText.innerHTML = 'off';
             const sinkId = 'sinkId' in HTMLMediaElement.prototype;
             speakerSelect.disabled = !sinkId;
             if (!sinkId) hide(initSpeakerSelect);
@@ -490,7 +494,8 @@ function whoAreYou() {
             nameEl.value = default_name;
         }
 
-        inputUserSubmitEl.onclick = () => {
+        inputUserSubmitEl.onclick = (e) => {
+            e.preventDefault();
             const name = nameEl ? nameEl.value : '';
 
             if (!name) return nameElError.classList.add('empty-field');
@@ -500,11 +505,13 @@ function whoAreYou() {
             }
             setCookie(room_id + '_name', name, 30);
             peer_name = name;
+            BLOCKS.loader.globalLoader && show(globalLoader);
 
             if (initStream) {
                 stopTracks(initStream);
                 hide(initVideo);
             }
+
             getPeerInfo();
             joinRoom(peer_name, room_id);
             initUser.classList.toggle('hidden');
@@ -515,6 +522,7 @@ function whoAreYou() {
 function handleAudio(e) {
     isAudioAllowed = isAudioAllowed ? false : true;
     e.target.className = 'fas fa-microphone' + (isAudioAllowed ? '' : '-slash');
+    initAudioButtonText.innerHTML = isAudioAllowed ? 'off' : 'on';
     setColor(e.target, isAudioAllowed ? 'white' : 'var(--main-color)');
     setColor(startAudioButton, isAudioAllowed ? 'white' : 'var(--main-color)');
     checkInitAudio(isAudioAllowed);
@@ -523,6 +531,7 @@ function handleAudio(e) {
 function handleVideo(e) {
     isVideoAllowed = isVideoAllowed ? false : true;
     e.target.className = 'fas fa-video' + (isVideoAllowed ? '' : '-slash');
+    initVideoButtonText.innerHTML = isVideoAllowed ? 'off' : 'on';
     setColor(e.target, isVideoAllowed ? 'white' : 'var(--main-color)');
     setColor(startVideoButton, isVideoAllowed ? 'white' : 'var(--main-color)');
     checkInitVideo(isVideoAllowed);
@@ -712,8 +721,9 @@ function joinRoom(peer_name, room_id) {
 
 function roomIsReady() {
     console.log(roomIsReady, 'roomIsReady');
+    BLOCKS.loader.globalLoader && hide(globalLoader);
     document.body.style.background = 'var(--body-bg)';
-
+    document.querySelector('header').classList.add('room-header');
     BLOCKS.header.headerNav && hide(headerNav);
     BLOCKS.header.headerCenterBlock && show(headerCenterBlock);
     BLOCKS.control.control && show(control);
@@ -2154,20 +2164,20 @@ function getParticipantAvatar(peerName) {
 function setTheme(theme) {
     switch (theme) {
         case 'dark':
-            swalBackground = 'radial-gradient(#393939, #000000)';
+            // swalBackground = 'radial-gradient(#393939, #000000)';
             // document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#393939, #000000)');
-            document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#393939, #000000)');
-            document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#393939, #000000)');
-            document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#393939, #000000)');
-            document.body.style.background = 'radial-gradient(#393939, #000000)';
+            // document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#393939, #000000)');
+            // document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#393939, #000000)');
+            // document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#393939, #000000)');
+            // document.body.style.background = 'radial-gradient(#393939, #000000)';
             break;
         case 'grey':
-            swalBackground = 'radial-gradient(#666, #333)';
+            // swalBackground = 'radial-gradient(#666, #333)';
             // document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#666, #333)');
-            document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#666, #333)');
-            document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#666, #333)');
-            document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#797979, #000)');
-            document.body.style.background = 'radial-gradient(#666, #333)';
+            // document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#666, #333)');
+            // document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#666, #333)');
+            // document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#797979, #000)');
+            // document.body.style.background = 'radial-gradient(#666, #333)';
             break;
         //...
     }

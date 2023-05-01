@@ -100,6 +100,7 @@
         <div id="initUser" class="init-user">
             <div class="video-box">
                 <span>No camera or camera turned off</span>
+                <div class="audio-box"></div>
                 <video
                     id="initVideo"
                     playsinline="true"
@@ -109,8 +110,18 @@
                 ></video>
 
                 <div class="init-buttons-box">
-                    <button id="initAudioButton" class="fas fa-microphone-slash" onclick="handleAudio(event)"></button>
-                    <button id="initVideoButton" class="fas fa-video-slash" onclick="handleVideo(event)"></button>
+                    <div class="init-audio-button-box">
+                        <button
+                            id="initAudioButton"
+                            class="fas fa-microphone-slash"
+                            onclick="handleAudio(event)"
+                        ></button>
+                        <p>Switch <span>on</span> microphone</p>
+                    </div>
+                    <div class="init-video-button-box">
+                        <button id="initVideoButton" class="fas fa-video-slash" onclick="handleVideo(event)"></button>
+                        <p>Switch <span>on</span> camera</p>
+                    </div>
                     <!-- <button id="initAudioVideoButton" class="fas fa-eye" onclick="handleAudioVideo(event)"></button> -->
                 </div>
                 <button
@@ -120,10 +131,15 @@
                 ></button>
             </div>
 
-            <div class="init-input-error-box">
-                <input id="initInputName" type="text" name="name" class="init-common" placeholder="Your name" />
-            </div>
-            <button id="initSubmitButton" class="init-common">Create Feat</button>
+            <form class="init-input-error-box">
+                <div class="input-box">
+                    <input id="initInputName" required type="text" name="name" class="init-common" />
+                    <label>Your name</label>
+                </div>
+
+                <button id="initSubmitButton" type="submit" class="init-common">Create Feat</button>
+            </form>
+
             <span class="init-limit-text">Up to 10 members. No time limit</span>
             <span class="init-terms-text"
                 >By starting to use the Featly service, you agree to the <a href="#">Terms of Use</a></span
@@ -174,6 +190,13 @@
             </div>
         </div>
 
+        <div id="globalLoader" class="hidden global-loader-box">
+            <div class="connecting-box">
+                <span class="loader"></span>
+                <p>Connecting</p>
+            </div>
+        </div>
+
         <header class="header">
             <img class="header-logo" src="../images/featlyLogo.svg" alt="logo" />
             <nav id="headerNav" class="header-nav">
@@ -183,6 +206,9 @@
             <div id="headerCenterBlock" class="hidden header-center-block">
                 <h1>Videomeeting</h1>
                 <span>12:53</span>
+            </div>
+            <div class="header-burger">
+                <span></span>
             </div>
         </header>
 

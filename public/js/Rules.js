@@ -16,6 +16,9 @@ const BLOCKS = {
     control: {
         control: true,
     },
+    loader: {
+        globalLoader: true,
+    },
 };
 
 const BUTTONS = {
