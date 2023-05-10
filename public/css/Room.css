@@ -843,7 +843,7 @@ input:checked + .slider:before {
     z-index: 3;
     position: absolute;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto auto 1fr auto auto auto auto auto auto auto 1fr auto;
     background: var(--control-bg);
     padding: 12px 24px;
     height: 126px;
@@ -855,41 +855,39 @@ input:checked + .slider:before {
     border-radius: 10px;
 }
 
-.control-buttons-box {
-    display: flex;
-    flex-direction: var(--btns-flex-direction);
-    gap: 24px;
-}
-
 .button-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
     max-width: 48px;
+    margin: 0 12px;
 }
 
-.control-buttons-box #exitButton i,
+.button-box:first-child {
+    margin-left: 0;
+}
+
+.exit-button #exitButton i,
 .button-box i {
     font-size: 20px;
     max-width: 24px;
 }
 
-.exit-button {
-    justify-self: end;
-}
-
-.control-buttons-box #exitButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 20px;
-    gap: 12px;
-    background: #2c2c39;
-    border-radius: 12px;
-    width: 105px;
-    height: 48px;
+@media (min-width: 769px) {
+    .exit-button #exitButton {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 20px;
+        gap: 12px;
+        background: #2c2c39;
+        border-radius: 12px;
+        width: 105px;
+        height: 48px;
+        color: red;
+    }
 }
 
 #exitButton span {
@@ -922,8 +920,78 @@ input:checked + .slider:before {
     cursor: default;
 }
 
-#exitButton {
-    color: red;
+@media (max-width: 768px) {
+    .mobile-hide,
+    #exitButton span,
+    #exitButton i,
+    .button-box > span {
+        display: none;
+    }
+
+    #control:not(.hidden) {
+        grid-template-columns: 36px 36px 36px 36px 36px;
+        gap: 24px;
+        justify-content: center;
+        background: transparent;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.81) 100%);
+        height: auto;
+        padding-bottom: 24px;
+        border-radius: 0;
+    }
+
+    .exit-button #exitButton {
+        position: relative;
+        background: var(--error-color);
+    }
+
+    #exitButton::before {
+        content: '';
+        background-image: url('../images/exit.svg');
+        position: absolute;
+        width: 20px;
+        left: 50%;
+        height: 20px;
+        top: 50%;
+        transform: translate(calc(-50% - 1.5px), -50%);
+    }
+
+    #control button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .button-box:first-child {
+        margin-left: 12px;
+    }
+
+    .control-chat-button {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .control-voice-button {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .exit-button {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .control-video-button {
+        grid-column: 4;
+        grid-row: 1;
+    }
+
+    .control-more-button {
+        grid-column: 5;
+        grid-row: 1;
+    }
+
+    .exit-button #exitButton i,
+    .button-box i {
+        font-size: 15px;
+        max-width: 18px;
+    }
 }
 
 /*--------------------------------------------------------------
@@ -1493,35 +1561,69 @@ button:hover {
 
 #participants {
     z-index: 7;
-    position: absolute;
-    margin: auto;
-    padding: 10px;
-    min-width: 320px;
+    position: relative;
+    padding: 16px 24px;
     background: var(--body-bg);
-    border: var(--border);
-    box-shadow: var(--box-shadow);
-    border-radius: 10px;
+    background: #191a1c;
     overflow: hidden;
+    min-width: 394px;
+    height: calc(100vh - (88px + 126px));
+    border-right: 2px solid var(--control-bg);
+}
+
+#roomParticipants,
+#participants main {
+    height: 100%;
+}
+
+.participants-box {
+    height: calc(100% - 42px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .participants-header {
     display: flex;
     justify-content: space-between;
-    background: rgb(0, 0, 0);
-    border-radius: 10px;
-    padding: 10px;
+    align-items: center;
     color: #fff;
-    cursor: move;
+    /* cursor: move; */
+    margin-bottom: 16px;
+}
+
+.participants-header-title {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+}
+
+#participantsCloseBtn i {
+    font-size: 30px;
+}
+
+.participants-header-options {
+    display: flex;
+    gap: 8px;
+}
+
+.participants-header button i {
+    font-size: 20px;
+    color: #ababaf;
 }
 
 #roomParticipants {
-    max-height: 680px;
-    overflow: auto;
+    /* max-height: 680px;
+    overflow: auto; */
 }
 
 #roomParticipants table {
     border-collapse: collapse;
     width: 100%;
+}
+
+#roomParticipants tr {
+    height: 56px;
 }
 
 #roomParticipants td,
@@ -1532,9 +1634,27 @@ button:hover {
     padding: 8px;
 }
 
-#roomParticipants tr {
-    border-bottom: 1px solid #444444;
+#roomParticipants td:not(#roomParticipants td:nth-child(2)) {
+    width: 27px;
 }
+
+#roomParticipants td:first-child,
+#roomParticipants th:first-child {
+    position: absolute;
+}
+
+#roomParticipants td:nth-child(2) {
+    padding-left: 0;
+    font-size: 16px;
+    line-height: 24px;
+    min-width: fit-content;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+/* #roomParticipants tr {
+    border-bottom: 1px solid #444444;
+} */
 /* #roomParticipants tr:nth-child(even) {
     background-color: #0c0b0b;
 } */
@@ -1553,14 +1673,29 @@ button:hover {
 
 #inviteParticipants {
     width: 100%;
-    padding: 10px;
-    margin: 10px auto 0px auto;
-    background-color: #056162;
-    border-radius: 10px;
-}
-#inviteParticipants:hover {
-    background-color: #191919;
+    max-width: 346px;
+    height: 56px;
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #2c2c39;
+    border-radius: 12px;
+    transition: 0.3s background-color;
     color: #fff;
+    cursor: pointer;
+    position: absolute;
+    bottom: 24px;
+}
+
+#inviteParticipants i {
+    font-size: 18px;
+}
+
+#inviteParticipants:hover {
+    color: #fff;
+    background: #2c2c39ad;
     transform: scale(1);
 }
 

@@ -181,6 +181,7 @@ function initClient() {
         setTippy('chatGhostButton', 'Toggle transparent background', 'bottom');
         setTippy('chatCloseButton', 'Close', 'right');
         setTippy('participantsCloseBtn', 'Close', 'left');
+        setTippy('participantsSearchBtn', 'Search members', 'left');
         setTippy('sessionTime', 'Session time', 'top');
     }
     setupWhiteboard();
@@ -759,7 +760,7 @@ function roomIsReady() {
     } else {
         rc.makeDraggable(chatRoom, chatHeader);
         rc.makeDraggable(mySettings, mySettingsHeader);
-        rc.makeDraggable(participants, participantsHeader);
+        // rc.makeDraggable(participants, participantsHeader);
         rc.makeDraggable(whiteboard, whiteboardHeader);
         rc.makeDraggable(sendFileDiv, imgShareSend);
         rc.makeDraggable(receiveFileDiv, imgShareReceive);
@@ -807,6 +808,10 @@ function hide(elem) {
 
 function show(elem) {
     elem.classList.remove('hidden');
+}
+
+function toggle(elem) {
+    elem.classList.toggle('hidden');
 }
 
 function setColor(elem, color) {
@@ -1083,6 +1088,10 @@ function handleButtons() {
     participantsCloseBtn.onclick = () => {
         toggleParticipants();
     };
+    participantsSearchBtn.onclick = () => {
+        const element = document.getElementById('searchParticipants');
+        toggle(element);
+    };
     lockRoomButton.onclick = () => {
         rc.roomAction('lock');
     };
@@ -1358,7 +1367,7 @@ function handleRoomClientEvents() {
         console.log('Room Client start audio');
         hide(startAudioButton);
         show(stopAudioButton);
-        setColor(startAudioButton, 'red');
+        setColor(startAudioButton, 'var(--main-color)');
         setAudioButtonsDisabled(false);
     });
     rc.on(RoomClient.EVENTS.pauseAudio, () => {
@@ -1381,7 +1390,7 @@ function handleRoomClientEvents() {
         console.log('Room Client start video');
         hide(startVideoButton);
         show(stopVideoButton);
-        setColor(startVideoButton, 'red');
+        setColor(startVideoButton, 'var(--main-color)');
         setVideoButtonsDisabled(false);
     });
     rc.on(RoomClient.EVENTS.pauseVideo, () => {
@@ -1992,12 +2001,12 @@ function whiteboardAction(data, emit = true) {
 function toggleParticipants() {
     let participants = rc.getId('participants');
     participants.classList.toggle('show');
-    participants.style.top = '50%';
-    participants.style.left = '50%';
-    if (DetectRTC.isMobileDevice) {
-        participants.style.width = '100%';
-        participants.style.height = '100%';
-    }
+    participants.style.top = '0%';
+    participants.style.left = '0%';
+    // if (DetectRTC.isMobileDevice) {
+    //     participants.style.width = '100%';
+    //     participants.style.height = '100%';
+    // }
     isParticipantsListOpen = !isParticipantsListOpen;
 }
 
@@ -2020,49 +2029,35 @@ async function getRoomParticipants(refresh = false) {
 
 async function getParticipantsTable(peers) {
     let table = `
+    
     <div>
-        <button
-            id="inviteParticipants"
-            onclick="shareRoom(true);"
-        ><i class="fas fa-user-plus"></i>&nbsp; Invite Someone</button>
+      <input
+          id="searchParticipants"
+          type="text"
+          placeholder="Search members..."
+          name="search"
+          onkeyup="rc.searchPeer();"
+          class="hidden"
+      />
     </div>
-    <div>
-        <input
-            id="searchParticipants"
-            type="text"
-            placeholder=" 🔍 Search participants ..."
-            name="search"
-            onkeyup="rc.searchPeer();"
-        />
-    </div>
-    <table id="myTable">
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>`;
+  <div class='participants-box'>
+    <table id="myTable">`;
 
-    if (!isRulesActive || isPresenter) {
-        table += `
-    <tr>
-        <td>&nbsp;<i class="fas fa-users fa-lg"></i></td>
-        <td>all</td>
-        <td><button id="muteAllButton" onclick="rc.peerAction('me','${rc.peer_id}','mute',true,true)">${_PEER.audioOff}</button></td>
-        <td><button id="hideAllButton" onclick="rc.peerAction('me','${rc.peer_id}','hide',true,true)">${_PEER.videoOff}</button></td>
-        <td></td>
-        <td><button id="sendAllButton" onclick="rc.selectFileToShare('${rc.peer_id}', true)">${_PEER.sendFile}</button></td>
-        <td><button id="sendMessageToAll" onclick="rc.sendMessageTo('all','all')">${_PEER.sendMsg}</button></td>
-        <td><button id="sendVideoToAll" onclick="rc.shareVideo('all');">${_PEER.sendVideo}</button></td>
-        <td><button id="ejectAllButton" onclick="rc.peerAction('me','${rc.peer_id}','eject',true,true)">${_PEER.ejectPeer}</button></td>
-    </tr>
-    `;
-    }
+    // if (!isRulesActive || isPresenter) {
+    //     table += `
+    // <tr>
+    //     <td>&nbsp;<i class="fas fa-users fa-lg"></i></td>
+    //     <td>all</td>
+    //     <td><button id="muteAllButton" onclick="rc.peerAction('me','${rc.peer_id}','mute',true,true)">${_PEER.audioOff}</button></td>
+    //     <td><button id="hideAllButton" onclick="rc.peerAction('me','${rc.peer_id}','hide',true,true)">${_PEER.videoOff}</button></td>
+    //     <td></td>
+    //     <td><button id="sendAllButton" onclick="rc.selectFileToShare('${rc.peer_id}', true)">${_PEER.sendFile}</button></td>
+    //     <td><button id="sendMessageToAll" onclick="rc.sendMessageTo('all','all')">${_PEER.sendMsg}</button></td>
+    //     <td><button id="sendVideoToAll" onclick="rc.shareVideo('all');">${_PEER.sendVideo}</button></td>
+    //     <td><button id="ejectAllButton" onclick="rc.peerAction('me','${rc.peer_id}','eject',true,true)">${_PEER.ejectPeer}</button></td>
+    // </tr>
+    // `;
+    // }
 
     for (let peer of Array.from(peers.keys())) {
         let peer_info = peers.get(peer).peer_info;
@@ -2078,22 +2073,22 @@ async function getParticipantsTable(peers) {
         if (rc.peer_id === peer_id) {
             table += `
             <tr id='${peer_name}'>
-                <td><img src='${avatarImg}'></td>
-                <td>${peer_name} (me)</td>
+            <td></td>
+                <td>${peer_name} (you)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><button>${peer_hand}</button></td>
                 <td><button>${peer_audio}</button></td>
                 <td><button>${peer_video}</button></td>
-                <td><button>${peer_hand}</button></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
             </tr>
             `;
         } else {
             if (isRulesActive && isPresenter) {
                 table += `
                 <tr id='${peer_id}'>
-                    <td><img src='${avatarImg}'></td>
+                <td></td>
                     <td>${peer_name}</td>
                     <td><button id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')">${peer_audio}</button></td>
                     <td><button id='${peer_id}___pVideo' onclick="rc.peerAction('me',this.id,'hide')">${peer_video}</button></td>
@@ -2107,7 +2102,7 @@ async function getParticipantsTable(peers) {
             } else {
                 table += `
                 <tr id='${peer_id}'>
-                    <td><img src='${avatarImg}'></td>
+                <td></td>
                     <td>${peer_name}</td>
                     <td><button id='${peer_id}___pAudio'>${peer_audio}</button></td>
                     <td><button id='${peer_id}___pVideo'>${peer_video}</button></td>
@@ -2121,7 +2116,13 @@ async function getParticipantsTable(peers) {
             }
         }
     }
-    table += `</table>`;
+    table += `</table>
+    <div>
+      <button
+          id="inviteParticipants"
+          onclick="shareRoom(true);"
+      ><i class="fa-solid fa-plus"></i>&nbsp; Invite to a feat</button>
+      </div> </div>`;
     return table;
 }
 
@@ -2149,7 +2150,7 @@ function setParticipantsTippy(peers) {
 }
 
 function refreshParticipantsCount(count, adapt = true) {
-    participantsTitle.innerHTML = `<i class="fas fa-users"></i> Participants ( ${count} )`;
+    participantsTitle.innerHTML = `${count} members`;
     if (adapt) adaptAspectRatio(count);
 }
 

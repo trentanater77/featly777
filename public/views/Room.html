@@ -213,67 +213,69 @@
         </header>
 
         <div id="control" class="hidden">
-            <div class="control-buttons-box">
-                <div class="button-box">
-                    <button id="startAudioButton" class="hidden"><i class="fas fa-microphone-slash"></i></button>
-                    <button id="stopAudioButton" class="hidden"><i class="fas fa-microphone"></i></button>
-                    <span>Voice</span>
-                </div>
-                <div class="button-box">
-                    <button id="startVideoButton" class="hidden"><i class="fas fa-video-slash"></i></button>
-                    <button id="stopVideoButton" class="hidden"><i class="fas fa-video"></i></button>
-                    <span>Video</span>
-                </div>
+            <div class="button-box control-voice-button">
+                <button id="startAudioButton" class="hidden"><i class="fas fa-microphone-slash"></i></button>
+                <button id="stopAudioButton" class="hidden"><i class="fas fa-microphone"></i></button>
+                <span>Voice</span>
             </div>
-            <div class="control-buttons-box">
-                <div class="button-box">
-                    <button id="participantsButton" class="hidden"><i class="fa-solid fa-user-group"></i></button>
-                    <span>Members</span>
-                </div>
-
-                <div class="button-box">
-                    <button id="chatButton" class="hidden">
-                        <i class="fa-sharp fa-solid fa-comment-dots fa-flip-horizontal"></i>
-                    </button>
-                    <span>Chat</span>
-                </div>
-
-                <div class="button-box">
-                    <button id="shareButton" class="hidden">
-                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                    </button>
-                    <span>Share</span>
-                </div>
-
-                <div class="button-box">
-                    <button id="startScreenButton" class="hidden">
-                        <i class="fa-solid fa-users-rectangle"></i>
-                    </button>
-                    <button id="stopScreenButton" class="hidden"><i class="fas fa-stop-circle"></i></button>
-                    <button id="swapCameraButton" class="hidden"><i class="fas fa-camera-rotate"></i></button>
-                    <span>View</span>
-                </div>
-
-                <div class="button-box">
-                    <button id="reactionButton" class="hidden">
-                        <i class="fa-regular fa-face-smile-beam"></i>
-                    </button>
-                    <span>Reaction</span>
-                </div>
-
-                <div class="button-box">
-                    <button id="whiteboardButton" class="hidden"><i class="fa-solid fa-pencil"></i></button>
-                    <span>Board</span>
-                </div>
-
-                <div class="button-box">
-                    <button id="settingsButton" class="hidden"><i class="fa-solid fa-ellipsis"></i></button>
-                    <span>More</span>
-                </div>
-
-                <!-- <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button> -->
+            <div class="button-box control-video-button">
+                <button id="startVideoButton" class="hidden"><i class="fas fa-video-slash"></i></button>
+                <button id="stopVideoButton" class="hidden"><i class="fas fa-video"></i></button>
+                <span>Video</span>
             </div>
-            <div class="exit-button control-buttons-box">
+
+            <div class="mobile-hide"></div>
+
+            <div class="button-box mobile-hide">
+                <button id="participantsButton" class="hidden"><i class="fa-solid fa-user-group"></i></button>
+                <span>Members</span>
+            </div>
+
+            <div class="button-box control-chat-button">
+                <button id="chatButton" class="hidden">
+                    <i class="fa-sharp fa-solid fa-comment-dots fa-flip-horizontal"></i>
+                </button>
+                <span>Chat</span>
+            </div>
+
+            <div class="button-box mobile-hide">
+                <button id="shareButton" class="hidden">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </button>
+                <span>Share</span>
+            </div>
+
+            <div class="button-box mobile-hide">
+                <button id="startScreenButton" class="hidden">
+                    <i class="fa-solid fa-users-rectangle"></i>
+                </button>
+                <button id="stopScreenButton" class="hidden"><i class="fas fa-stop-circle"></i></button>
+                <button id="swapCameraButton" class="hidden"><i class="fas fa-camera-rotate"></i></button>
+                <span>View</span>
+            </div>
+
+            <div class="button-box mobile-hide">
+                <button id="reactionButton" class="hidden">
+                    <i class="fa-regular fa-face-smile-beam"></i>
+                </button>
+                <span>Reaction</span>
+            </div>
+
+            <div class="button-box mobile-hide">
+                <button id="whiteboardButton" class="hidden"><i class="fa-solid fa-pencil"></i></button>
+                <span>Board</span>
+            </div>
+
+            <div class="button-box control-more-button">
+                <button id="settingsButton" class="hidden"><i class="fa-solid fa-ellipsis"></i></button>
+                <span>More</span>
+            </div>
+
+            <!-- <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button> -->
+
+            <div class="mobile-hide"></div>
+
+            <div class="exit-button">
                 <button id="exitButton" class="hidden">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Exit</span>
                 </button>
@@ -516,7 +518,20 @@
                     <div id="chatEmoji" class="hidden fadein"></div>
                 </section>
             </section>
-            <div>
+
+            <section id="participants" class="hidden">
+                <header id="participantsHeader" class="participants-header">
+                    <div id="participantsTitle" class="participants-header-title"></div>
+                    <div class="participants-header-options">
+                        <button id="participantsSearchBtn"><i class="fas fa-magnifying-glass"></i></button>
+                        <button id="participantsCloseBtn"><i class="fas fa-times"></i></button>
+                    </div>
+                </header>
+                <main>
+                    <div id="roomParticipants"></div>
+                </main>
+            </section>
+            <div class="video-conteiner-box">
                 <div id="videoMediaContainer">
                     <!-- <div class="Camera"></div> -->
                 </div>
@@ -546,18 +561,6 @@
             <progress id="receiveProgress" max="0" value="0"></progress>
             <button id="receiveHideBtn"><i class="fas fa-eye-slash"></i>&nbsp; Hide</button>
         </div>
-
-        <section id="participants" class="fadein center hidden">
-            <header id="participantsHeader" class="participants-header">
-                <div class="participants-header-options">
-                    <button id="participantsCloseBtn" class="fas fa-times"></button>
-                </div>
-                <div id="participantsTitle" class="participants-header-title"></div>
-            </header>
-            <main>
-                <div id="roomParticipants"></div>
-            </main>
-        </section>
 
         <section id="whiteboard" class="fadein center hidden">
             <header id="whiteboardHeader" class="whiteboard-header">
