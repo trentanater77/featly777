@@ -292,7 +292,7 @@ class RoomClient {
         console.log('06.2 Participants Count ---->', participantsCount);
         // notify && participantsCount == 1 ? shareRoom() : sound('joined');
         if (notify && participantsCount == 1) {
-            shareRoom();
+            // shareRoom();
         } else {
             if (this.isScreenAllowed) {
                 this.shareScreen();
@@ -2360,11 +2360,11 @@ class RoomClient {
     }
 
     sendMessage() {
-        if (!this.thereIsParticipants()) {
-            this.cleanMessage();
-            isChatPasteTxt = false;
-            return this.userLog('info', 'No participants in the room', 'top-end');
-        }
+        // if (!this.thereIsParticipants()) {
+        //     this.cleanMessage();
+        //     isChatPasteTxt = false;
+        //     return this.userLog('info', 'No participants in the room', 'top-end');
+        // }
         let peer_msg = this.formatMsg(chatMessage.value.trim());
         if (!peer_msg) {
             return this.cleanMessage();
@@ -2377,9 +2377,12 @@ class RoomClient {
         };
         console.log('Send message:', data);
         this.socket.emit('message', data);
-        this.setMsgAvatar('right', this.peer_name);
+        // this.setMsgAvatar('right', this.peer_name);
         this.appendMessage('right', this.rightMsgAvatar, this.peer_name, this.peer_id, peer_msg, 'all', 'all');
         this.cleanMessage();
+
+        document.getElementById('chatMessageLabel').style.color = '#828282';
+        document.querySelector('#chatMessageLabel span').innerText = '0';
     }
 
     sendMessageTo(to_peer_id, to_peer_name) {
@@ -2417,7 +2420,7 @@ class RoomClient {
                 };
                 console.log('Send message:', data);
                 this.socket.emit('message', data);
-                this.setMsgAvatar('right', this.peer_name);
+                // this.setMsgAvatar('right', this.peer_name);
                 this.appendMessage(
                     'right',
                     this.rightMsgAvatar,
@@ -2434,7 +2437,7 @@ class RoomClient {
 
     showMessage(data) {
         if (!this.isChatOpen && this.showChatOnMessage) this.toggleChat();
-        this.setMsgAvatar('left', data.peer_name);
+        // this.setMsgAvatar('left', data.peer_name);
         this.appendMessage(
             'left',
             this.leftMsgAvatar,
@@ -2462,14 +2465,19 @@ class RoomClient {
         let message = toId == 'all' ? msg : msg + replyMsg;
         let msgHTML = `
         <div id="msg-${chatMessagesId}" class="msg ${side}-msg">
-            <div class="msg-img" style="background-image: url('${img}')"></div>
-            <div class=${msgBubble}>
-                <div class="msg-info">
-                    <div class="msg-info-name">${fromName}</div>
-                    <div class="msg-info-time">${time}</div>
-                </div>
-                <div id="${chatMessagesId}" class="msg-text">${message}
-                    <hr/>`;
+            <div class=${msgBubble}>`;
+
+        if (fromId != this.peer_id) {
+            msgHTML += `
+            <div class="msg-info">
+            <div class="msg-info-name">${fromName}</div>
+        </div>`;
+        }
+
+        msgHTML += `
+                <div id="${chatMessagesId}" class="msg-text">${message}   </div>
+                  <div class="msg-buttons-box">`;
+
         // add btn direct reply to private message
         if (fromId != this.peer_id) {
             msgHTML += `
@@ -2490,7 +2498,9 @@ class RoomClient {
                         class="fas fa-copy" 
                         onclick="rc.copyToClipboard('${chatMessagesId}')"
                     ></button>
-                </div>
+                    <div class="msg-info-time">${time}</div>
+                    </div>
+             
             </div>
         </div>
         `;
@@ -2527,6 +2537,7 @@ class RoomClient {
     }
 
     copyToClipboard(id) {
+        console.log(this.getId(id));
         const text = this.getId(id).innerText;
         navigator.clipboard
             .writeText(text)
@@ -4036,14 +4047,11 @@ class RoomClient {
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName('td')[1];
             if (td) {
-                console.log(filter, 'td exist');
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = '';
-                    console.log('td ""');
                 } else {
                     tr[i].style.display = 'none';
-                    console.log('td none');
                 }
             }
         }

@@ -19,6 +19,9 @@ const BLOCKS = {
     loader: {
         globalLoader: true,
     },
+    popups: {
+        invitePopup: true,
+    },
 };
 
 const BUTTONS = {
@@ -73,6 +76,7 @@ const BUTTONS = {
         chatMarkdownButton: false,
         chatShareFileButton: true,
         chatSpeechStartButton: false,
+        resetSearchParticipants: true,
     },
     //...
 };

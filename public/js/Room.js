@@ -182,7 +182,9 @@ function initClient() {
         setTippy('chatCloseButton', 'Close', 'right');
         setTippy('participantsCloseBtn', 'Close', 'left');
         setTippy('participantsSearchBtn', 'Search members', 'left');
+        setTippy('chatSearchBtn', 'Search members', 'left');
         setTippy('sessionTime', 'Session time', 'top');
+        setTippy('inviteCopyLink', 'Copy link', 'right');
     }
     setupWhiteboard();
     initEnumerateDevices();
@@ -538,6 +540,12 @@ function handleVideo(e) {
     checkInitVideo(isVideoAllowed);
 }
 
+function resetInput(target) {
+    const element = document.getElementById(target);
+    element.value = '';
+    element.onkeyup();
+}
+
 // function handleAudioVideo(e) {
 //     isAudioVideoAllowed = isAudioVideoAllowed ? false : true;
 //     isAudioAllowed = isAudioVideoAllowed;
@@ -608,6 +616,7 @@ async function shareRoom(useNavigator = false) {
         }
     } else {
         // share();
+        copyRoomURL();
     }
 
     function share() {
@@ -640,7 +649,7 @@ async function shareRoom(useNavigator = false) {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                copyRoomURL();
+                // copyRoomURL();
             } else if (result.isDenied) {
                 let message = {
                     email: '',
@@ -672,16 +681,16 @@ function makeRoomQR() {
     });
 }
 
-function copyRoomURL() {
-    let tmpInput = document.createElement('input');
-    document.body.appendChild(tmpInput);
-    tmpInput.value = RoomURL;
-    tmpInput.select();
-    tmpInput.setSelectionRange(0, 99999); // For mobile devices
-    navigator.clipboard.writeText(tmpInput.value);
-    document.body.removeChild(tmpInput);
-    userLog('info', 'Meeting URL copied to clipboard 👍', 'top-end');
-}
+// function copyRoomURL() {
+//     let tmpInput = document.createElement('input');
+//     document.body.appendChild(tmpInput);
+//     tmpInput.value = RoomURL;
+//     tmpInput.select();
+//     tmpInput.setSelectionRange(0, 99999); // For mobile devices
+//     navigator.clipboard.writeText(tmpInput.value);
+//     document.body.removeChild(tmpInput);
+//     userLog('info', 'Meeting URL copied to clipboard 👍', 'top-end');
+// }
 
 function shareRoomByEmail(message) {
     let email = message.email;
@@ -720,14 +729,37 @@ function joinRoom(peer_name, room_id) {
     }
 }
 
+function copyRoomURL() {
+    navigator.clipboard.writeText(RoomURL);
+    showSnackbar('Link copied');
+}
+
+const snackbar = document.getElementById('snackbar');
+
+function showSnackbar(text) {
+    if (snackbar.classList.contains('hidden')) {
+        snackbar.querySelector('span').innerText = text;
+        toggle(snackbar);
+        setTimeout(() => toggle(snackbar), 3000);
+    }
+}
+
 function roomIsReady() {
     console.log(roomIsReady, 'roomIsReady');
-    BLOCKS.loader.globalLoader && hide(globalLoader);
     document.body.style.background = 'var(--body-bg)';
     document.querySelector('header').classList.add('room-header');
+
+    BLOCKS.loader.globalLoader && hide(globalLoader);
     BLOCKS.header.headerNav && hide(headerNav);
     BLOCKS.header.headerCenterBlock && show(headerCenterBlock);
     BLOCKS.control.control && show(control);
+    BLOCKS.popups.invitePopup && show(invitePopup);
+
+    setTimeout(() => hide(invitePopup), 10000);
+
+    document.querySelector('#invitePopup input').value = RoomURL;
+
+    getRoomParticipants();
 
     setTheme('dark');
     BUTTONS.main.exitButton && show(exitButton);
@@ -758,7 +790,7 @@ function roomIsReady() {
         show(swapCameraButton);
         setChatSize();
     } else {
-        rc.makeDraggable(chatRoom, chatHeader);
+        // rc.makeDraggable(chatRoom, chatHeader);
         rc.makeDraggable(mySettings, mySettingsHeader);
         // rc.makeDraggable(participants, participantsHeader);
         rc.makeDraggable(whiteboard, whiteboardHeader);
@@ -1083,13 +1115,18 @@ function handleButtons() {
         whiteboardAction(getWhiteboardAction('close'));
     };
     participantsButton.onclick = () => {
-        getRoomParticipants();
+        // getRoomParticipants();
+        toggleParticipants();
     };
     participantsCloseBtn.onclick = () => {
         toggleParticipants();
     };
     participantsSearchBtn.onclick = () => {
-        const element = document.getElementById('searchParticipants');
+        const element = document.getElementById('searchParticipantsBox');
+        toggle(element);
+    };
+    chatSearchBtn.onclick = () => {
+        const element = document.getElementById('searchChatBox');
         toggle(element);
     };
     lockRoomButton.onclick = () => {
@@ -1111,6 +1148,7 @@ function setButtonsInit() {
     if (!DetectRTC.isMobileDevice) {
         setTippy('initAudioButton', 'Toggle the audio', 'left');
         setTippy('initVideoButton', 'Toggle the video', 'right');
+        setTippy('initSettingButton', 'Settings', 'right');
         setTippy('initAudioVideoButton', 'Toggle the audio & video', 'right');
     }
     initAudioButton = document.getElementById('initAudioButton');
@@ -1277,6 +1315,9 @@ function handleSelects() {
 // HTML INPUTS
 // ####################################################
 
+const chatMessageLabel = document.getElementById('chatMessageLabel');
+const chatMessageLabelCounter = chatMessageLabel.querySelector('span');
+
 function handleInputs() {
     chatMessage.onkeyup = (e) => {
         if (e.keyCode === 13 && (DetectRTC.isMobileDevice || !e.shiftKey)) {
@@ -1285,6 +1326,14 @@ function handleInputs() {
         }
     };
     chatMessage.oninput = function () {
+        chatMessageLabelCounter.innerText = chatMessage.value.length;
+
+        if (chatMessage.value.length === 200) {
+            chatMessageLabel.style.color = '#FFB60A';
+        } else {
+            chatMessageLabel.style.color = '#828282';
+        }
+
         const chatInputEmoji = {
             '<3': '\u2764\uFE0F',
             '</3': '\uD83D\uDC94',
@@ -2030,16 +2079,13 @@ async function getRoomParticipants(refresh = false) {
 async function getParticipantsTable(peers) {
     let table = `
     
-    <div>
-      <input
-          id="searchParticipants"
-          type="text"
-          placeholder="Search members..."
-          name="search"
-          onkeyup="rc.searchPeer();"
-          class="hidden"
-      />
-    </div>
+  <div class="input-box hidden" id='searchParticipantsBox'>
+    <input  id="searchParticipants" required type="text"   name="search" class="init-common" onkeyup="rc.searchPeer();"/>
+    <label>Search</label>
+    <button id="resetSearchParticipants" onclick="resetInput('searchParticipants')"><i class="fas fa-times"></i></button>
+  </div>
+
+
   <div class='participants-box'>
     <table id="myTable">`;
 

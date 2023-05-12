@@ -146,7 +146,7 @@
             >
         </div>
 
-        <div id="initSettingPopup" class="popup hidden">
+        <div id="initSettingPopup" class="center-popup hidden">
             <div class="popup-title">
                 <h2>Settings</h2>
                 <div class="close-icon" onclick="showInitSetting()"><span></span></div>
@@ -190,11 +190,29 @@
             </div>
         </div>
 
+        <div id="invitePopup" class="invite-popup hidden">
+            <div class="popup-title">
+                <h2>Invite to a meeting</h2>
+                <div class="close-icon" onclick="hide(invitePopup)"><span></span></div>
+            </div>
+            <span class="popup-sub-title">Maximum amount — 10 users</span>
+
+            <div class="input-box">
+                <input type="text" disabled />
+                <i id="inviteCopyLink" onclick="copyRoomURL()" class="fa-solid fa-clone"></i>
+            </div>
+            <button onclick="copyRoomURL()" class="init-common">Сopy invite</button>
+        </div>
+
         <div id="globalLoader" class="hidden global-loader-box">
             <div class="connecting-box">
                 <span class="loader"></span>
                 <p>Connecting</p>
             </div>
+        </div>
+
+        <div id="snackbar" class="hidden">
+            <span></span>
         </div>
 
         <header class="header">
@@ -482,34 +500,56 @@
         <div id="videoPinMediaContainer"></div>
 
         <div class="video-with-chat--wrapper">
-            <section id="chatRoom" class="chat-room fadein">
+            <section id="chatRoom" class="chat-room">
                 <section id="msger" class="msger">
-                    <header id="chatHeader" class="chat-header">
-                        <div class="chat-header-title">
-                            <button id="chatCloseButton" class="fas fa-times"></button>
+                    <header id="chatHeader">
+                        <div class="chat-header">
+                            <h2 class="participants-header-title">Chat</h2>
+
+                            <div class="participants-header-options">
+                                <button id="chatSearchBtn">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                                <button id="chatCloseButton"><i class="fa-sharp fas fa-times"></i></button>
+                            </div>
+
+                            <!--                        <div class="chat-header-options">-->
+                            <!--                            <button id="chatGhostButton" class="fas fa-circle-half-stroke"></button>-->
+                            <!--                            <button id="chatSaveButton" class="fas fa-save"></button>-->
+                            <!--                            <button id="chatCleanButton" class="fas fa-trash"></button>-->
+                            <!--                        </div>-->
                         </div>
-                        <!--                        <div class="chat-header-options">-->
-                        <!--                            <button id="chatGhostButton" class="fas fa-circle-half-stroke"></button>-->
-                        <!--                            <button id="chatSaveButton" class="fas fa-save"></button>-->
-                        <!--                            <button id="chatCleanButton" class="fas fa-trash"></button>-->
-                        <!--                        </div>-->
+                        <div id="searchChatBox" class="input-box hidden">
+                            <input id="searchChatInput" required type="text" name="search" class="init-common" />
+                            <label>Message search</label>
+                            <button id="resetSearchParticipants" onclick="resetInput('searchChatInput')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </header>
+
                     <div class="chat-content">
                         <main id="chatMsger" class="chat-msger">
                             <!-- chat messages -->
                         </main>
                         <div class="chat-msger-block">
                             <div class="chat-msger-wrapper">
-                                <label for="chatMessage" class="chat-message-label"
-                                    >Enter your message ( 0 / 200)
+                                <label id="chatMessageLabel" for="chatMessage" class="chat-message-label"
+                                    >Enter your message ( <span>0</span> / 200)
                                 </label>
-                                <textarea rows="1" cols="1" id="chatMessage" class="chat-msger-input"></textarea>
+                                <textarea
+                                    rows="1"
+                                    cols="1"
+                                    id="chatMessage"
+                                    maxlength="200"
+                                    class="chat-msger-input"
+                                ></textarea>
                                 <div class="chat-msger-controls">
                                     <button id="chatShareFileButton" class="hidden">
-                                        <i class="fas fa-paperclip"></i>
+                                        <i class="fa-solid fa-image fa-flip-horizontal"></i>
                                     </button>
                                     <button id="chatSendButton" class="hidden">
-                                        <i class="fas fa-paper-plane"></i>
+                                        <i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 </div>
                             </div>
@@ -523,7 +563,9 @@
                 <header id="participantsHeader" class="participants-header">
                     <div id="participantsTitle" class="participants-header-title"></div>
                     <div class="participants-header-options">
-                        <button id="participantsSearchBtn"><i class="fas fa-magnifying-glass"></i></button>
+                        <button id="participantsSearchBtn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                         <button id="participantsCloseBtn"><i class="fas fa-times"></i></button>
                     </div>
                 </header>
