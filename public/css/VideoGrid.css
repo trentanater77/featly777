@@ -29,17 +29,61 @@
 
 #videoPinMediaContainer {
     z-index: 1;
-    position: absolute;
+    position: relative;
     display: none;
     top: 0;
     left: 0;
-    width: 75%;
-    height: 100%;
+    width: 100%;
+    height: var(--msger-height);
     border-radius: 5px;
     box-shadow: var(--box-shadow);
     overflow: hidden;
+
     /* animation: show 0.4s ease; */
     /* border: 3px solid lime; */
+}
+
+.share-center-box {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+}
+
+.share-center-box span {
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 52px;
+    text-align: center;
+    color: white;
+    white-space: nowrap;
+}
+
+.share-center-box button {
+    padding: 13px 18px;
+    width: 206px;
+    height: 56px;
+    background: #2c2c39;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 22px;
+    color: #f8f8f8;
+    cursor: pointer;
+}
+
+.share-center-box button:hover {
+    opacity: 1 !important;
+}
+
+#videoPinMediaContainer video {
+    filter: blur(3px);
 }
 
 .Camera {

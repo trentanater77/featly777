@@ -120,7 +120,8 @@ let initStream = null;
 
 function initClient() {
     if (!DetectRTC.isMobileDevice) {
-        setTippy('shareButton', 'Share room', 'right');
+        // setTippy('shareButton', 'Share room', 'right');
+        setTippy('closeSettingPopupBtn', 'Close', 'right');
         setTippy('startAudioButton', 'Start the audio', 'right');
         setTippy('stopAudioButton', 'Stop the audio', 'right');
         setTippy('startVideoButton', 'Start the video', 'right');
@@ -131,7 +132,7 @@ function initClient() {
         setTippy('swapCameraButton', 'Swap the camera', 'right');
         setTippy('chatButton', 'Toggle the chat', 'right');
         setTippy('whiteboardButton', 'Toggle the whiteboard', 'right');
-        setTippy('settingsButton', 'Toggle the settings', 'right');
+        setTippy('settingsButton', 'More', 'right');
         setTippy('aboutButton', 'About this project', 'right');
         setTippy('exitButton', 'Leave room', 'right');
         setTippy('mySettingsCloseBtn', 'Close', 'right');
@@ -152,20 +153,24 @@ function initClient() {
         setTippy('switchSounds', 'Toggle the sounds notifications', 'right');
         setTippy('whiteboardGhostButton', 'Toggle transparent background', 'bottom');
         setTippy('wbBackgroundColorEl', 'Background color', 'bottom');
-        setTippy('wbDrawingColorEl', 'Drawing color', 'bottom');
-        setTippy('whiteboardPencilBtn', 'Drawing mode', 'bottom');
-        setTippy('whiteboardObjectBtn', 'Object mode', 'bottom');
+        setTippy('whiteboardSaveBtn', 'Save', 'bottom');
+
+        // setTippy('wbDrawingColorEl', 'Drawing color', 'bottom');
+        setTippy('whiteboardPencilBtn', 'Drawing mode', 'right');
+        // setTippy('whiteboardObjectBtn', 'Object mode', 'right');
         setTippy('whiteboardUndoBtn', 'Undo', 'bottom');
         setTippy('whiteboardRedoBtn', 'Redo', 'bottom');
-        setTippy('whiteboardImgFileBtn', 'Add image file', 'bottom');
+        setTippy('whiteboardImgFileBtn', 'Add image', 'right');
         setTippy('whiteboardImgUrlBtn', 'Add image url', 'bottom');
-        setTippy('whiteboardTextBtn', 'Add text', 'bottom');
-        setTippy('whiteboardLineBtn', 'Add line', 'bottom');
-        setTippy('whiteboardRectBtn', 'Add rectangle', 'bottom');
-        setTippy('whiteboardCircleBtn', 'Add circle', 'bottom');
-        setTippy('whiteboardSaveBtn', 'Save', 'bottom');
-        setTippy('whiteboardEraserBtn', 'Eraser', 'bottom');
-        setTippy('whiteboardCleanBtn', 'Clean', 'bottom');
+        setTippy('whiteboardTextBtn', 'Add text', 'right');
+        setTippy('whiteboardLineBtn', 'Add line', 'right');
+        setTippy('whiteboardRectBtn', 'Add rectangle', 'right');
+        setTippy('whiteboardTriangleBtn', 'Add triangle', 'right');
+        setTippy('whiteboardCircleBtn', 'Add circle', 'right');
+        setTippy('whiteboardZoomInBtn', 'Zoom in', 'bottom');
+        setTippy('whiteboardZoomOutBtn', 'Zoom out', 'bottom');
+        setTippy('whiteboardEraserBtn', 'Eraser', 'right');
+        setTippy('whiteboardCleanBtn', 'Clean', 'right');
         setTippy('whiteboardCloseBtn', 'Close', 'right');
         setTippy('chatCleanTextButton', 'Clean', 'top');
         setTippy('chatPasteButton', 'Paste', 'top');
@@ -764,7 +769,7 @@ function roomIsReady() {
 
     setTheme('dark');
     BUTTONS.main.exitButton && show(exitButton);
-    BUTTONS.main.shareButton && show(shareButton);
+    // BUTTONS.main.shareButton && show(shareButton);
 
     if (BUTTONS.settings.tabRecording) {
         show(startRecButton);
@@ -845,6 +850,10 @@ function show(elem) {
 
 function toggle(elem) {
     elem.classList.toggle('hidden');
+}
+
+function toggleClass(elem, className) {
+    elem.classList.toggle(className);
 }
 
 function setColor(elem, color) {
@@ -931,11 +940,17 @@ function handleButtons() {
     exitButton.onclick = () => {
         rc.exitRoom();
     };
-    shareButton.onclick = () => {
-        shareRoom(true);
+    // shareButton.onclick = () => {
+    //     shareRoom(true);
+    // };
+
+    showSettingsBtn.onclick = () => {
+        toggle(initSettingPopup);
+        toggleClass(morePopup, 'show-popup');
     };
     settingsButton.onclick = () => {
-        rc.toggleMySettings();
+        // rc.toggleMySettings();
+        toggleClass(morePopup, 'show-popup');
     };
     mySettingsCloseBtn.onclick = () => {
         rc.toggleMySettings();
@@ -1006,9 +1021,11 @@ function handleButtons() {
     };
     startRecButton.onclick = () => {
         rc.startRecording();
+        toggleClass(morePopup, 'show-popup');
     };
     stopRecButton.onclick = () => {
         rc.stopRecording();
+        toggleClass(morePopup, 'show-popup');
     };
     pauseRecButton.onclick = () => {
         rc.pauseRecording();
@@ -1118,6 +1135,7 @@ function handleButtons() {
     participantsButton.onclick = () => {
         // getRoomParticipants();
         toggleParticipants();
+        console.log('!!!!');
     };
     participantsCloseBtn.onclick = () => {
         toggleParticipants();
@@ -1379,9 +1397,10 @@ function handleInputs() {
 function handleRoomClientEvents() {
     rc.on(RoomClient.EVENTS.startRec, () => {
         console.log('Room Client start recoding');
-        hide(startRecButton);
-        show(stopRecButton);
-        show(pauseRecButton);
+        toggle(startRecButton);
+        toggle(stopRecButton);
+        toggle(moreButtonIcon);
+        toggle(moreButtonRec);
         startRecordingTimer();
     });
     rc.on(RoomClient.EVENTS.pauseRec, () => {
@@ -1396,10 +1415,10 @@ function handleRoomClientEvents() {
     });
     rc.on(RoomClient.EVENTS.stopRec, () => {
         console.log('Room Client stop recoding');
-        hide(stopRecButton);
-        hide(pauseRecButton);
-        hide(resumeRecButton);
-        show(startRecButton);
+        toggle(startRecButton);
+        toggle(stopRecButton);
+        toggle(moreButtonIcon);
+        toggle(moreButtonRec);
         stopRecordingTimer();
     });
     rc.on(RoomClient.EVENTS.raiseHand, () => {
@@ -1672,7 +1691,7 @@ function getCookie(cName) {
 function toggleWhiteboard() {
     if (!wbIsOpen) rc.sound('open');
     let whiteboard = rc.getId('whiteboard');
-    whiteboard.classList.toggle('show');
+    toggle(whiteboard);
     // whiteboard.style.top = '50%';
     // whiteboard.style.left = '50%';
     wbIsOpen = wbIsOpen ? false : true;
@@ -2050,7 +2069,8 @@ function whiteboardAction(data, emit = true) {
 
 function toggleParticipants() {
     let participants = rc.getId('participants');
-    participants.classList.toggle('show');
+    // participants.classList.toggle('show');
+    toggle(participants);
     participants.style.top = '0%';
     participants.style.left = '0%';
     // if (DetectRTC.isMobileDevice) {

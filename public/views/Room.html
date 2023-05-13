@@ -149,7 +149,7 @@
         <div id="initSettingPopup" class="center-popup hidden">
             <div class="popup-title">
                 <h2>Settings</h2>
-                <button class="close-icon" onclick="showInitSetting()">
+                <button id="closeSettingPopupBtn" class="close-icon" onclick="showInitSetting()">
                     <img src="../images/icons/close_icon.svg" alt="close" />
                 </button>
             </div>
@@ -261,18 +261,22 @@
             </div>
 
             <div class="button-box mobile-hide">
-                <button id="shareButton" class="hidden">
+                <button id="startScreenButton" class="hidden">
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </button>
+                <button id="stopScreenButton" class="hidden">
+                    <i class="fas fa-stop-circle"></i>
+                </button>
+                <button id="swapCameraButton" class="hidden">
+                    <i class="fas fa-camera-rotate"></i>
                 </button>
                 <span>Share</span>
             </div>
 
             <div class="button-box mobile-hide">
-                <button id="startScreenButton" class="hidden">
+                <button class="">
                     <i class="fa-solid fa-users-rectangle"></i>
                 </button>
-                <button id="stopScreenButton" class="hidden"><i class="fas fa-stop-circle"></i></button>
-                <button id="swapCameraButton" class="hidden"><i class="fas fa-camera-rotate"></i></button>
                 <span>View</span>
             </div>
 
@@ -289,11 +293,30 @@
             </div>
 
             <div class="button-box control-more-button">
-                <button id="settingsButton" class="hidden"><i class="fa-solid fa-ellipsis"></i></button>
+                <button id="settingsButton" class="hidden">
+                    <i id="moreButtonIcon" class="fa-solid fa-ellipsis"></i>
+                    <div id="moreButtonRec" class="circle-rec-box hidden"><div class="circle-rec"></div></div>
+                </button>
                 <span>More</span>
+
+                <div id="morePopup" class="vertical-select-popup">
+                    <div id="startRecButton" class="vertical-select-item">
+                        <img src="../images/icons/rec_icon.svg" alt="" />
+                        <span>Record a meeting</span>
+                    </div>
+
+                    <div id="stopRecButton" class="vertical-select-item hidden">
+                        <div class="circle-rec-box"><div class="circle-rec"></div></div>
+                        <span>Stop record</span>
+                    </div>
+
+                    <div id="showSettingsBtn" class="vertical-select-item">
+                        <img src="../images/icons/settings_icon.svg" alt="" /> <span>Settings</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button> -->
+            <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button>
 
             <div class="mobile-hide"></div>
 
@@ -398,14 +421,14 @@
 
                 <div id="tabRecording" class="tabcontent">
                     <br />
-                    <button id="startRecButton" class="hidden">
+                    <!-- <button id="startRecButton" class="hidden">
                         <i class="fas fa-record-vinyl"></i>
                         <p>Start recording</p>
                     </button>
                     <button id="stopRecButton" class="hidden">
                         <i class="fas fa-stop-circle"></i>
                         <p>Stop recording</p>
-                    </button>
+                    </button> -->
                     <br />
                     <button id="pauseRecButton" class="hidden">
                         <i class="far fa-pause-circle"></i>
@@ -501,7 +524,12 @@
             </main>
         </section>
 
-        <div id="videoPinMediaContainer"></div>
+        <div id="videoPinMediaContainer">
+            <div class="share-center-box">
+                <span>Your screen is visible to other members</span>
+                <button onclick="stopScreenButton.click()">Stop demo</button>
+            </div>
+        </div>
 
         <div class="video-with-chat--wrapper">
             <section id="chatRoom" class="chat-room">
@@ -628,11 +656,11 @@
                         <img src="../images/icons/turn_foward_icon.svg" alt="" />
                     </button>
 
-                    <button>
+                    <button id="whiteboardZoomInBtn">
                         <img src="../images/icons/search_plus.svg" alt="" />
                     </button>
 
-                    <button>
+                    <button id="whiteboardZoomOutBtn">
                         <img src="../images/icons/search_minus.svg" alt="" />
                     </button>
 
@@ -690,7 +718,7 @@
                             <div id="whiteboardCircleBtn" class="vertical-select-item">
                                 <img src="../images/icons/ellipse_icon.svg" alt="" /> <span>Ellipse</span>
                             </div>
-                            <div class="vertical-select-item">
+                            <div id="whiteboardTriangleBtn" class="vertical-select-item">
                                 <img src="../images/icons/triangle_icon.svg" alt="" /> <span>Triangle</span>
                             </div>
                         </div>

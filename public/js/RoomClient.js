@@ -2163,8 +2163,8 @@ class RoomClient {
                 break;
             case 'vertical':
                 this.videoPinMediaContainer.style.top = 0;
-                this.videoPinMediaContainer.style.width = '75%';
-                this.videoPinMediaContainer.style.height = '100%';
+                this.videoPinMediaContainer.style.width = '100%';
+                this.videoPinMediaContainer.style.height = 'var(--msger-height)';
                 this.videoMediaContainer.style.top = 0;
                 this.videoMediaContainer.style.width = '25%';
                 this.videoMediaContainer.style.height = '100%';

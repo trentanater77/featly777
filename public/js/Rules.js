@@ -26,7 +26,7 @@ const BLOCKS = {
 
 const BUTTONS = {
     main: {
-        shareButton: true,
+        shareButton: false,
         startAudioButton: true,
         startVideoButton: true,
         startScreenButton: true,

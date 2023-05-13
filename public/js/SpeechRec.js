@@ -129,7 +129,7 @@ function execVoiceCommands(transcript) {
     switch (transcript.trim().toLowerCase()) {
         case commands.shareRoom:
             printCommand(commands.shareRoom);
-            shareButton.click();
+            // shareButton.click();
             break;
         case commands.newRoom:
             printCommand(commands.newRoom);
