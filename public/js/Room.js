@@ -753,11 +753,12 @@ function roomIsReady() {
     BLOCKS.header.headerNav && hide(headerNav);
     BLOCKS.header.headerCenterBlock && show(headerCenterBlock);
     BLOCKS.control.control && show(control);
+
+    //invite popup
+    document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
     BLOCKS.popups.invitePopup && show(invitePopup);
-
     setTimeout(() => hide(invitePopup), 10000);
-
-    document.querySelector('#invitePopup input').value = RoomURL;
+    //
 
     getRoomParticipants();
 
@@ -793,7 +794,7 @@ function roomIsReady() {
         // rc.makeDraggable(chatRoom, chatHeader);
         rc.makeDraggable(mySettings, mySettingsHeader);
         // rc.makeDraggable(participants, participantsHeader);
-        rc.makeDraggable(whiteboard, whiteboardHeader);
+        // rc.makeDraggable(whiteboard, whiteboardHeader);
         rc.makeDraggable(sendFileDiv, imgShareSend);
         rc.makeDraggable(receiveFileDiv, imgShareReceive);
         rc.makeDraggable(lobby, lobbyHeader);
@@ -855,8 +856,8 @@ function setColor(elem, color) {
 // ####################################################
 
 function setChatSize() {
-    document.documentElement.style.setProperty('--msger-width', '99%');
-    document.documentElement.style.setProperty('--msger-height', '99%');
+    // document.documentElement.style.setProperty('--msger-width', '99%');
+    // document.documentElement.style.setProperty('--msger-height', '99%');
 }
 
 // ####################################################
@@ -1672,8 +1673,8 @@ function toggleWhiteboard() {
     if (!wbIsOpen) rc.sound('open');
     let whiteboard = rc.getId('whiteboard');
     whiteboard.classList.toggle('show');
-    whiteboard.style.top = '50%';
-    whiteboard.style.left = '50%';
+    // whiteboard.style.top = '50%';
+    // whiteboard.style.left = '50%';
     wbIsOpen = wbIsOpen ? false : true;
 }
 

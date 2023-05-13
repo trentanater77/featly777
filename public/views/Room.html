@@ -149,7 +149,9 @@
         <div id="initSettingPopup" class="center-popup hidden">
             <div class="popup-title">
                 <h2>Settings</h2>
-                <div class="close-icon" onclick="showInitSetting()"><span></span></div>
+                <button class="close-icon" onclick="showInitSetting()">
+                    <img src="../images/icons/close_icon.svg" alt="close" />
+                </button>
             </div>
 
             <div class="dropdown-box">
@@ -193,15 +195,17 @@
         <div id="invitePopup" class="invite-popup hidden">
             <div class="popup-title">
                 <h2>Invite to a meeting</h2>
-                <div class="close-icon" onclick="hide(invitePopup)"><span></span></div>
+                <div class="close-icon" onclick="hide(invitePopup)">
+                    <img src="../images/icons/close_icon.svg" alt="close" />
+                </div>
             </div>
             <span class="popup-sub-title">Maximum amount — 10 users</span>
 
             <div class="input-box">
-                <input type="text" disabled />
+                <div class="invite-popup-input"><span></span></div>
                 <i id="inviteCopyLink" onclick="copyRoomURL()" class="fa-solid fa-clone"></i>
             </div>
-            <button onclick="copyRoomURL()" class="init-common">Сopy invite</button>
+            <button onclick="shareRoom(true)" class="init-common">Сopy invite</button>
         </div>
 
         <div id="globalLoader" class="hidden global-loader-box">
@@ -302,7 +306,7 @@
 
         <section id="mySettings" class="fadein center hidden">
             <header id="mySettingsHeader">
-                <button id="mySettingsCloseBtn" class="fas fa-times"></button>
+                <button id="mySettingsCloseBtn"><img src="../images/icons/close_icon.svg" alt="close" /></button>
             </header>
             <main>
                 <br />
@@ -508,9 +512,13 @@
 
                             <div class="participants-header-options">
                                 <button id="chatSearchBtn">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <img src="../images/icons/search_icon.svg" alt="close" />
+                                    <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                                 </button>
-                                <button id="chatCloseButton"><i class="fa-sharp fas fa-times"></i></button>
+                                <button id="chatCloseButton">
+                                    <img src="../images/icons/close_icon.svg" alt="close" />
+                                    <!-- <i class="fas fa-times"></i> -->
+                                </button>
                             </div>
 
                             <!--                        <div class="chat-header-options">-->
@@ -523,7 +531,8 @@
                             <input id="searchChatInput" required type="text" name="search" class="init-common" />
                             <label>Message search</label>
                             <button id="resetSearchParticipants" onclick="resetInput('searchChatInput')">
-                                <i class="fas fa-times"></i>
+                                <img src="../images/icons/close_icon.svg" alt="close" />
+                                <!-- <i class="fas fa-times"></i> -->
                             </button>
                         </div>
                     </header>
@@ -564,9 +573,13 @@
                     <div id="participantsTitle" class="participants-header-title"></div>
                     <div class="participants-header-options">
                         <button id="participantsSearchBtn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <img src="../images/icons/search_icon.svg" alt="close" />
+                            <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                         </button>
-                        <button id="participantsCloseBtn"><i class="fas fa-times"></i></button>
+                        <button id="participantsCloseBtn">
+                            <img src="../images/icons/close_icon.svg" alt="close" />
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
                     </div>
                 </header>
                 <main>
@@ -604,30 +617,107 @@
             <button id="receiveHideBtn"><i class="fas fa-eye-slash"></i>&nbsp; Hide</button>
         </div>
 
-        <section id="whiteboard" class="fadein center hidden">
+        <section id="whiteboard" class="hidden">
             <header id="whiteboardHeader" class="whiteboard-header">
-                <div id="whiteboardTitle" class="whiteboard-header-title">
-                    <button id="whiteboardCloseBtn" class="fas fa-times"></button>
+                <div class="whiteboard-header-options whiteboard-options-box">
+                    <button id="whiteboardUndoBtn">
+                        <img src="../images/icons/turn_back_icon.svg" alt="" />
+                    </button>
+
+                    <button id="whiteboardRedoBtn">
+                        <img src="../images/icons/turn_foward_icon.svg" alt="" />
+                    </button>
+
+                    <button>
+                        <img src="../images/icons/search_plus.svg" alt="" />
+                    </button>
+
+                    <button>
+                        <img src="../images/icons/search_minus.svg" alt="" />
+                    </button>
+
+                    <button id="whiteboardSaveBtn">
+                        <img src="../images/icons/save_icon.svg" alt="" />
+                    </button>
                 </div>
-                <div class="whiteboard-header-options">
-                    <button id="whiteboardGhostButton" class="fas fa-circle-half-stroke"></button>
-                    <input id="wbBackgroundColorEl" class="whiteboardColorPicker" type="color" value="#000000" />
-                    <input id="wbDrawingColorEl" class="whiteboardColorPicker" type="color" value="#FFFFFF" />
-                    <button id="whiteboardPencilBtn" class="fas fa-pencil-alt"></button>
-                    <button id="whiteboardObjectBtn" class="fas fa-mouse-pointer"></button>
-                    <button id="whiteboardUndoBtn" class="fas fa-undo"></button>
-                    <button id="whiteboardRedoBtn" class="fas fa-redo"></button>
-                    <button id="whiteboardImgFileBtn" class="far fa-image"></button>
-                    <button id="whiteboardImgUrlBtn" class="fas fa-link"></button>
-                    <button id="whiteboardTextBtn" class="fas fa-spell-check"></button>
-                    <button id="whiteboardLineBtn" class="fas fa-slash"></button>
-                    <button id="whiteboardRectBtn" class="far fa-square"></button>
-                    <button id="whiteboardCircleBtn" class="far fa-circle"></button>
-                    <button id="whiteboardSaveBtn" class="fas fa-save"></button>
-                    <button id="whiteboardEraserBtn" class="fas fa-eraser"></button>
-                    <button id="whiteboardCleanBtn" class="fas fa-trash"></button>
+
+                <div class="whiteboard-sidebar-options whiteboard-options-box">
+                    <button id="whiteboardObjectBtn">
+                        <img src="../images/icons/move_icon.svg" alt="" />
+                        <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" />
+                        <div class="vertical-select-popup">
+                            <div class="vertical-select-item">
+                                <img src="../images/icons/move_icon.svg" alt="" /> <span>Move</span>
+                            </div>
+                            <div class="vertical-select-item">
+                                <img src="../images/icons/hand_grab.svg" alt="" /> <span>Grab move</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button id="whiteboardPencilBtn">
+                        <img src="../images/icons/pen-icon.svg" alt="" />
+                    </button>
+                    <button id="pickColorBtn">
+                        <input id="wbDrawingColorEl" class="whiteboardColorPicker" type="color" value="#FFFFFF" />
+                        <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" />
+
+                        <div class="horizontal-select-popup">
+                            <div><div class="select-popup-red-color"></div></div>
+                            <div><div class="select-popup-red-yellow"></div></div>
+                            <div><div class="select-popup-red-green"></div></div>
+                            <div><div class="select-popup-red-blue"></div></div>
+                            <div><div class="select-popup-red-purple"></div></div>
+                            <div><div class="select-popup-red-pink"></div></div>
+                            <div><div class="select-popup-red-black"></div></div>
+                            <div><div class="select-popup-red-white"></div></div>
+                        </div>
+                    </button>
+                    <button id="whiteboardEraserBtn">
+                        <img src="../images/icons/eraser_icon.svg" alt="" />
+                    </button>
+
+                    <button id="pickFigureBtn">
+                        <img src="../images/icons/rectangle_icon.svg" alt="" />
+                        <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" />
+
+                        <div class="vertical-select-popup">
+                            <div id="whiteboardRectBtn" class="vertical-select-item">
+                                <img src="../images/icons/rectangle_icon.svg" alt="" /> <span>Rectangle</span>
+                            </div>
+                            <div id="whiteboardLineBtn" class="vertical-select-item">
+                                <img src="../images/icons/arrow_sketch_icon.svg" alt="" /> <span>Arrow</span>
+                            </div>
+                            <div id="whiteboardCircleBtn" class="vertical-select-item">
+                                <img src="../images/icons/ellipse_icon.svg" alt="" /> <span>Ellipse</span>
+                            </div>
+                            <div class="vertical-select-item">
+                                <img src="../images/icons/triangle_icon.svg" alt="" /> <span>Triangle</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button id="whiteboardTextBtn">
+                        <img src="../images/icons/text_icon.svg" alt="" />
+                    </button>
+
+                    <button id="whiteboardImgFileBtn">
+                        <img src="../images/icons/image_icon.svg" alt="" />
+                    </button>
+                    <button id="whiteboardCleanBtn">
+                        <img src="../images/icons/trash_icon.svg" alt="" />
+                    </button>
+
+                    <div class="hidden">
+                        <button id="whiteboardGhostButton" class="fas fa-circle-half-stroke"></button>
+                        <input id="wbBackgroundColorEl" class="whiteboardColorPicker" type="color" value="#000000" />
+                        <button id="whiteboardImgUrlBtn" class="fas fa-link"></button>
+                    </div>
                 </div>
             </header>
+            <div class="whiteboard-footer">
+                <span>Your board is visible to other members</span>
+                <button id="whiteboardCloseBtn">Exit board mode</button>
+            </div>
             <main>
                 <canvas id="wbCanvas"></canvas>
             </main>

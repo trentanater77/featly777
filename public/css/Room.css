@@ -40,6 +40,7 @@ html[data-theme='dark'] {
     --control-bg: #0d0e10;
     --main-color: #8c6be6;
     --error-color: #e63b2a;
+    --secondary-bg: #1d1d24;
 
     --border: 1px solid rgb(255 255 255 / 32%);
     --border-radius: 1rem;
@@ -575,7 +576,7 @@ a {
     width: 90%;
     max-width: 408px;
     padding: 24px;
-    background: #1d1d24;
+    background: var(--secondary-bg);
     z-index: 9;
     border-radius: 12px;
     display: flex;
@@ -603,47 +604,27 @@ a {
 
 .close-icon {
     padding-top: 6px;
-    width: 25px;
-    height: 20px;
     cursor: pointer;
 }
 
-.close-icon span {
-    display: block;
-    width: 25px;
-    height: 1px;
-    background: #ffffff9e;
-    transform: rotate(45deg);
-    border-radius: 4px;
-    transition: 0.3s background;
-}
-
-.close-icon span::after {
-    content: '';
-    display: block;
-    width: 25px;
-    height: 1px;
-    background: #ffffff9e;
-    transform: rotate(-90deg);
-    border-radius: 4px;
-    transition: 0.3s background;
-}
-
-.close-icon:hover span,
-.close-icon:hover span::after {
-    background: #fff;
-}
-
 .invite-popup {
-    background: #1d1d24;
+    background: var(--secondary-bg);
     border-radius: 12px;
     max-width: 477px;
-    width: 90%;
+    width: 100%;
     position: fixed;
     left: 22px;
     bottom: 148px;
     padding: 24px;
     z-index: 9;
+}
+
+@media (max-width: 768px) {
+    .invite-popup {
+        left: 0;
+        bottom: -12px;
+        padding-bottom: 70px;
+    }
 }
 
 .popup-sub-title {
@@ -667,7 +648,7 @@ a {
     height: 20px;
     color: white;
 }
-.invite-popup input {
+.invite-popup .invite-popup-input {
     width: 100%;
     padding: 16px 18px;
     border-radius: 12px;
@@ -679,6 +660,8 @@ a {
     text-overflow: ellipsis;
     overflow: hidden;
     padding-right: 50px;
+    height: 56px;
+    white-space: nowrap;
 }
 
 #inviteCopyLink {
@@ -781,7 +764,7 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #1d1d24;
+    background-color: var(--secondary-bg);
     border-radius: 34px;
     transition: 0.4s;
 }
@@ -2028,33 +2011,188 @@ progress {
 
 #whiteboard {
     z-index: 4;
-    position: absolute;
-    margin: auto;
-    padding: 10px;
-    width: var(--wb-width);
-    height: var(--wb-height);
+    position: relative;
+    width: 100%;
+    height: var(--msger-height);
     background: var(--wb-bg);
-    border: var(--border);
-    box-shadow: var(--box-shadow);
-    border-radius: 10px;
+    top: 0;
+    left: 0;
     overflow: hidden;
 }
 
-.whiteboard-header {
-    display: flex;
-    justify-content: space-between;
-    background: rgb(0, 0, 0);
-    border-radius: 10px;
-    padding: 10px;
-    color: #fff;
-    cursor: move;
+.whiteboard-options-box {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 8px;
+    z-index: 9;
 }
 
-.whiteboard-header button {
-    padding: 10px;
-    margin: 2px;
-    border-radius: 5px;
-    border: var(--border);
+.whiteboard-options-box button {
+    border-radius: 12px;
+    width: 48px;
+    height: 48px;
+    transition: 0.3s background-color;
+    position: relative;
+}
+
+.whiteboard-options-box .small-arrow {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+.whiteboard-options-box button:hover {
+    background: #2c2c39;
+    /* background: var(--main-color); */
+    opacity: 1 !important;
+}
+
+.whiteboard-options-box button:active {
+    background: var(--main-color);
+}
+
+.whiteboard-header-options {
+    position: absolute;
+    top: 16px;
+    left: 24px;
+}
+
+.whiteboard-sidebar-options {
+    position: absolute;
+    top: 104px;
+    left: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+#whiteboardObjectBtn:hover .vertical-select-popup,
+#pickFigureBtn:hover .vertical-select-popup,
+#pickColorBtn:hover .horizontal-select-popup {
+    opacity: 1;
+    visibility: visible;
+}
+
+.vertical-select-popup {
+    position: absolute;
+    right: -215px;
+    top: 0;
+    border-radius: 12px;
+    background: var(--secondary-bg);
+    overflow: hidden;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.vertical-select-item {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #ffffff;
+    transition: background-color 0.3s;
+    border-radius: 12px;
+}
+
+.vertical-select-item:hover,
+.horizontal-select-popup > div:hover {
+    background: #2c2c39;
+}
+
+.vertical-select-item span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.horizontal-select-popup {
+    background: var(--secondary-bg);
+    width: 144px;
+    height: 80px;
+    padding: 8px;
+    position: absolute;
+    right: -159px;
+    top: 0;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 32px);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.horizontal-select-popup > div {
+    background: var(--secondary-bg);
+    width: 32px;
+    height: 32px;
+    transition: background-color 0.3s;
+    border-radius: 12px;
+    padding: 6px;
+}
+
+.horizontal-select-popup > div > div {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.select-popup-red-color {
+    background: #a63a3a;
+}
+.select-popup-red-yellow {
+    background: #f8e327;
+}
+.select-popup-red-green {
+    background: #49ba2d;
+}
+.select-popup-red-blue {
+    background: #1757fb;
+}
+.select-popup-red-purple {
+    background: #6623bb;
+}
+.select-popup-red-pink {
+    background: #ac0f6d;
+}
+.select-popup-red-black {
+    background: #000000;
+}
+.select-popup-red-white {
+    background: #fff;
+}
+
+.whiteboard-footer {
+    background: #141418;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.whiteboard-footer span {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    margin-left: 4px;
+}
+
+.whiteboard-footer button {
+    background: #2c2c39;
+    border-radius: 12px;
+    height: 56px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    padding: 16px;
 }
 
 .whiteboardColorPicker {
@@ -2063,10 +2201,9 @@ progress {
     appearance: none;
     padding: 0;
     width: 20px;
-    height: 15px;
+    height: 20px;
     margin: 2px;
-    border-radius: 20px;
-    border: solid 0.5px #afadad38;
+    border-radius: 50%;
 }
 .whiteboardColorPicker:hover {
     transform: var(--btns-hover-scale);
