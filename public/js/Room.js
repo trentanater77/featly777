@@ -121,6 +121,7 @@ let initStream = null;
 function initClient() {
     if (!DetectRTC.isMobileDevice) {
         // setTippy('shareButton', 'Share room', 'right');
+        setTippy('closeInvitePopup', 'Close', 'right');
         setTippy('closeSettingPopupBtn', 'Close', 'right');
         setTippy('startAudioButton', 'Start the audio', 'right');
         setTippy('stopAudioButton', 'Stop the audio', 'right');
@@ -378,11 +379,6 @@ function addChild(device, els) {
         }
         el.appendChild(option);
     });
-}
-
-function showInitSetting() {
-    const initSettingPopup = document.getElementById('initSettingPopup');
-    initSettingPopup.classList.toggle('hidden');
 }
 
 // ####################################################

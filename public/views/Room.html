@@ -126,7 +126,7 @@
                 </div>
                 <button
                     id="initSettingButton"
-                    onclick="showInitSetting()"
+                    onclick="toggle(initSettingPopup)"
                     class="fa-solid fa-gear circle-button"
                 ></button>
             </div>
@@ -149,7 +149,7 @@
         <div id="initSettingPopup" class="center-popup hidden">
             <div class="popup-title">
                 <h2>Settings</h2>
-                <button id="closeSettingPopupBtn" class="close-icon" onclick="showInitSetting()">
+                <button id="closeSettingPopupBtn" class="close-icon" onclick="hide(initSettingPopup)">
                     <img src="../images/icons/close_icon.svg" alt="close" />
                 </button>
             </div>
@@ -195,7 +195,7 @@
         <div id="invitePopup" class="invite-popup hidden">
             <div class="popup-title">
                 <h2>Invite to a meeting</h2>
-                <div class="close-icon" onclick="hide(invitePopup)">
+                <div id="closeInvitePopup" class="close-icon" onclick="hide(invitePopup)">
                     <img src="../images/icons/close_icon.svg" alt="close" />
                 </div>
             </div>
