@@ -21,6 +21,7 @@ const BLOCKS = {
     },
     popups: {
         invitePopup: true,
+        membersScreens: true,
     },
 };
 

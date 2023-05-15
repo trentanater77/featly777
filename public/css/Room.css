@@ -484,6 +484,63 @@ a {
 }
 
 /*--------------------------------------------------------------
+# Members Screens
+--------------------------------------------------------------*/
+
+.members-screens {
+    position: absolute;
+    background: #0d0e10;
+    border: 1px solid #2e2e36;
+    border-radius: 14px;
+    width: 308px;
+    top: 104px;
+    right: 16px;
+    z-index: 9;
+    overflow: hidden;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.members-screens-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 15px 8px;
+}
+
+.members-screens-header h2 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+    color: #f8f8f8;
+}
+.members-buttons-box {
+}
+
+.members-screen {
+    background: #151519;
+    border-radius: 12px;
+    width: 300px;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+}
+
+.members-screen span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 52px;
+    letter-spacing: -0.02em;
+    color: #30303c;
+    white-space: nowrap;
+}
+
+/*--------------------------------------------------------------
 # Input
 --------------------------------------------------------------*/
 
@@ -2110,11 +2167,11 @@ progress {
 
 .whiteboard-options-box button:hover {
     background: #2c2c39;
-    /* background: var(--main-color); */
     opacity: 1 !important;
 }
 
-.whiteboard-options-box button:active {
+.whiteboard-options-box button:active,
+.whiteboard-options-box button.active {
     background: var(--main-color);
 }
 
@@ -2130,6 +2187,13 @@ progress {
     left: 24px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
+}
+
+.whiteboard-sidebar-options button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #whiteboardObjectBtn:hover .vertical-select-popup,
@@ -2209,6 +2273,14 @@ progress {
     height: 20px;
 }
 
+#currentBoardColor {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    transition: background-color 0.3s;
+}
+
 .select-popup-red-color {
     background: #a63a3a;
 }
@@ -2245,6 +2317,7 @@ progress {
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1;
 }
 
 .whiteboard-footer span {

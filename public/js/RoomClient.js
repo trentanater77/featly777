@@ -1111,7 +1111,7 @@ class RoomClient {
                 p.innerHTML = this.peer_name + ' (me)';
                 i = document.createElement('i');
                 i.id = this.peer_id + '__hand';
-                i.className = html.userHand;
+                // i.className = html.userHand;
                 pm = document.createElement('div');
                 pb = document.createElement('div');
                 pm.setAttribute('id', this.peer_id + '_pitchMeter');
@@ -1420,7 +1420,7 @@ class RoomClient {
                 ko.className = html.kickOut;
                 i = document.createElement('i');
                 i.id = remotePeerId + '__hand';
-                i.className = html.userHand;
+                // i.className = html.userHand;
                 p = document.createElement('p');
                 p.id = remotePeerId + '__name';
                 p.className = html.userName;
@@ -1597,7 +1597,7 @@ class RoomClient {
         p.innerHTML = peer_name + (remotePeer ? '' : ' (me) ');
         h = document.createElement('i');
         h.id = peer_id + '__hand';
-        h.className = html.userHand;
+        // h.className = html.userHand;
         pm = document.createElement('div');
         pb = document.createElement('div');
         pm.setAttribute('id', peer_id + '__pitchMeter');

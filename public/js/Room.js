@@ -155,8 +155,6 @@ function initClient() {
         setTippy('whiteboardGhostButton', 'Toggle transparent background', 'bottom');
         setTippy('wbBackgroundColorEl', 'Background color', 'bottom');
         setTippy('whiteboardSaveBtn', 'Save', 'bottom');
-
-        // setTippy('wbDrawingColorEl', 'Drawing color', 'bottom');
         setTippy('whiteboardPencilBtn', 'Drawing mode', 'right');
         // setTippy('whiteboardObjectBtn', 'Object mode', 'right');
         setTippy('whiteboardUndoBtn', 'Undo', 'bottom');
@@ -188,7 +186,7 @@ function initClient() {
         setTippy('chatCloseButton', 'Close', 'right');
         setTippy('participantsCloseBtn', 'Close', 'left');
         setTippy('participantsSearchBtn', 'Search members', 'left');
-        setTippy('chatSearchBtn', 'Search members', 'left');
+        setTippy('chatSearchBtn', 'Search message', 'left');
         setTippy('sessionTime', 'Session time', 'top');
         setTippy('inviteCopyLink', 'Copy link', 'right');
     }
@@ -755,6 +753,8 @@ function roomIsReady() {
     BLOCKS.header.headerCenterBlock && show(headerCenterBlock);
     BLOCKS.control.control && show(control);
 
+    BLOCKS.popups.membersScreens && show(membersScreens);
+
     //invite popup
     document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
     BLOCKS.popups.invitePopup && show(invitePopup);
@@ -1088,9 +1088,11 @@ function handleButtons() {
     };
     whiteboardPencilBtn.onclick = () => {
         whiteboardIsDrawingMode(true);
+        setActiveWhiteboardBtn(whiteboardPencilBtn);
     };
     whiteboardObjectBtn.onclick = () => {
         whiteboardIsDrawingMode(false);
+        setActiveWhiteboardBtn(whiteboardObjectBtn);
     };
     whiteboardUndoBtn.onclick = () => {
         whiteboardAction(getWhiteboardAction('undo'));
@@ -1119,8 +1121,12 @@ function handleButtons() {
     whiteboardCircleBtn.onclick = () => {
         whiteboardAddObj('circle');
     };
+    whiteboardTriangleBtn.onclick = () => {
+        whiteboardAddObj('triangle');
+    };
     whiteboardEraserBtn.onclick = () => {
         whiteboardIsEraser(true);
+        setActiveWhiteboardBtn(whiteboardEraserBtn);
     };
     whiteboardCleanBtn.onclick = () => {
         confirmClearBoard();
@@ -1131,18 +1137,9 @@ function handleButtons() {
     participantsButton.onclick = () => {
         // getRoomParticipants();
         toggleParticipants();
-        console.log('!!!!');
     };
     participantsCloseBtn.onclick = () => {
         toggleParticipants();
-    };
-    participantsSearchBtn.onclick = () => {
-        const element = document.getElementById('searchParticipantsBox');
-        toggle(element);
-    };
-    chatSearchBtn.onclick = () => {
-        const element = document.getElementById('searchChatBox');
-        toggle(element);
     };
     lockRoomButton.onclick = () => {
         rc.roomAction('lock');
@@ -1313,10 +1310,6 @@ function handleSelects() {
     //     }
     // };
     // whiteboard options
-    wbDrawingColorEl.onchange = () => {
-        wbCanvas.freeDrawingBrush.color = wbDrawingColorEl.value;
-        whiteboardIsDrawingMode(true);
-    };
     wbBackgroundColorEl.onchange = () => {
         setWhiteboardBgColor(wbBackgroundColorEl.value);
     };
@@ -1693,6 +1686,19 @@ function toggleWhiteboard() {
     wbIsOpen = wbIsOpen ? false : true;
 }
 
+function whiteboardSetColor(color) {
+    wbCanvas.freeDrawingBrush.color = color;
+    currentBoardColor.style.background = color;
+    whiteboardIsDrawingMode(true);
+}
+
+const whiteboardSidebarBtns = document.querySelectorAll('.whiteboard-sidebar-options button');
+
+function setActiveWhiteboardBtn(button) {
+    whiteboardSidebarBtns.forEach((btn) => btn.classList.remove('active'));
+    button.classList.add('active');
+}
+
 function setupWhiteboard() {
     setupWhiteboardCanvas();
     setupWhiteboardCanvasSize();
@@ -1850,9 +1856,9 @@ function whiteboardAddObj(type) {
                     let wbCanvasText = result.value;
                     if (wbCanvasText) {
                         const text = new fabric.Text(wbCanvasText, {
-                            top: 0,
-                            left: 0,
-                            fontFamily: 'Comfortaa',
+                            top: 150,
+                            left: 150,
+                            fontFamily: 'Roboto',
                             fill: wbCanvas.freeDrawingBrush.color,
                             strokeWidth: wbCanvas.freeDrawingBrush.width,
                             stroke: wbCanvas.freeDrawingBrush.color,
@@ -1864,8 +1870,8 @@ function whiteboardAddObj(type) {
             break;
         case 'line':
             const line = new fabric.Line([50, 100, 200, 200], {
-                top: 0,
-                left: 0,
+                top: 150,
+                left: 150,
                 fill: wbCanvas.freeDrawingBrush.color,
                 strokeWidth: wbCanvas.freeDrawingBrush.width,
                 stroke: wbCanvas.freeDrawingBrush.color,
@@ -1874,6 +1880,8 @@ function whiteboardAddObj(type) {
             break;
         case 'circle':
             const circle = new fabric.Circle({
+                top: 150,
+                left: 150,
                 radius: 50,
                 fill: 'transparent',
                 stroke: wbCanvas.freeDrawingBrush.color,
@@ -1883,8 +1891,8 @@ function whiteboardAddObj(type) {
             break;
         case 'rect':
             const rect = new fabric.Rect({
-                top: 0,
-                left: 0,
+                top: 150,
+                left: 150,
                 width: 150,
                 height: 100,
                 fill: 'transparent',
@@ -1892,6 +1900,18 @@ function whiteboardAddObj(type) {
                 strokeWidth: wbCanvas.freeDrawingBrush.width,
             });
             addWbCanvasObj(rect);
+            break;
+        case 'triangle':
+            const triangle = new fabric.Triangle({
+                top: 150,
+                left: 150,
+                width: 150,
+                height: 100,
+                fill: 'transparent',
+                stroke: wbCanvas.freeDrawingBrush.color,
+                strokeWidth: wbCanvas.freeDrawingBrush.width,
+            });
+            addWbCanvasObj(triangle);
             break;
     }
 }

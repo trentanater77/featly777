@@ -234,6 +234,17 @@
             </div>
         </header>
 
+        <div id="membersScreens" class="members-screens hidden">
+            <div class="members-screens-header">
+                <h2>Slava</h2>
+                <div class="members-buttons-box">
+                    <button><img src="../images/icons/arrow_up_icon.svg" alt="" /></button>
+                    <button><img src="../images/icons/turn_icon.svg" alt="" /></button>
+                </div>
+            </div>
+            <div class="members-screen"><span>Slava</span></div>
+        </div>
+
         <div id="control" class="hidden">
             <div class="button-box control-voice-button">
                 <button id="startAudioButton" class="hidden"><i class="fas fa-microphone-slash"></i></button>
@@ -539,7 +550,7 @@
                             <h2 class="participants-header-title">Chat</h2>
 
                             <div class="participants-header-options">
-                                <button id="chatSearchBtn">
+                                <button id="chatSearchBtn" onclick="toggle(searchChatBox)">
                                     <img src="../images/icons/search_icon.svg" alt="close" />
                                     <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                                 </button>
@@ -600,7 +611,7 @@
                 <header id="participantsHeader" class="participants-header">
                     <div id="participantsTitle" class="participants-header-title"></div>
                     <div class="participants-header-options">
-                        <button id="participantsSearchBtn">
+                        <button id="participantsSearchBtn" onclick="toggle(searchParticipantsBox)">
                             <img src="../images/icons/search_icon.svg" alt="close" />
                             <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                         </button>
@@ -674,7 +685,7 @@
                         <img src="../images/icons/move_icon.svg" alt="" />
                         <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" />
                         <div class="vertical-select-popup">
-                            <div class="vertical-select-item">
+                            <div class="vertical-select-item" onclick="setActiveWhiteboardBtn(whiteboardObjectBtn)">
                                 <img src="../images/icons/move_icon.svg" alt="" /> <span>Move</span>
                             </div>
                             <div class="vertical-select-item">
@@ -682,22 +693,38 @@
                             </div>
                         </div>
                     </button>
-                    <button id="whiteboardPencilBtn">
+                    <button id="whiteboardPencilBtn" class="active">
                         <img src="../images/icons/pen-icon.svg" alt="" />
                     </button>
                     <button id="pickColorBtn">
-                        <input id="wbDrawingColorEl" class="whiteboardColorPicker" type="color" value="#FFFFFF" />
+                        <div id="currentBoardColor"></div>
                         <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" />
 
                         <div class="horizontal-select-popup">
-                            <div><div class="select-popup-red-color"></div></div>
-                            <div><div class="select-popup-red-yellow"></div></div>
-                            <div><div class="select-popup-red-green"></div></div>
-                            <div><div class="select-popup-red-blue"></div></div>
-                            <div><div class="select-popup-red-purple"></div></div>
-                            <div><div class="select-popup-red-pink"></div></div>
-                            <div><div class="select-popup-red-black"></div></div>
-                            <div><div class="select-popup-red-white"></div></div>
+                            <div onclick="whiteboardSetColor('#A63A3A')">
+                                <div class="select-popup-red-color"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#F8E327')">
+                                <div class="select-popup-red-yellow"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#49BA2D')">
+                                <div class="select-popup-red-green"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#1757FB')">
+                                <div class="select-popup-red-blue"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#6623BB')">
+                                <div class="select-popup-red-purple"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#AC0F6D')">
+                                <div class="select-popup-red-pink"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#000000')">
+                                <div class="select-popup-red-black"></div>
+                            </div>
+                            <div onclick="whiteboardSetColor('#FFFFFF')">
+                                <div class="select-popup-red-white"></div>
+                            </div>
                         </div>
                     </button>
                     <button id="whiteboardEraserBtn">
