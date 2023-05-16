@@ -506,6 +506,7 @@ a {
     display: flex;
     justify-content: space-between;
     padding: 11px 15px 8px;
+    cursor: move;
 }
 
 .members-screens-header h2 {
@@ -527,7 +528,12 @@ a {
     position: relative;
 }
 
-.members-screen span {
+.members-screen video {
+    height: 100% !important;
+}
+
+.members-screen span,
+.member-name {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -611,19 +617,21 @@ a {
 
 #snackbar {
     position: fixed;
-    left: 22px;
-    bottom: 22px;
-    padding: 16px 18px;
-    border-radius: 12px;
+    left: 50%;
+    bottom: 138px;
+    transform: translateX(-50%);
+    padding: 10px 20px;
     background: #2c2c39;
+    border-radius: 52px;
     border: none;
     color: #f8f8f8;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 22px;
     height: 56px;
     z-index: 9;
     font-weight: 500;
     border: 1px solid #4b4b4b;
+    height: 42px;
 }
 
 /*--------------------------------------------------------------
@@ -1367,8 +1375,7 @@ input:checked + .slider:before {
     display: flex;
 }
 
-.chat-room {
-    display: none;
+#chatRoom {
     height: calc(var(--msger-height));
     width: var(--msger-width);
     min-height: calc(var(--msger-height) - 126px);
@@ -1874,7 +1881,8 @@ button:hover {
     background: var(--body-bg);
     background: #151519;
     overflow: hidden;
-    min-width: 394px;
+    width: var(--msger-width);
+    min-width: var(--msger-width);
     height: var(--msger-height);
     border-right: 2px solid var(--control-bg);
 }
@@ -1944,7 +1952,7 @@ button:hover {
     /* border: 1px solid #444444; */
     color: #fff;
     text-align: left;
-    padding: 8px;
+    /* padding: 8px; */
 }
 
 #roomParticipants td:not(#roomParticipants td:nth-child(2)) {

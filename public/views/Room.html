@@ -235,14 +235,14 @@
         </header>
 
         <div id="membersScreens" class="members-screens hidden">
-            <div class="members-screens-header">
-                <h2>Slava</h2>
+            <div id="membersScreenHeader" class="members-screens-header">
+                <h2 id="membersTitlePeerName">Name</h2>
                 <div class="members-buttons-box">
                     <button><img src="../images/icons/arrow_up_icon.svg" alt="" /></button>
                     <button><img src="../images/icons/turn_icon.svg" alt="" /></button>
                 </div>
             </div>
-            <div class="members-screen"><span>Slava</span></div>
+            <div class="members-screen" id="membersPeerScreen"><span id="membersPeerName">Name</span></div>
         </div>
 
         <div id="control" class="hidden">
@@ -543,7 +543,7 @@
         </div>
 
         <div class="video-with-chat--wrapper">
-            <section id="chatRoom" class="chat-room">
+            <section id="chatRoom" class="hidden">
                 <section id="msger" class="msger">
                     <header id="chatHeader">
                         <div class="chat-header">

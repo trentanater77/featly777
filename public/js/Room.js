@@ -32,9 +32,9 @@ const url = {
 
 const _PEER = {
     audioOn: '<i class="fas fa-microphone"></i>',
-    audioOff: '<i style="color: red;" class="fas fa-microphone-slash"></i>',
+    audioOff: '<i style="color: var(--main-color);" class="fas fa-microphone-slash"></i>',
     videoOn: '<i class="fas fa-video"></i>',
-    videoOff: '<i style="color: red;" class="fas fa-video-slash"></i>',
+    videoOff: '<i style="color: var(--main-color);" class="fas fa-video-slash"></i>',
     raiseHand: '<i style="color: rgb(0, 255, 71);" class="fas fa-hand-paper pulsate"></i>',
     lowerHand: '',
     acceptPeer: '<i class="fas fa-check"></i>',
@@ -184,7 +184,7 @@ function initClient() {
         setTippy('chatSaveButton', 'Save', 'bottom');
         setTippy('chatGhostButton', 'Toggle transparent background', 'bottom');
         setTippy('chatCloseButton', 'Close', 'right');
-        setTippy('participantsCloseBtn', 'Close', 'left');
+        setTippy('participantsCloseBtn', 'Close', 'right');
         setTippy('participantsSearchBtn', 'Search members', 'left');
         setTippy('chatSearchBtn', 'Search message', 'left');
         setTippy('sessionTime', 'Session time', 'top');
@@ -343,7 +343,9 @@ function enumerateAudioDevices(stream) {
             initAudioButtonText.innerHTML = 'off';
             const sinkId = 'sinkId' in HTMLMediaElement.prototype;
             speakerSelect.disabled = !sinkId;
-            if (!sinkId) hide(initSpeakerSelect);
+            if (!sinkId) {
+                hide(initSpeakerSelect.closest('.dropdown-box'));
+            }
         });
 }
 
@@ -761,6 +763,9 @@ function roomIsReady() {
     setTimeout(() => hide(invitePopup), 10000);
     //
 
+    membersTitlePeerName.innerText = peer_name;
+    membersPeerName.innerText = peer_name;
+
     getRoomParticipants();
 
     setTheme('dark');
@@ -794,6 +799,8 @@ function roomIsReady() {
     } else {
         // rc.makeDraggable(chatRoom, chatHeader);
         rc.makeDraggable(mySettings, mySettingsHeader);
+        rc.makeDraggable(membersScreens, membersScreenHeader);
+
         // rc.makeDraggable(participants, participantsHeader);
         // rc.makeDraggable(whiteboard, whiteboardHeader);
         rc.makeDraggable(sendFileDiv, imgShareSend);
@@ -974,6 +981,14 @@ function handleButtons() {
     };
     chatButton.onclick = () => {
         rc.toggleChat();
+
+        if (!participants.classList.length) {
+            hide(participants);
+        }
+
+        if (!whiteboard.classList.length) {
+            hide(whiteboard);
+        }
     };
     // chatGhostButton.onclick = (e) => {
     //     rc.chatToggleBg();
@@ -1022,6 +1037,7 @@ function handleButtons() {
     stopRecButton.onclick = () => {
         rc.stopRecording();
         toggleClass(morePopup, 'show-popup');
+        showSnackbar('Record saved');
     };
     pauseRecButton.onclick = () => {
         rc.pauseRecording();
@@ -1085,6 +1101,14 @@ function handleButtons() {
     };
     whiteboardButton.onclick = () => {
         toggleWhiteboard();
+
+        if (!participants.classList.length) {
+            hide(participants);
+        }
+
+        if (!chatRoom.classList.length) {
+            hide(chatRoom);
+        }
     };
     whiteboardPencilBtn.onclick = () => {
         whiteboardIsDrawingMode(true);
@@ -1137,6 +1161,14 @@ function handleButtons() {
     participantsButton.onclick = () => {
         // getRoomParticipants();
         toggleParticipants();
+
+        if (!chatRoom.classList.length) {
+            hide(chatRoom);
+        }
+
+        if (!whiteboard.classList.length) {
+            hide(whiteboard);
+        }
     };
     participantsCloseBtn.onclick = () => {
         toggleParticipants();
@@ -2173,13 +2205,13 @@ async function getParticipantsTable(peers) {
                 <tr id='${peer_id}'>
                 <td></td>
                     <td>${peer_name}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button>${peer_hand}</button></td>
+                    <td><button id='${peer_id}___pEject' onclick="rc.peerAction('me',this.id,'eject')">${peer_eject}</button></td>
                     <td><button id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')">${peer_audio}</button></td>
                     <td><button id='${peer_id}___pVideo' onclick="rc.peerAction('me',this.id,'hide')">${peer_video}</button></td>
-                    <td><button>${peer_hand}</button></td>
-                    <td><button id='${peer_id}___shareFile' onclick="rc.selectFileToShare(this.id)">${peer_sendFile}</button></td>
-                    <td><button id="${peer_id}___sendMessageTo" onclick="rc.sendMessageTo('${peer_id}','${peer_name}')">${peer_sendMsg}</button></td>
-                    <td><button id="${peer_id}___sendVideoTo" onclick="rc.shareVideo('${peer_id}');">${_PEER.sendVideo}</button></td>
-                    <td><button id='${peer_id}___pEject' onclick="rc.peerAction('me',this.id,'eject')">${peer_eject}</button></td>
                 </tr>
                 `;
             } else {
@@ -2187,13 +2219,13 @@ async function getParticipantsTable(peers) {
                 <tr id='${peer_id}'>
                 <td></td>
                     <td>${peer_name}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button>${peer_hand}</button></td>
                     <td><button id='${peer_id}___pAudio'>${peer_audio}</button></td>
                     <td><button id='${peer_id}___pVideo'>${peer_video}</button></td>
-                    <td><button>${peer_hand}</button></td>
-                    <td><button id='${peer_id}___shareFile' onclick="rc.selectFileToShare(this.id)">${peer_sendFile}</button></td>
-                    <td><button id="${peer_id}___sendMessageTo" onclick="rc.sendMessageTo('${peer_id}','${peer_name}')">${peer_sendMsg}</button></td>
-                    <td><button id="${peer_id}___sendVideoTo" onclick="rc.shareVideo('${peer_id}');">${_PEER.sendVideo}</button></td>
-                    <td></td>
                 </tr>
                 `;
             }
@@ -2208,6 +2240,39 @@ async function getParticipantsTable(peers) {
       </div> </div>`;
     return table;
 }
+
+// } else {
+//   if (isRulesActive && isPresenter) {
+//       table += `
+//       <tr id='${peer_id}'>
+//       <td></td>
+//           <td>${peer_name}</td>
+
+//           <td><button id='${peer_id}___shareFile' onclick="rc.selectFileToShare(this.id)">${peer_sendFile}</button></td>
+//           <td><button id="${peer_id}___sendMessageTo" onclick="rc.sendMessageTo('${peer_id}','${peer_name}')">${peer_sendMsg}</button></td>
+//           <td><button id="${peer_id}___sendVideoTo" onclick="rc.shareVideo('${peer_id}');">${_PEER.sendVideo}</button></td>
+//           <td><button id='${peer_id}___pEject' onclick="rc.peerAction('me',this.id,'eject')">${peer_eject}</button></td>
+//           <td><button>${peer_hand}</button></td>
+//           <td><button id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')">${peer_audio}</button></td>
+//           <td><button id='${peer_id}___pVideo' onclick="rc.peerAction('me',this.id,'hide')">${peer_video}</button></td>
+//       </tr>
+//       `;
+//   } else {
+//       table += `
+//       <tr id='${peer_id}'>
+//       <td></td>
+//           <td>${peer_name}</td>
+//           <td><button id='${peer_id}___shareFile' onclick="rc.selectFileToShare(this.id)">${peer_sendFile}</button></td>
+//           <td><button id="${peer_id}___sendMessageTo" onclick="rc.sendMessageTo('${peer_id}','${peer_name}')">${peer_sendMsg}</button></td>
+//           <td><button id="${peer_id}___sendVideoTo" onclick="rc.shareVideo('${peer_id}');">${_PEER.sendVideo}</button></td>
+//           <td></td>
+//           <td><button>${peer_hand}</button></td>
+//           <td><button id='${peer_id}___pAudio'>${peer_audio}</button></td>
+//           <td><button id='${peer_id}___pVideo'>${peer_video}</button></td>
+//       </tr>
+//       `;
+//   }
+// }
 
 function setParticipantsTippy(peers) {
     //

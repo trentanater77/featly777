@@ -1130,7 +1130,9 @@ class RoomClient {
                 d.appendChild(i);
                 d.appendChild(p);
                 d.appendChild(vb);
-                this.videoMediaContainer.appendChild(d);
+                // this.videoMediaContainer.appendChild(d);
+                membersPeerScreen.appendChild(d);
+
                 this.attachMediaStream(elem, stream, type, 'Producer');
                 this.myVideoEl = elem;
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
@@ -1371,7 +1373,7 @@ class RoomClient {
                 let remotePeerAudio = peer_info.peer_audio;
                 this.removeVideoOff(remotePeerId);
                 d = document.createElement('div');
-                d.className = 'Camera';
+                d.className = 'Camera members-screen';
                 d.id = id + '__video';
                 elem = document.createElement('video');
                 elem.setAttribute('id', id);
@@ -1448,7 +1450,10 @@ class RoomClient {
                 d.appendChild(p);
                 d.appendChild(pm);
                 d.appendChild(vb);
-                this.videoMediaContainer.appendChild(d);
+                // this.videoMediaContainer.appendChild(d);
+
+                membersScreens.appendChild(d);
+
                 this.attachMediaStream(elem, stream, type, 'Consumer');
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, remotePeerId);
@@ -1588,8 +1593,9 @@ class RoomClient {
             ko.id = 'remotePeer___' + peer_id + '___kickOut';
             ko.className = html.kickOut;
         }
-        i = document.createElement('img');
-        i.className = 'center pulsate';
+        i = document.createElement('span');
+        i.className = 'member-name';
+        i.innerText = peer_name;
         i.id = peer_id + '__img';
         p = document.createElement('p');
         p.id = peer_id + '__name';
@@ -1813,7 +1819,7 @@ class RoomClient {
     }
 
     setIsVideo(status) {
-        this.peer_info.peer_video = status;
+        this.peer_info.peer_video = !status ? status : !status;
         if (!this.peer_info.peer_video) {
             this.setVideoOff(this.peer_info, false);
             this.sendVideoOff();
@@ -2319,13 +2325,13 @@ class RoomClient {
     toggleChat() {
         let chatRoom = this.getId('chatRoom');
         if (this.isChatOpen == false) {
-            chatRoom.style.display = 'block';
-            chatRoom.style.top = '50%';
-            chatRoom.style.left = '50%';
+            toggle(chatRoom);
+            // chatRoom.style.display = 'block';
             this.sound('open');
             this.isChatOpen = true;
         } else {
-            chatRoom.style.display = 'none';
+            // chatRoom.style.display = 'none';
+            toggle(chatRoom);
             this.isChatOpen = false;
         }
     }
