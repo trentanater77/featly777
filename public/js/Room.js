@@ -134,6 +134,8 @@ function initClient() {
         setTippy('chatButton', 'Toggle the chat', 'right');
         setTippy('whiteboardButton', 'Toggle the whiteboard', 'right');
         setTippy('settingsButton', 'More', 'right');
+        setTippy('participantsButton', 'Toggle the members', 'right');
+        setTippy('showViewPopupBtn', 'Change view', 'right');
         setTippy('aboutButton', 'About this project', 'right');
         setTippy('exitButton', 'Leave room', 'right');
         setTippy('mySettingsCloseBtn', 'Close', 'right');
@@ -156,7 +158,7 @@ function initClient() {
         setTippy('wbBackgroundColorEl', 'Background color', 'bottom');
         setTippy('whiteboardSaveBtn', 'Save', 'bottom');
         setTippy('whiteboardPencilBtn', 'Drawing mode', 'right');
-        // setTippy('whiteboardObjectBtn', 'Object mode', 'right');
+        setTippy('whiteboardObjectBtn', 'Object mode', 'right');
         setTippy('whiteboardUndoBtn', 'Undo', 'bottom');
         setTippy('whiteboardRedoBtn', 'Redo', 'bottom');
         setTippy('whiteboardImgFileBtn', 'Add image', 'right');
@@ -946,11 +948,15 @@ function handleButtons() {
     // shareButton.onclick = () => {
     //     shareRoom(true);
     // };
-
     showSettingsBtn.onclick = () => {
         toggle(initSettingPopup);
         toggleClass(morePopup, 'show-popup');
     };
+
+    showViewPopupBtn.onclick = () => {
+        toggleClass(viewPopup, 'show-popup');
+    };
+
     settingsButton.onclick = () => {
         // rc.toggleMySettings();
         toggleClass(morePopup, 'show-popup');
@@ -978,6 +984,9 @@ function handleButtons() {
     };
     tabLanguagesBtn.onclick = (e) => {
         rc.openTab(e, 'tabLanguages');
+    };
+    minifyMembersScreens.onclick = () => {
+        membersScreens.classList.toggle('minify');
     };
     chatButton.onclick = () => {
         rc.toggleChat();
@@ -1060,17 +1069,25 @@ function handleButtons() {
         rc.produce(RoomClient.mediaType.audio, microphoneSelect.value);
         rc.updatePeerInfo(peer_name, rc.peer_id, 'audio', true);
         // rc.resumeProducer(RoomClient.mediaType.audio);
+        membersProducerMicrophone.remove();
     };
     stopAudioButton.onclick = () => {
         setAudioButtonsDisabled(true);
         rc.closeProducer(RoomClient.mediaType.audio);
         rc.updatePeerInfo(peer_name, rc.peer_id, 'audio', false);
+
+        const mic = document.createElement('div');
+        mic.id = 'membersProducerMicrophone';
+        mic.className = 'members-microphone';
+        mic.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+        membersPeerScreen.appendChild(mic);
         // rc.pauseProducer(RoomClient.mediaType.audio);
     };
     startVideoButton.onclick = () => {
         setVideoButtonsDisabled(true);
         if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
         rc.produce(RoomClient.mediaType.video, videoSelect.value);
+
         // rc.resumeProducer(RoomClient.mediaType.video);
     };
     stopVideoButton.onclick = () => {
@@ -1116,6 +1133,7 @@ function handleButtons() {
     };
     whiteboardObjectBtn.onclick = () => {
         whiteboardIsDrawingMode(false);
+        whiteboardIsEraser(false);
         setActiveWhiteboardBtn(whiteboardObjectBtn);
     };
     whiteboardUndoBtn.onclick = () => {
@@ -1126,6 +1144,7 @@ function handleButtons() {
     };
     whiteboardSaveBtn.onclick = () => {
         wbCanvasSaveImg();
+        showSnackbar('Image saved');
     };
     whiteboardImgFileBtn.onclick = () => {
         whiteboardAddObj('imgFile');
@@ -1367,6 +1386,9 @@ function handleInputs() {
     };
     chatMessage.oninput = function () {
         chatMessageLabelCounter.innerText = chatMessage.value.length;
+
+        chatMessage.style.height = 'auto'; // Reset the height to auto to calculate the actual content height
+        chatMessage.style.height = chatMessage.scrollHeight + 'px'; // Set the height to match the content
 
         if (chatMessage.value.length === 200) {
             chatMessageLabel.style.color = '#FFB60A';

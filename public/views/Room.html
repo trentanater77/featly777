@@ -238,11 +238,16 @@
             <div id="membersScreenHeader" class="members-screens-header">
                 <h2 id="membersTitlePeerName">Name</h2>
                 <div class="members-buttons-box">
-                    <button><img src="../images/icons/arrow_up_icon.svg" alt="" /></button>
-                    <button><img src="../images/icons/turn_icon.svg" alt="" /></button>
+                    <button id="minifyMembersScreens"><img src="../images/icons/arrow_up_icon.svg" alt="" /></button>
+                    <!-- <button><img src="../images/icons/turn_icon.svg" alt="" /></button> -->
                 </div>
             </div>
-            <div class="members-screen" id="membersPeerScreen"><span id="membersPeerName">Name</span></div>
+            <div class="members-screen" id="membersPeerScreen">
+                <!-- <div id="membersProducerMicrophone" class="members-microphone">
+                    <i class="fa-solid fa-microphone"></i>
+                </div> -->
+                <span id="membersPeerName">Name</span>
+            </div>
         </div>
 
         <div id="control" class="hidden">
@@ -285,10 +290,26 @@
             </div>
 
             <div class="button-box mobile-hide">
-                <button class="">
+                <button id="showViewPopupBtn">
                     <i class="fa-solid fa-users-rectangle"></i>
                 </button>
                 <span>View</span>
+
+                <div id="viewPopup" class="vertical-select-popup">
+                    <div id="fullScreenView" class="vertical-select-item">
+                        <img src="../images/icons/full_screen.svg" alt="" />
+                        <span>Full screen</span>
+                    </div>
+
+                    <div id="speakScreenView" class="vertical-select-item">
+                        <img src="../images/icons/view.svg" alt="" />
+                        <span>Speaks now</span>
+                    </div>
+
+                    <div id="allScreenView" class="vertical-select-item">
+                        <img src="../images/icons/all_view.svg" alt="" /> <span>All members</span>
+                    </div>
+                </div>
             </div>
 
             <div class="button-box mobile-hide">
@@ -667,13 +688,13 @@
                         <img src="../images/icons/turn_foward_icon.svg" alt="" />
                     </button>
 
-                    <button id="whiteboardZoomInBtn">
+                    <!-- <button id="whiteboardZoomInBtn">
                         <img src="../images/icons/search_plus.svg" alt="" />
                     </button>
 
                     <button id="whiteboardZoomOutBtn">
                         <img src="../images/icons/search_minus.svg" alt="" />
-                    </button>
+                    </button> -->
 
                     <button id="whiteboardSaveBtn">
                         <img src="../images/icons/save_icon.svg" alt="" />
@@ -683,15 +704,15 @@
                 <div class="whiteboard-sidebar-options whiteboard-options-box">
                     <button id="whiteboardObjectBtn">
                         <img src="../images/icons/move_icon.svg" alt="" />
-                        <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" />
-                        <div class="vertical-select-popup">
+                        <!-- <img src="../images/icons/small_arrow_down.svg" class="small-arrow" alt="" /> -->
+                        <!-- <div class="vertical-select-popup">
                             <div class="vertical-select-item" onclick="setActiveWhiteboardBtn(whiteboardObjectBtn)">
                                 <img src="../images/icons/move_icon.svg" alt="" /> <span>Move</span>
                             </div>
                             <div class="vertical-select-item">
                                 <img src="../images/icons/hand_grab.svg" alt="" /> <span>Grab move</span>
                             </div>
-                        </div>
+                        </div> -->
                     </button>
                     <button id="whiteboardPencilBtn" class="active">
                         <img src="../images/icons/pen-icon.svg" alt="" />
