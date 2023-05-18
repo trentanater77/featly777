@@ -2389,6 +2389,11 @@ class RoomClient {
 
         document.getElementById('chatMessageLabel').style.color = '#828282';
         document.querySelector('#chatMessageLabel span').innerText = '0';
+
+        if (window.matchMedia('(max-width: 769px)').matches) {
+            chatMessageWrapper.style.height = '56px';
+            chatMsger.style.maxHeight = `calc(100vh - 140px)`;
+        }
     }
 
     sendMessageTo(to_peer_id, to_peer_name) {
@@ -2493,7 +2498,11 @@ class RoomClient {
                         onclick="rc.sendMessageTo('${fromId}','${fromName}')"
                     ></button>`;
         }
-        msgHTML += `                    
+        msgHTML += `       
+                      <button
+                        id="msg-pin-${chatMessagesId}"
+                        class="fa-solid fa-thumbtack" 
+                    ></button>             
                     <button
                         id="msg-delete-${chatMessagesId}"
                         class="fas fa-trash" 
@@ -2513,6 +2522,7 @@ class RoomClient {
         this.collectMessages(time, fromName, msg);
         chatMsger.insertAdjacentHTML('beforeend', msgHTML);
         chatMsger.scrollTop += 500;
+        this.setTippy('msg-pin-' + chatMessagesId, 'Pin', 'top');
         this.setTippy('msg-delete-' + chatMessagesId, 'Delete', 'top');
         this.setTippy('msg-copy-' + chatMessagesId, 'Copy', 'top');
         this.setTippy('msg-private-reply-' + chatMessagesId, 'Reply', 'top');

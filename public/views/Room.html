@@ -601,26 +601,26 @@
                         <main id="chatMsger" class="chat-msger">
                             <!-- chat messages -->
                         </main>
-                        <div class="chat-msger-block">
-                            <div class="chat-msger-wrapper">
-                                <label id="chatMessageLabel" for="chatMessage" class="chat-message-label"
-                                    >Enter your message ( <span>0</span> / 200)
-                                </label>
-                                <textarea
-                                    rows="1"
-                                    cols="1"
-                                    id="chatMessage"
-                                    maxlength="200"
-                                    class="chat-msger-input"
-                                ></textarea>
-                                <div class="chat-msger-controls">
-                                    <button id="chatShareFileButton" class="hidden">
-                                        <i class="fa-solid fa-image fa-flip-horizontal"></i>
-                                    </button>
-                                    <button id="chatSendButton" class="hidden">
-                                        <i class="fa-regular fa-paper-plane"></i>
-                                    </button>
-                                </div>
+
+                        <div id="chatMessageWrapper" class="chat-msger-wrapper">
+                            <textarea
+                                rows="1"
+                                cols="1"
+                                id="chatMessage"
+                                maxlength="200"
+                                class="chat-msger-input"
+                                required
+                            ></textarea>
+                            <label id="chatMessageLabel" for="chatMessage" class="chat-message-label"
+                                >Enter your message ( <span>0</span> / 200)
+                            </label>
+                            <div class="chat-msger-controls">
+                                <button id="chatShareFileButton" class="hidden">
+                                    <i class="fa-solid fa-image fa-flip-horizontal"></i>
+                                </button>
+                                <button id="chatSendButton" class="hidden">
+                                    <i class="fa-regular fa-paper-plane"></i>
+                                </button>
                             </div>
                         </div>
                     </div>

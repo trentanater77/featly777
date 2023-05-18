@@ -1387,8 +1387,13 @@ function handleInputs() {
     chatMessage.oninput = function () {
         chatMessageLabelCounter.innerText = chatMessage.value.length;
 
-        chatMessage.style.height = 'auto'; // Reset the height to auto to calculate the actual content height
-        chatMessage.style.height = chatMessage.scrollHeight + 'px'; // Set the height to match the content
+        if (window.matchMedia('(max-width: 769px)').matches) {
+            chatMessageWrapper.style.height = 'auto';
+            chatMessageWrapper.style.height =
+                this.scrollHeight === 56 ? this.scrollHeight + 'px' : this.scrollHeight + 6 + 'px';
+
+            chatMsger.style.maxHeight = `calc(100vh - (84px + ${this.scrollHeight}px))`;
+        }
 
         if (chatMessage.value.length === 200) {
             chatMessageLabel.style.color = '#FFB60A';
