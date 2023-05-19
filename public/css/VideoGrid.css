@@ -20,7 +20,7 @@
 @media (max-width: 768px) {
     #videoMediaContainer {
         top: 0;
-        height: 100vh;
+        /* height: 100vh; */
     }
     .Camera {
         height: 100vh !important;

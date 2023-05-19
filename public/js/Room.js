@@ -121,6 +121,7 @@ let initStream = null;
 function initClient() {
     if (!DetectRTC.isMobileDevice) {
         // setTippy('shareButton', 'Share room', 'right');
+        setTippy('unpinChatMessageBtn', 'Unpin', 'right');
         setTippy('closeInvitePopup', 'Close', 'right');
         setTippy('closeSettingPopupBtn', 'Close', 'right');
         setTippy('startAudioButton', 'Start the audio', 'right');
@@ -544,9 +545,8 @@ function handleVideo(e) {
 }
 
 function resetInput(target) {
-    const element = document.getElementById(target);
-    element.value = '';
-    element.onkeyup();
+    target.value = '';
+    target.onkeyup && target.onkeyup();
 }
 
 // function handleAudioVideo(e) {
@@ -988,6 +988,13 @@ function handleButtons() {
     minifyMembersScreens.onclick = () => {
         membersScreens.classList.toggle('minify');
     };
+    searchChatInput.oninput = (e) => {
+        rc.markSearchedMessage(e);
+    };
+    resetSearchParticipants.onclick = () => {
+        resetInput(searchChatInput);
+        rc.markSearchedMessage({ target: { value: '' } });
+    };
     chatButton.onclick = () => {
         rc.toggleChat();
 
@@ -1201,6 +1208,19 @@ function handleButtons() {
     // aboutButton.onclick = () => {
     //     showAbout();
     // };
+    chatSearchBtn.onclick = () => {
+        toggle(searchChatBox);
+        const isShow = !searchChatBox.classList.contains('hidden');
+        const isShowPin = !pinChatMessage.classList.contains('hidden');
+        const differeceSize = isMobileView ? 142 : 225;
+        const screenSize = isMobileView ? '100vh' : 'var(--msger-height)';
+
+        if (isShow) {
+            showChatSearch(differeceSize, screenSize, isShowPin);
+        } else {
+            hideChatSearch(differeceSize, screenSize, isShowPin);
+        }
+    };
 }
 
 // ####################################################
@@ -1385,7 +1405,14 @@ function handleInputs() {
         }
     };
     chatMessage.oninput = function () {
+        const chatMessageLabelCounter = chatMessageLabel.querySelector('span');
+        const chatMessageLabelBox = chatMessageLabel.querySelector('p');
         chatMessageLabelCounter.innerText = chatMessage.value.length;
+
+ 
+
+        show(chatMessageLabelBox);
+        if (chatMessage.value.length === 0) hide(chatMessageLabelBox);
 
         if (window.matchMedia('(max-width: 769px)').matches) {
             chatMessageWrapper.style.height = 'auto';
@@ -1393,6 +1420,9 @@ function handleInputs() {
                 this.scrollHeight === 56 ? this.scrollHeight + 'px' : this.scrollHeight + 6 + 'px';
 
             chatMsger.style.maxHeight = `calc(100vh - (84px + ${this.scrollHeight}px))`;
+
+            hide(searchChatBox);
+            hideChatSearch();
         }
 
         if (chatMessage.value.length === 200) {
@@ -2139,6 +2169,26 @@ function whiteboardAction(data, emit = true) {
 }
 
 // ####################################################
+// CHAT
+// ####################################################
+
+function showChatSearch(differeceSize, screenSize, isShowPin) {
+    if (pinChatMessage.offsetHeight < 56) {
+        chatMsger.style.maxHeight = `calc(${screenSize} - (${differeceSize}px + 56px))`;
+        if (isMobileView) chatMsger.style.marginTop = `56px`;
+    }
+}
+
+function hideChatSearch(differeceSize, screenSize, isShowPin) {
+    if (isShowPin) {
+        chatMsger.style.maxHeight = `calc(${screenSize} - (${differeceSize}px + ${pinChatMessage.offsetHeight}px))`;
+    } else {
+        chatMsger.style.maxHeight = `calc(${screenSize} - ${differeceSize}px)`;
+        if (isMobileView) chatMsger.style.marginTop = `0`;
+    }
+}
+
+// ####################################################
 // HANDLE PARTICIPANTS
 // ####################################################
 
@@ -2178,9 +2228,9 @@ async function getParticipantsTable(peers) {
   <div class="input-box hidden" id='searchParticipantsBox'>
     <input  id="searchParticipants" required type="text"   name="search" class="init-common" onkeyup="rc.searchPeer();"/>
     <label>Search</label>
-    <button id="resetSearchParticipants" onclick="resetInput('searchParticipants')"><i class="fas fa-times"></i></button>
+    <button id="resetSearchParticipants" onclick="resetInput(searchParticipants)"><i class="fas fa-times"></i></button>
   </div>
-
+Í
 
   <div class='participants-box'>
     <table id="myTable">`;

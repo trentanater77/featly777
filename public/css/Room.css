@@ -1485,9 +1485,10 @@ input:checked + .slider:before {
 .chat-msger {
     flex: 1;
     overflow-y: auto;
-    max-height: calc(var(--msger-height) - 200px);
-    padding: 10px;
+    max-height: calc(var(--msger-height) - 225px);
+    padding: 0 10px;
     max-width: 100%;
+    margin-bottom: 10px;
 }
 
 .chat-msger::-webkit-scrollbar {
@@ -1685,6 +1686,11 @@ input:checked + .slider:before {
     position: absolute;
 }
 
+.chat-message-label p {
+    display: inline-flex;
+    color: inherit;
+}
+
 .chat-msger-input {
     flex: 1;
     height: 43px;
@@ -1734,13 +1740,59 @@ input:checked + .slider:before {
 
 #searchChatBox {
     position: absolute;
-    left: 0;
     width: 349px;
-    left: 16px;
+    left: 24px;
     top: 150px;
 }
 
+#searchChatInput {
+    border: 3px solid var(--body-bg);
+}
+#pinChatMessage {
+    position: absolute;
+    width: 349px;
+    left: 24px;
+    top: 150px;
+    background: var(--main-color);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 140%;
+    padding: 6px 22px 8px 10px;
+    border: 3px solid var(--body-bg);
+    word-wrap: break-word;
+}
+
+#pinChatMessage button {
+    position: absolute;
+    top: 7px;
+    right: 2px;
+    font-size: 12px;
+    transform: rotate(314deg);
+}
+
+span.highlight {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 2px 0;
+}
+
+.msg-a:hover {
+    color: inherit;
+}
+
 @media (max-width: 768px) {
+    .chat-msger-controls button {
+        padding: 0 6px;
+    }
+    .msg-buttons-box {
+        display: none;
+    }
+    #pinChatMessage {
+        width: calc(100% - 32px);
+        left: 16px;
+        top: 65px;
+    }
+
     #chatRoom {
         min-width: 100%;
         border-right: none;
@@ -1755,7 +1807,7 @@ input:checked + .slider:before {
     #chatMessage {
         overflow: hidden;
         min-height: 56px;
-        width: 88%;
+        width: 83%;
         padding: 18px 18px 0px;
         height: 100%;
         flex: none;
@@ -1763,13 +1815,14 @@ input:checked + .slider:before {
     }
 
     .chat-msger {
-        max-height: calc(100vh - 140px);
+        max-height: calc(100vh - 142px);
         height: 100%;
         padding: 0;
         /* justify-content: flex-end;
         display: flex;
         flex-direction: column; */
         padding-bottom: 10px;
+        margin-bottom: 0;
     }
 
     .chat-content {
@@ -1786,7 +1839,7 @@ input:checked + .slider:before {
     .chat-msger-controls {
         left: inherit;
         right: 0;
-        bottom: 15px;
+        bottom: 18px;
         gap: 14px;
         width: fit-content;
     }
@@ -1828,6 +1881,7 @@ input:checked + .slider:before {
         position: absolute;
         width: calc(100% - 32px);
         top: 65px;
+        left: 16px;
     }
 }
 
@@ -1856,7 +1910,7 @@ input:checked + .slider:before {
 
 .chat-msger-buttons {
     display: flex;
-    padding: 10px;
+    padding: 3px;
 }
 
 #chatSendButton {

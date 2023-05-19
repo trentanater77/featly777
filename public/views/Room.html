@@ -25,7 +25,8 @@
         <!-- Meta Information -->
 
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
         <meta
             name="description"
             content="FeatlyTalk SFU powered by WebRTC and mediasoup, Real-time Simple Secure Fast video calls, messaging and screen sharing capabilities in the browser."
@@ -571,7 +572,7 @@
                             <h2 class="participants-header-title">Chat</h2>
 
                             <div class="participants-header-options">
-                                <button id="chatSearchBtn" onclick="toggle(searchChatBox)">
+                                <button id="chatSearchBtn">
                                     <img src="../images/icons/search_icon.svg" alt="close" />
                                     <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                                 </button>
@@ -590,10 +591,20 @@
                         <div id="searchChatBox" class="input-box hidden">
                             <input id="searchChatInput" required type="text" name="search" class="init-common" />
                             <label>Message search</label>
-                            <button id="resetSearchParticipants" onclick="resetInput('searchChatInput')">
+                            <button id="resetSearchParticipants">
                                 <img src="../images/icons/close_icon.svg" alt="close" />
                                 <!-- <i class="fas fa-times"></i> -->
                             </button>
+                        </div>
+                        <div id="pinChatMessage" class="hidden">
+                            <button id="unpinChatMessageBtn" onclick="rc.unpinMessage()">
+                                <i class="fa-solid fa-thumbtack"></i>
+                            </button>
+
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi autem et corrupti esse,
+                                excepturi sapiente sit, saepe animi alias quasi veniam officiis laborum distinctio.
+                            </p>
                         </div>
                     </header>
 
@@ -612,7 +623,8 @@
                                 required
                             ></textarea>
                             <label id="chatMessageLabel" for="chatMessage" class="chat-message-label"
-                                >Enter your message ( <span>0</span> / 200)
+                                >Enter your message
+                                <p class="hidden">( <span>0</span> / 200)</p>
                             </label>
                             <div class="chat-msger-controls">
                                 <button id="chatShareFileButton" class="hidden">

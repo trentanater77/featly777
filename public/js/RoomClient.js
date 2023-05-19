@@ -94,6 +94,8 @@ const _EVENTS = {
     roomUnlock: 'roomUnlock',
 };
 
+const isMobileView = window.matchMedia('(max-width: 769px)').matches;
+
 let recordedBlobs;
 class RoomClient {
     constructor(
@@ -2392,8 +2394,11 @@ class RoomClient {
 
         if (window.matchMedia('(max-width: 769px)').matches) {
             chatMessageWrapper.style.height = '56px';
-            chatMsger.style.maxHeight = `calc(100vh - 140px)`;
+            chatMsger.style.maxHeight = `calc(100vh - 142px)`;
         }
+
+        const chatMessageLabelBox = chatMessageLabel.querySelector('p');
+        hide(chatMessageLabelBox);
     }
 
     sendMessageTo(to_peer_id, to_peer_name) {
@@ -2502,6 +2507,7 @@ class RoomClient {
                       <button
                         id="msg-pin-${chatMessagesId}"
                         class="fa-solid fa-thumbtack" 
+                        onclick="rc.pinMessage('${chatMessagesId}')"
                     ></button>             
                     <button
                         id="msg-delete-${chatMessagesId}"
@@ -2552,8 +2558,31 @@ class RoomClient {
         });
     }
 
+    pinMessage(id) {
+        pinChatMessage.querySelector('p').innerText = this.getId(id).innerText;
+        show(pinChatMessage);
+        chatMsger.style.maxHeight = `calc(var(--msger-height) - (225px + ${pinChatMessage.offsetHeight}px))`;
+    }
+
+    unpinMessage() {
+        hide(pinChatMessage);
+        chatMsger.style.maxHeight = `calc(var(--msger-height) - 225px)`;
+    }
+
+    markSearchedMessage(e) {
+        const messages = Array.from(document.getElementsByClassName('msg-text'));
+        const searchTerm = e.target.value.toLowerCase();
+
+        messages.forEach(function (message) {
+            const messageText = message.textContent.toLowerCase();
+            const highlightedText = messageText.replace(new RegExp(searchTerm, 'gi'), function (match) {
+                return '<span class="highlight">' + match + '</span>';
+            });
+            message.innerHTML = highlightedText;
+        });
+    }
+
     copyToClipboard(id) {
-        console.log(this.getId(id));
         const text = this.getId(id).innerText;
         navigator.clipboard
             .writeText(text)
