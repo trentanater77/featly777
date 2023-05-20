@@ -11,6 +11,9 @@
     z-index: 1;
     position: absolute;
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
     top: 0;
     width: 100%;
     height: calc(100vh - (88px + 126px));
@@ -84,6 +87,17 @@
 
 #videoPinMediaContainer video {
     filter: blur(3px);
+}
+
+#videoMediaContainer video {
+    margin: 8px;
+    /* border: 2px solid #51c251; */
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#videoMediaContainer .Camera {
+   max-width: 500px;
 }
 
 .Camera {
@@ -206,6 +220,9 @@
     position: absolute;
     margin-left: auto;
     margin-right: auto;
+    border: 2px solid #51c251;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .videoCircle {

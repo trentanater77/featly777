@@ -560,7 +560,7 @@ a {
 }
 
 .members-screen video {
-    height: 100% !important;
+    /* height: 100% !important; */
 }
 
 .members-screen span,

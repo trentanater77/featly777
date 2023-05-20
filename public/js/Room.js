@@ -1409,8 +1409,6 @@ function handleInputs() {
         const chatMessageLabelBox = chatMessageLabel.querySelector('p');
         chatMessageLabelCounter.innerText = chatMessage.value.length;
 
- 
-
         show(chatMessageLabelBox);
         if (chatMessage.value.length === 0) hide(chatMessageLabelBox);
 
@@ -2230,7 +2228,6 @@ async function getParticipantsTable(peers) {
     <label>Search</label>
     <button id="resetSearchParticipants" onclick="resetInput(searchParticipants)"><i class="fas fa-times"></i></button>
   </div>
-Í
 
   <div class='participants-box'>
     <table id="myTable">`;

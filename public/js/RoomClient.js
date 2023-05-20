@@ -726,16 +726,17 @@ class RoomClient {
 
             this.producers.set(producer.id, producer);
 
-            let elem, au;
+            let elem, elem2, au;
             if (!audio) {
                 this.localVideoStream = stream;
                 this.videoProducerId = producer.id;
-                elem = await this.handleProducer(producer.id, type, stream);
+                elem = await this.handleProducer(producer.id, type, stream, videoMediaContainer);
+                elem2 = await this.handleProducer(producer.id, type, stream, membersPeerScreen);
                 //if (!screen && !isEnumerateDevices) enumerateVideoDevices(stream);
             } else {
                 this.localAudioStream = stream;
                 this.audioProducerId = producer.id;
-                au = await this.handleProducer(producer.id, type, stream);
+                au = await this.handleProducer(producer.id, type, stream, videoMediaContainer);
                 //if (!isEnumerateDevices) enumerateAudioDevices(stream);
             }
 
@@ -844,7 +845,7 @@ class RoomClient {
 
             this.producers.set(producerSa.id, producerSa);
 
-            const sa = await this.handleProducer(producerSa.id, mediaType.audio, stream);
+            const sa = await this.handleProducer(producerSa.id, mediaType.audio, stream, videoMediaContainer);
 
             producerSa.on('trackended', () => {
                 this.closeProducer(mediaType.audio);
@@ -1068,19 +1069,20 @@ class RoomClient {
         }, 1000);
     }
 
-    async handleProducer(id, type, stream) {
+    async handleProducer(id, type, stream, placement) {
         let elem, vb, vp, ts, d, p, i, au, fs, pm, pb, pn;
         switch (type) {
             case mediaType.video:
             case mediaType.screen:
                 let isScreen = type === mediaType.screen;
-                this.removeVideoOff(this.peer_id);
+                this.removeVideoOff(this.peer_id + String(placement));
+
                 d = document.createElement('div');
                 d.className = 'Camera';
-                d.id = id + '__video';
+                d.id = id + String(placement) + '__video';
                 elem = document.createElement('video');
-                elem.setAttribute('id', id);
-                !isScreen && elem.setAttribute('name', this.peer_id);
+                elem.setAttribute('id', id + String(placement));
+                !isScreen && elem.setAttribute('name', this.peer_id + String(placement));
                 elem.setAttribute('playsinline', true);
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
@@ -1090,34 +1092,34 @@ class RoomClient {
                 elem.style.objectFit = isScreen ? 'contain' : 'var(--videoObjFit)';
                 elem.className = this.isMobileDevice || isScreen ? '' : 'mirror';
                 vb = document.createElement('div');
-                vb.setAttribute('id', this.peer_id + '__vb');
+                vb.setAttribute('id', this.peer_id + String(placement) + '__vb');
                 vb.className = 'videoMenuBar fadein';
                 fs = document.createElement('button');
-                fs.id = id + '__fullScreen';
+                fs.id = id + String(placement) + '__fullScreen';
                 fs.className = html.fullScreen;
                 ts = document.createElement('button');
-                ts.id = id + '__snapshot';
+                ts.id = id + String(placement) + '__snapshot';
                 ts.className = html.snapshot;
                 pn = document.createElement('button');
-                pn.id = id + '__pin';
+                pn.id = id + String(placement) + '__pin';
                 pn.className = html.pin;
                 vp = document.createElement('button');
-                vp.id = this.peer_id + +'__vp';
+                vp.id = this.peer_id + String(placement) + +'__vp';
                 vp.className = html.videoPrivacy;
                 au = document.createElement('button');
-                au.id = this.peer_id + '__audio';
+                au.id = this.peer_id + String(placement) + '__audio';
                 au.className = this.peer_info.peer_audio ? html.audioOn : html.audioOff;
                 p = document.createElement('p');
-                p.id = this.peer_id + '__name';
+                p.id = this.peer_id + String(placement) + '__name';
                 p.className = html.userName;
                 p.innerHTML = this.peer_name + ' (me)';
-                i = document.createElement('i');
-                i.id = this.peer_id + '__hand';
+                // i = document.createElement('i');
+                // i.id = this.peer_id + String(placement) + '__hand';
                 // i.className = html.userHand;
                 pm = document.createElement('div');
                 pb = document.createElement('div');
-                pm.setAttribute('id', this.peer_id + '_pitchMeter');
-                pb.setAttribute('id', this.peer_id + '_pitchBar');
+                pm.setAttribute('id', this.peer_id + String(placement) + '_pitchMeter');
+                pb.setAttribute('id', this.peer_id + String(placement) + '_pitchBar');
                 pm.className = 'speechbar';
                 pb.className = 'bar';
                 pb.style.height = '1%';
@@ -1129,16 +1131,18 @@ class RoomClient {
                 if (!this.isMobileDevice) vb.appendChild(pn);
                 d.appendChild(elem);
                 d.appendChild(pm);
-                d.appendChild(i);
+                // d.appendChild(i);
                 d.appendChild(p);
                 d.appendChild(vb);
                 // this.videoMediaContainer.appendChild(d);
-                membersPeerScreen.appendChild(d);
+                // membersPeerScreen.appendChild(d);
+
+                placement.appendChild(d);
 
                 this.attachMediaStream(elem, stream, type, 'Producer');
                 this.myVideoEl = elem;
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
-                this.handleDD(elem.id, this.peer_id, true);
+                this.handleDD(elem.id, this.peer_id + String(placement), true);
                 this.handleTS(elem.id, ts.id);
                 this.handlePN(elem.id, pn.id, d.id, isScreen);
                 if (!isScreen) this.handleVP(elem.id, vp.id);
@@ -1312,7 +1316,8 @@ class RoomClient {
 
                 console.log('CONSUMER MEDIA TYPE ----> ' + type);
 
-                this.handleConsumer(consumer.id, type, stream, peer_name, peer_info);
+                this.handleConsumer(consumer.id, type, stream, peer_name, peer_info, videoMediaContainer);
+                this.handleConsumer(consumer.id, type, stream, peer_name, peer_info, membersPeerScreen);
 
                 consumer.on(
                     'trackended',
@@ -1360,14 +1365,14 @@ class RoomClient {
         };
     }
 
-    handleConsumer(id, type, stream, peer_name, peer_info) {
+    handleConsumer(id, type, stream, peer_name, peer_info, placement) {
         let elem, vb, d, p, i, cm, au, fs, ts, sf, sm, sv, ko, pb, pm, pv, pn;
 
         console.log('PEER-INFO', peer_info);
 
-        let remotePeerId = peer_info.peer_id;
+        let remotePeerId = peer_info.peer_id + String(placement);
         let remoteIsScreen = type == mediaType.screen;
-        let remotePrivacyOn = peer_info.peer_video_privacy;
+        let remotePrivacyOn = peer_info.peer_video_privacy + String(placement);
 
         switch (type) {
             case mediaType.video:
@@ -1376,9 +1381,9 @@ class RoomClient {
                 this.removeVideoOff(remotePeerId);
                 d = document.createElement('div');
                 d.className = 'Camera members-screen';
-                d.id = id + '__video';
+                d.id = id + String(placement) + '__video';
                 elem = document.createElement('video');
-                elem.setAttribute('id', id);
+                elem.setAttribute('id', id + String(placement));
                 !remoteIsScreen && elem.setAttribute('name', remotePeerId);
                 elem.setAttribute('playsinline', true);
                 elem.controls = isVideoControlsOn;
@@ -1396,31 +1401,31 @@ class RoomClient {
                 pv.max = 100;
                 pv.value = 100;
                 fs = document.createElement('button');
-                fs.id = id + '__fullScreen';
+                fs.id = id + String(placement) + '__fullScreen';
                 fs.className = html.fullScreen;
                 ts = document.createElement('button');
-                ts.id = id + '__snapshot';
+                ts.id = id + String(placement) + '__snapshot';
                 ts.className = html.snapshot;
                 pn = document.createElement('button');
-                pn.id = id + '__pin';
+                pn.id = id + String(placement) + '__pin';
                 pn.className = html.pin;
                 sf = document.createElement('button');
-                sf.id = id + '___' + remotePeerId + '___sendFile';
+                sf.id = id + String(placement) + '___' + remotePeerId + '___sendFile';
                 sf.className = html.sendFile;
                 sm = document.createElement('button');
-                sm.id = id + '___' + remotePeerId + '___sendMsg';
+                sm.id = id + String(placement) + '___' + remotePeerId + '___sendMsg';
                 sm.className = html.sendMsg;
                 sv = document.createElement('button');
-                sv.id = id + '___' + remotePeerId + '___sendVideo';
+                sv.id = id + String(placement) + '___' + remotePeerId + '___sendVideo';
                 sv.className = html.sendVideo;
                 cm = document.createElement('button');
-                cm.id = id + '___' + remotePeerId + '___video';
+                cm.id = id + String(placement) + '___' + remotePeerId + '___video';
                 cm.className = html.videoOn;
                 au = document.createElement('button');
                 au.id = remotePeerId + '__audio';
                 au.className = remotePeerAudio ? html.audioOn : html.audioOff;
                 ko = document.createElement('button');
-                ko.id = id + '___' + remotePeerId + '___kickOut';
+                ko.id = id + String(placement) + '___' + remotePeerId + '___kickOut';
                 ko.className = html.kickOut;
                 i = document.createElement('i');
                 i.id = remotePeerId + '__hand';
@@ -1454,7 +1459,9 @@ class RoomClient {
                 d.appendChild(vb);
                 // this.videoMediaContainer.appendChild(d);
 
-                membersScreens.appendChild(d);
+                // membersScreens.appendChild(d);
+
+                placement.appendChild(d);
 
                 this.attachMediaStream(elem, stream, type, 'Consumer');
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
@@ -1465,7 +1472,7 @@ class RoomClient {
                 this.handleSV(sv.id);
                 BUTTONS.consumerVideo.muteVideoButton && this.handleCM(cm.id);
                 BUTTONS.consumerVideo.muteAudioButton && this.handleAU(au.id);
-                this.handlePV(id + '___' + pv.id);
+                this.handlePV(id + String(placement) + '___' + pv.id);
                 this.handleKO(ko.id);
                 this.handlePN(elem.id, pn.id, d.id, remoteIsScreen);
                 this.popupPeerInfo(p.id, peer_info);
@@ -1627,7 +1634,8 @@ class RoomClient {
         d.appendChild(h);
         d.appendChild(pm);
         d.appendChild(vb);
-        this.videoMediaContainer.appendChild(d);
+        // this.videoMediaContainer.appendChild(d);
+        membersScreens.appendChild(d);
         BUTTONS.videoOff.muteAudioButton && this.handleAU(au.id);
         if (remotePeer) {
             this.handlePV('remotePeer___' + pv.id);
@@ -3364,7 +3372,8 @@ class RoomClient {
         if (!this.isMobileDevice) vb.appendChild(pn);
         d.appendChild(video);
         d.appendChild(vb);
-        this.videoMediaContainer.appendChild(d);
+        // this.videoMediaContainer.appendChild(d);
+        membersScreens.appendChild(d);
         handleAspectRatio();
         let exitVideoBtn = this.getId(e.id);
         exitVideoBtn.addEventListener('click', (e) => {
