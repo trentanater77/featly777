@@ -502,6 +502,24 @@ a {
     flex-direction: column;
     gap: 3px;
     transition: height 0.3s ease-in-out;
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+.members-screens::-webkit-scrollbar {
+    width: 5px;
+}
+
+.members-screens::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.members-screens::-webkit-scrollbar-thumb {
+    background: black;
+    /*aqua;*/
+}
+
+.members-screens .Camera {
 }
 
 .members-screens.minify {
@@ -555,12 +573,20 @@ a {
     border-radius: 12px;
     width: 300px;
     height: 160px;
+    min-height: 160px;
+    max-height: 160px;
     overflow: hidden;
     position: relative;
+    transition: border 0.5s ease-in-out;
+    border-style: solid;
+    border-width: 0;
 }
 
-.members-screen video {
-    /* height: 100% !important; */
+#membersPeerScreen > .Camera {
+    width: 300px;
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
 }
 
 .members-screen span,
@@ -2339,11 +2365,11 @@ progress {
 
 #whiteboard {
     z-index: 4;
-    position: relative;
+    position: absolute;
     width: 100%;
     height: var(--msger-height);
     background: #141418;
-    top: 0;
+    top: 89px;
     left: 0;
     overflow: hidden;
     background-image: repeating-linear-gradient(to right, #2c2c39, #2c2c39 1px, transparent 1px, transparent 150px),
@@ -2439,6 +2465,11 @@ progress {
     border-radius: 12px;
     cursor: pointer;
     position: relative;
+}
+
+.vertical-select-item-done {
+    margin-left: auto;
+    margin-right: 2px;
 }
 
 .vertical-select-item:not(.vertical-select-item:last-child)::after {
@@ -2608,6 +2639,11 @@ progress {
     border: none;
     border-radius: 20px;
     padding: 0;
+}
+
+#wbCanvas,
+.canvas-container {
+    /* width: 100% !important; */
 }
 
 /*--------------------------------------------------------------

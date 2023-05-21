@@ -759,6 +759,8 @@ function roomIsReady() {
 
     BLOCKS.popups.membersScreens && show(membersScreens);
 
+    show(producerCameraBox);
+
     //invite popup
     document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
     BLOCKS.popups.invitePopup && show(invitePopup);
@@ -766,7 +768,7 @@ function roomIsReady() {
     //
 
     membersTitlePeerName.innerText = peer_name;
-    membersPeerName.innerText = peer_name;
+    // membersPeerName.innerText = peer_name;
 
     getRoomParticipants();
 
@@ -987,6 +989,12 @@ function handleButtons() {
     };
     minifyMembersScreens.onclick = () => {
         membersScreens.classList.toggle('minify');
+
+        if (membersScreens.classList.contains('minify')) {
+            membersScreens.style.overflowY = 'hidden';
+        } else {
+            membersScreens.style.overflowY = 'auto';
+        }
     };
     searchChatInput.oninput = (e) => {
         rc.markSearchedMessage(e);
@@ -1006,6 +1014,30 @@ function handleButtons() {
             hide(whiteboard);
         }
     };
+    fullScreenView.onclick = () => {
+        document.documentElement.requestFullscreen();
+    };
+
+    allScreenView.onclick = () => {
+        document.exitFullscreen();
+    };
+
+    document.addEventListener('fullscreenchange', function (e) {
+        const fullscreenEnabled = document.fullscreenEnabled;
+
+        if (viewPopup.classList.contains('show-popup')) {
+            toggleClass(viewPopup, 'show-popup');
+        }
+
+        if (fullscreenEnabled) {
+            toggle(fullScreenView.querySelector('.vertical-select-item-done'));
+            toggle(allScreenView.querySelector('.vertical-select-item-done'));
+        } else {
+            toggle(fullScreenView.querySelector('.vertical-select-item-done'));
+            toggle(allScreenView.querySelector('.vertical-select-item-done'));
+        }
+    });
+
     // chatGhostButton.onclick = (e) => {
     //     rc.chatToggleBg();
     // };
@@ -1100,6 +1132,7 @@ function handleButtons() {
     stopVideoButton.onclick = () => {
         setVideoButtonsDisabled(true);
         rc.closeProducer(RoomClient.mediaType.video);
+        producerCameraBox.querySelector('.Camera').remove();
         // rc.pauseProducer(RoomClient.mediaType.video);
     };
     startScreenButton.onclick = () => {
@@ -1114,6 +1147,11 @@ function handleButtons() {
     videoShareButton.onclick = () => {
         rc.shareVideo('all');
     };
+
+    reactionButton.onclick = () => {
+        rc.handleFakeAudioVolume();
+    };
+
     videoCloseBtn.onclick = () => {
         rc.closeVideo(true);
     };
@@ -1550,6 +1588,7 @@ function handleRoomClientEvents() {
     });
     rc.on(RoomClient.EVENTS.stopVideo, () => {
         console.log('Room Client stop video');
+
         hide(stopVideoButton);
         show(startVideoButton);
         setVideoButtonsDisabled(false);
@@ -1824,7 +1863,7 @@ function setupWhiteboardCanvasSize() {
 }
 
 function setWhiteboardSize(w, h) {
-    document.documentElement.style.setProperty('--wb-width', w);
+    document.documentElement.style.setProperty('--wb-width', '100%');
     document.documentElement.style.setProperty('--wb-height', h);
 }
 

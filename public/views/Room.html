@@ -247,7 +247,7 @@
                 <!-- <div id="membersProducerMicrophone" class="members-microphone">
                     <i class="fa-solid fa-microphone"></i>
                 </div> -->
-                <span id="membersPeerName">Name</span>
+                <!-- <span id="membersPeerName">Name</span> -->
             </div>
         </div>
 
@@ -300,15 +300,18 @@
                     <div id="fullScreenView" class="vertical-select-item">
                         <img src="../images/icons/full_screen.svg" alt="" />
                         <span>Full screen</span>
+                        <img class="vertical-select-item-done hidden" src="../images/icons/done_icon.svg" alt="" />
                     </div>
 
                     <div id="speakScreenView" class="vertical-select-item">
                         <img src="../images/icons/view.svg" alt="" />
                         <span>Speaks now</span>
+                        <img class="vertical-select-item-done hidden" src="../images/icons/done_icon.svg" alt="" />
                     </div>
 
                     <div id="allScreenView" class="vertical-select-item">
                         <img src="../images/icons/all_view.svg" alt="" /> <span>All members</span>
+                        <img class="vertical-select-item-done" src="../images/icons/done_icon.svg" alt="" />
                     </div>
                 </div>
             </div>
@@ -600,11 +603,7 @@
                             <button id="unpinChatMessageBtn" onclick="rc.unpinMessage()">
                                 <i class="fa-solid fa-thumbtack"></i>
                             </button>
-
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi autem et corrupti esse,
-                                excepturi sapiente sit, saepe animi alias quasi veniam officiis laborum distinctio.
-                            </p>
+                            <p></p>
                         </div>
                     </header>
 
@@ -658,8 +657,11 @@
                     <div id="roomParticipants"></div>
                 </main>
             </section>
-            <div class="video-conteiner-box">
+            <div class="video-conteiner-box all-members-view">
                 <div id="videoMediaContainer">
+                    <div class="Camera hidden" id="producerCameraBox">
+                      <p class="member-name"></p>
+                    </div>
                     <!-- <div class="Camera"></div> -->
                 </div>
             </div>

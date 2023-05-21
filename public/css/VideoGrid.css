@@ -3,31 +3,44 @@
 --------------------------------------------------------------*/
 
 .video-conteiner-box {
-    position: relative;
+    /* position: relative; */
     width: 100%;
+    height: calc(100vh - (88px + 126px));
+    min-height: calc(100vh - (88px + 126px));
+    max-height: calc(100vh - (88px + 126px));
+    overflow-y: auto;
+    display: flex;
+    /* align-items: */
+    justify-content: center;
+    padding: 4px;
+}
+
+.video-conteiner-box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.video-conteiner-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.video-conteiner-box::-webkit-scrollbar-thumb {
+    background: black;
+    /*aqua;*/
 }
 
 #videoMediaContainer {
-    z-index: 1;
-    position: absolute;
+    /* z-index: 1;
+    position: absolute; */
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    top: 0;
     width: 100%;
-    height: calc(100vh - (88px + 126px));
+    /* height: calc(100vh - (88px + 126px));*/
+    height: fit-content;
     overflow: hidden;
-}
-
-@media (max-width: 768px) {
-    #videoMediaContainer {
-        top: 0;
-        /* height: 100vh; */
-    }
-    .Camera {
-        height: 100vh !important;
-    }
+    margin: auto;
 }
 
 #videoPinMediaContainer {
@@ -41,7 +54,6 @@
     border-radius: 5px;
     box-shadow: var(--box-shadow);
     overflow: hidden;
-
     /* animation: show 0.4s ease; */
     /* border: 3px solid lime; */
 }
@@ -89,32 +101,33 @@
     filter: blur(3px);
 }
 
-#videoMediaContainer video {
-    margin: 8px;
-    /* border: 2px solid #51c251; */
+#videoMediaContainer .Camera {
+    max-width: 500px;
+    height: 285px;
+    min-height: 285px;
+    max-height: 285px;
+    transition: border 0.5s ease-in-out;
     border-radius: 12px;
     overflow: hidden;
-}
-
-#videoMediaContainer .Camera {
-   max-width: 500px;
+    border-style: solid;
+    border-width: 0;
 }
 
 .Camera {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     display: inline-block;
-    background: #151519;
+    background: #141418;
+    border-radius: 12px;
     margin: 0 !important;
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100% !important;
 }
 
-.Camera p {
-    display: none;
+.video-conteiner-box.all-members-view {
+    /* background: #0d0e10; */
 }
 
 /* .Camera:hover {
@@ -150,7 +163,7 @@
 .username {
     z-index: 1;
     position: absolute;
-    right: 0;
+    left: 0;
     bottom: 0;
     color: #fff;
     font-size: 14px;
@@ -159,9 +172,15 @@
     padding: 5px;
     margin: 5px;
     width: auto;
-    height: 25px;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.1);
+    height: 32px;
+    background: #141418;
+    border-radius: 6px;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.Camera:hover .username {
+    opacity: 1;
 }
 
 .fscreen {
@@ -216,15 +235,6 @@
     transition: all 0.3s ease-in-out;
 }
 
-#videoMediaContainer video {
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid #51c251;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
 .videoCircle {
     position: absolute;
     width: var(--vmi-wh);
@@ -247,7 +257,7 @@
 
 video {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: var(--videoObjFit);
     /* border-radius: 10px; */
     cursor: pointer;
@@ -302,5 +312,29 @@ input[type='range'] {
 @media screen and (max-width: 500px) {
     .username {
         font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    #videoMediaContainer {
+        top: 0;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+    }
+
+    .video-conteiner-box {
+        height: 100vh;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    #videoMediaContainer .Camera {
+        height: 100%;
+        /* min-height: 100%; */
+        max-height: 100%;
+        border-radius: 0;
+        overflow: visible;
+        flex: 1 1;
     }
 }
