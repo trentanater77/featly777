@@ -61,7 +61,7 @@ const lS = new LocalStorage();
 // ####################################################
 
 let currentTheme = 'dark';
-let swalBackground = 'radial-gradient(#393939, #000000)'; //'rgba(0, 0, 0, 0.7)';
+let swalBackground = 'var(--secondary-bg)'; 
 
 let rc = null;
 let producer = null;
@@ -1655,7 +1655,7 @@ function leaveFeedback() {
         allowEscapeKey: false,
         showDenyButton: true,
         background: swalBackground,
-        imageUrl: image.feedback,
+        // imageUrl: image.feedback,
         title: 'Leave a feedback',
         text: 'Do you want to rate your FeatlyTalk experience?',
         confirmButtonText: `Yes`,
@@ -2151,7 +2151,6 @@ function getWhiteboardAction(action) {
 function confirmClearBoard() {
     Swal.fire({
         background: swalBackground,
-        imageUrl: image.delete,
         position: 'center',
         title: 'Clean the board',
         text: 'Are you sure you want to clean the board?',
@@ -2527,7 +2526,7 @@ function showAbout() {
 
     Swal.fire({
         background: swalBackground,
-        imageUrl: image.about,
+        // imageUrl: image.about,
         position: 'center',
         title: 'Featly Talk',
         html: `

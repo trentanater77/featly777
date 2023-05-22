@@ -1118,7 +1118,7 @@ class RoomClient {
                 pm.setAttribute('id', this.peer_id + '_pitchMeter');
                 pb.setAttribute('id', this.peer_id + '_pitchBar');
                 pm.className = 'speechbar';
-                pb.className = 'bar';
+                pb.className = this.peer_id + '_pitchBar';
                 pb.style.height = '1%';
                 pm.appendChild(pb);
                 BUTTONS.producerVideo.muteAudioButton && vb.appendChild(au);
@@ -1434,7 +1434,7 @@ class RoomClient {
                 pm.setAttribute('id', remotePeerId + '__pitchMeter');
                 pb.setAttribute('id', remotePeerId + '__pitchBar');
                 pm.className = 'speechbar';
-                pb.className = 'bar';
+                pb.className = remotePeerId + '__pitchBar';
                 pb.style.height = '1%';
                 pm.appendChild(pb);
                 BUTTONS.consumerVideo.ejectButton && vb.appendChild(ko);
@@ -1628,7 +1628,7 @@ class RoomClient {
         pm.setAttribute('id', peer_id + '__pitchMeter');
         pb.setAttribute('id', peer_id + '__pitchBar');
         pm.className = 'speechbar';
-        pb.className = 'bar';
+        pb.className = peer_id + '__pitchBar';
         pb.style.height = '1%';
         pm.appendChild(pb);
         if (remotePeer) {
@@ -2430,7 +2430,7 @@ class RoomClient {
         Swal.fire({
             background: swalBackground,
             position: 'center',
-            imageUrl: image.message,
+            // imageUrl: image.message,
             input: 'text',
             inputPlaceholder: '💬 Enter your message...',
             showCancelButton: true,
@@ -2560,7 +2560,7 @@ class RoomClient {
             background: swalBackground,
             position: 'center',
             title: 'Delete this Message?',
-            imageUrl: image.delete,
+            // imageUrl: image.delete,
             showDenyButton: true,
             confirmButtonText: `Yes`,
             denyButtonText: `No`,
@@ -2582,6 +2582,7 @@ class RoomClient {
         pinChatMessage.querySelector('p').innerText = this.getId(id).innerText;
         show(pinChatMessage);
         chatMsger.style.maxHeight = `calc(var(--msger-height) - (225px + ${pinChatMessage.offsetHeight}px))`;
+        showSnackbar('Message pinned')
     }
 
     unpinMessage() {
@@ -2607,10 +2608,12 @@ class RoomClient {
         navigator.clipboard
             .writeText(text)
             .then(() => {
-                this.userLog('success', 'Message copied!', 'top-end', 1000);
+                // this.userLog('success', 'Message copied!', 'top-end', 1000);
+                showSnackbar('Message copied!')
             })
             .catch((err) => {
-                this.userLog('error', err, 'top-end', 2000);
+                // this.userLog('error', err, 'top-end', 2000);
+                showSnackbar('Error')
             });
     }
 
@@ -2710,7 +2713,7 @@ class RoomClient {
             background: swalBackground,
             position: 'center',
             title: 'Clean up chat Messages?',
-            imageUrl: image.delete,
+            // imageUrl: image.delete,
             showDenyButton: true,
             confirmButtonText: `Yes`,
             denyButtonText: `No`,
@@ -2954,7 +2957,7 @@ class RoomClient {
             allowOutsideClick: false,
             background: swalBackground,
             imageAlt: 'featlytalk-file-sharing',
-            imageUrl: image.share,
+            // imageUrl: image.share,
             position: 'center',
             title: 'Share file',
             input: 'file',
@@ -3252,7 +3255,7 @@ class RoomClient {
         Swal.fire({
             background: swalBackground,
             position: 'center',
-            imageUrl: image.videoShare,
+            // imageUrl: image.videoShare,
             title: 'Share a Video or Audio',
             text: 'Paste a Video or Audio URL',
             input: 'text',
@@ -3460,7 +3463,7 @@ class RoomClient {
                             allowEscapeKey: false,
                             showDenyButton: true,
                             background: swalBackground,
-                            imageUrl: image.locked,
+                            // imageUrl: image.locked,
                             input: 'text',
                             inputPlaceholder: 'Set Room password',
                             confirmButtonText: `OK`,
@@ -3730,7 +3733,7 @@ class RoomClient {
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 background: swalBackground,
-                imageUrl: image.locked,
+                // imageUrl: image.locked,
                 title: 'Oops, Room is Locked',
                 input: 'text',
                 inputPlaceholder: 'Enter the Room password',
@@ -3763,7 +3766,7 @@ class RoomClient {
             allowOutsideClick: false,
             background: swalBackground,
             position: 'center',
-            imageUrl: image.locked,
+            // imageUrl: image.locked,
             title: 'Oops, Wrong Room Password',
             text: 'The room is locked, try with another one.',
             showDenyButton: false,
@@ -3787,7 +3790,7 @@ class RoomClient {
             showDenyButton: true,
             showConfirmButton: false,
             background: swalBackground,
-            imageUrl: image.poster,
+            // imageUrl: image.poster,
             title: 'Room has lobby enabled',
             text: 'Asking to join meeting...',
             confirmButtonText: `Ok`,
@@ -3818,14 +3821,17 @@ class RoomClient {
         if ([50, 60, 70].includes(audioVolume)) audioColor = 'orange';
         if ([80, 90, 100].includes(audioVolume)) audioColor = 'red';
 
-        const newPbProducer = document.querySelectorAll('#' + peerId + '_pitchBar');
-        const newPbConsumer = document.querySelectorAll('#' + peerId + '__pitchBar');
+        const newPbProducer = document.querySelectorAll('.' + peerId + '_pitchBar');
+        const newPbConsumer = document.querySelectorAll('.' + peerId + '__pitchBar');
 
-        [...newPbProducer, ...newPbConsumer].forEach((item) => {
+        const allMembers = [...newPbProducer, ...newPbConsumer];
+
+        allMembers.forEach((item) => {
             const videoBox1 = item.closest('.members-screen');
-            const videoBox2 = item.closest('.' + peerId);
+            const videoBox2 = item.closest('#videoMediaContainer .' + peerId);
 
             [videoBox1, videoBox2].forEach((member) => {
+                console.log('3', member);
                 if (member) {
                     member.style.borderColor = audioColor;
                     member.style.borderWidth = '2px';
@@ -3846,10 +3852,12 @@ class RoomClient {
         if ([50, 60, 70].includes(audioVolume)) audioColor = 'orange';
         if ([80, 90, 100].includes(audioVolume)) audioColor = 'red';
 
-        const newPbProducer = document.querySelectorAll('#' + peerId + '_pitchBar');
-        const newPbConsumer = document.querySelectorAll('#' + peerId + '__pitchBar');
+        const newPbProducer = document.querySelectorAll('.' + peerId + '_pitchBar');
+        const newPbConsumer = document.querySelectorAll('.' + peerId + '__pitchBar');
 
-        [...newPbProducer, ...newPbConsumer].forEach((item) => {
+        const allMembers = [...newPbProducer, ...newPbConsumer];
+
+        allMembers.forEach((item) => {
             const videoBox1 = item.closest('.members-screen');
             const videoBox2 = item.closest('.' + peerId);
 
@@ -4070,7 +4078,7 @@ class RoomClient {
                 Swal.fire({
                     background: swalBackground,
                     position: 'center',
-                    imageUrl: data.broadcast ? image.users : image.user,
+                    // imageUrl: data.broadcast ? image.users : image.user,
                     title: 'Eject ' + whoEject,
                     showDenyButton: true,
                     confirmButtonText: `Yes`,
@@ -4113,7 +4121,7 @@ class RoomClient {
                 Swal.fire({
                     background: swalBackground,
                     position: 'center',
-                    imageUrl: action == 'mute' ? image.mute : image.hide,
+                    // imageUrl: action == 'mute' ? image.mute : image.hide,
                     title: action == 'mute' ? 'Mute ' + whoMuteHide : 'Hide ' + whoMuteHide,
                     text:
                         action == 'mute'

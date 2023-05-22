@@ -45,13 +45,13 @@
 
 #videoPinMediaContainer {
     z-index: 1;
-    position: relative;
+    position: absolute;
     display: none;
-    top: 0;
-    left: 0;
+    top: 89px !important;
+    left: 0 !important;
     width: 100%;
     height: var(--msger-height);
-    border-radius: 5px;
+    border-radius: 0px;
     box-shadow: var(--box-shadow);
     overflow: hidden;
     /* animation: show 0.4s ease; */
@@ -111,6 +111,17 @@
     overflow: hidden;
     border-style: solid;
     border-width: 0;
+}
+
+#videoMediaContainer > .Camera::before {
+    content: '';
+    border: 1px solid #2e2e36;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 12px;
 }
 
 .Camera {
