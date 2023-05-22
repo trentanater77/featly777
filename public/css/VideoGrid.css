@@ -3,7 +3,7 @@
 --------------------------------------------------------------*/
 
 .video-conteiner-box {
-    /* position: relative; */
+    position: relative;
     width: 100%;
     height: calc(100vh - (88px + 126px));
     min-height: calc(100vh - (88px + 126px));
@@ -136,14 +136,6 @@
     justify-content: center;
     width: 100% !important;
 }
-
-.video-conteiner-box.all-members-view {
-    /* background: #0d0e10; */
-}
-
-/* .Camera:hover {
-    border: 3px solid rgb(113, 157, 239);
-} */
 
 #videoMediaContainer i {
     position: absolute;
@@ -353,5 +345,24 @@ input[type='range'] {
     #videoMediaContainer > .Camera::before {
         content: '';
         border: 0;
+    }
+}
+
+@media (min-width: 769px) {
+    .video-conteiner-box.speaks-now-view {
+        overflow-y: hidden;
+        padding: 0px;
+    }
+
+    .video-conteiner-box.speaks-now-view .Camera {
+        width: 100% !important;
+        max-width: none !important;
+        height: 100% !important;
+        min-height: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
     }
 }

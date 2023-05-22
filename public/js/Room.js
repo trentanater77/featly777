@@ -32,9 +32,9 @@ const url = {
 
 const _PEER = {
     audioOn: '<i class="fas fa-microphone"></i>',
-    audioOff: '<i style="color: var(--main-color);" class="fas fa-microphone-slash"></i>',
+    audioOff: '<i style="color: var(--main-color); margin-left: -2px;" class="fas fa-microphone-slash"></i>',
     videoOn: '<i class="fas fa-video"></i>',
-    videoOff: '<i style="color: var(--main-color);" class="fas fa-video-slash"></i>',
+    videoOff: '<i style="color: var(--main-color);  margin-left: -1px;" class="fas fa-video-slash"></i>',
     raiseHand: '<i style="color: rgb(0, 255, 71);" class="fas fa-hand-paper pulsate"></i>',
     lowerHand: '',
     acceptPeer: '<i class="fas fa-check"></i>',
@@ -759,7 +759,7 @@ function roomIsReady() {
 
     BLOCKS.popups.membersScreens && show(membersScreens);
 
-    show(producerCameraBox);
+    // show(producerCameraBox);
 
     //invite popup
     document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
@@ -1014,27 +1014,49 @@ function handleButtons() {
             hide(whiteboard);
         }
     };
+
+    function removeMenuChecks() {
+        const allChecks = document.querySelectorAll('.vertical-select-item-done');
+        allChecks.forEach((checkIcon) => hide(checkIcon));
+    }
+
     fullScreenView.onclick = () => {
         document.documentElement.requestFullscreen();
     };
 
     allScreenView.onclick = () => {
         document.exitFullscreen();
+        removeMenuChecks();
+        show(allScreenView.querySelector('.vertical-select-item-done'));
+        document.querySelector('.video-conteiner-box').classList.remove('speaks-now-view');
+        toggleClass(viewPopup, 'show-popup');
+    };
+
+    speakScreenView.onclick = () => {
+        document.exitFullscreen();
+        removeMenuChecks();
+        show(speakScreenView.querySelector('.vertical-select-item-done'));
+        document.querySelector('.video-conteiner-box').classList.add('speaks-now-view');
+        toggleClass(viewPopup, 'show-popup');
     };
 
     document.addEventListener('fullscreenchange', function (e) {
-        const fullscreenEnabled = document.fullscreenEnabled;
+        const fullscreenEnabled = document.fullscreen;
 
         if (viewPopup.classList.contains('show-popup')) {
             toggleClass(viewPopup, 'show-popup');
         }
 
+        removeMenuChecks();
+
         if (fullscreenEnabled) {
-            toggle(fullScreenView.querySelector('.vertical-select-item-done'));
-            toggle(allScreenView.querySelector('.vertical-select-item-done'));
+            show(fullScreenView.querySelector('.vertical-select-item-done'));
         } else {
-            toggle(fullScreenView.querySelector('.vertical-select-item-done'));
-            toggle(allScreenView.querySelector('.vertical-select-item-done'));
+            if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+                show(speakScreenView.querySelector('.vertical-select-item-done'));
+            } else {
+                show(allScreenView.querySelector('.vertical-select-item-done'));
+            }
         }
     });
 
@@ -1993,6 +2015,7 @@ function whiteboardAddObj(type) {
                         });
                         addWbCanvasObj(text);
                     }
+                    whiteboardObjectBtn.onclick();
                 }
             });
             break;
@@ -2260,6 +2283,12 @@ async function getRoomParticipants(refresh = false) {
     setParticipantsTippy(peers);
 }
 
+async function getRoomMembers() {
+    let room_info = await rc.getRoomInfo();
+    let peers = new Map(JSON.parse(room_info.peers));
+    console.log({ peers });
+}
+
 async function getParticipantsTable(peers) {
     let table = `
     
@@ -2309,7 +2338,7 @@ async function getParticipantsTable(peers) {
                 <td></td>
                 <td></td>
                 <td><button>${peer_hand}</button></td>
-                <td><button>${peer_audio}</button></td>
+                <td><button id='${peer_id}___pAudio' ><img class='hidden sound-icon' src='../images/icons/sound_icon.svg' /> ${peer_audio}</button></td>
                 <td><button>${peer_video}</button></td>
             </tr>
             `;
@@ -2324,7 +2353,7 @@ async function getParticipantsTable(peers) {
                     <td></td>
                     <td><button>${peer_hand}</button></td>
                     <td><button id='${peer_id}___pEject' onclick="rc.peerAction('me',this.id,'eject')">${peer_eject}</button></td>
-                    <td><button id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')">${peer_audio}</button></td>
+                    <td><button id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')"><img class='hidden sound-icon' src='../images/icons/sound_icon.svg' /> ${peer_audio}</button></td>
                     <td><button id='${peer_id}___pVideo' onclick="rc.peerAction('me',this.id,'hide')">${peer_video}</button></td>
                 </tr>
                 `;
@@ -2338,7 +2367,7 @@ async function getParticipantsTable(peers) {
                     <td></td>
                     <td></td>
                     <td><button>${peer_hand}</button></td>
-                    <td><button id='${peer_id}___pAudio'>${peer_audio}</button></td>
+                    <td><button id='${peer_id}___pAudio'><img class='hidden sound-icon' src='../images/icons/sound_icon.svg' /> ${peer_audio}</button></td>
                     <td><button id='${peer_id}___pVideo'>${peer_video}</button></td>
                 </tr>
                 `;

@@ -730,7 +730,7 @@ class RoomClient {
             if (!audio) {
                 this.localVideoStream = stream;
                 this.videoProducerId = producer.id;
-                elem = await this.handleProducer(producer.id, type, stream, producerCameraBox);
+                elem = await this.handleProducer(producer.id, type, stream, videoMediaContainer);
                 elem2 = await this.handleProducer(producer.id, type, stream, membersPeerScreen);
                 //if (!screen && !isEnumerateDevices) enumerateVideoDevices(stream);
             } else {
@@ -1087,7 +1087,7 @@ class RoomClient {
                 let isScreen = type === mediaType.screen;
                 this.removeVideoOff(this.peer_id);
                 d = document.createElement('div');
-                d.className = 'Camera ' + this.peer_id;
+                d.className = 'Camera ProducerCamera ' + this.peer_id;
                 d.id = id + '__video';
 
                 elem = document.createElement('video');
@@ -1259,7 +1259,7 @@ class RoomClient {
 
             //alert(this.pinnedVideoPlayerId + '==' + producer_id);
             // if (this.isVideoPinned && this.pinnedVideoPlayerId == producer_id) {
-              if (type === mediaType.screen) {
+            if (type === mediaType.screen) {
                 this.removeVideoPinMediaContainer();
                 console.log('Remove pin container due the Producer close', {
                     producer_id: producer_id,
@@ -3837,19 +3837,42 @@ class RoomClient {
 
         const allMembers = [...newPbProducer, ...newPbConsumer];
 
+        const currentTableMember = document.getElementById(peerId + '___pAudio');
+        const soundIcon = currentTableMember.querySelector('img');
+        const microphoneIcon = currentTableMember.querySelector('i');
+
+        // getRoomMembers();
+
+        if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+            const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
+            const currentSpeakNow = videoMediaContainer.querySelector('.Camera.' + peerId);
+
+            allSpeakers.forEach((speaker) => {
+                hide(speaker);
+            });
+
+            if (peerId === this.peer_id) show(producerCameraBox);
+            show(currentSpeakNow);
+        }
+
         allMembers.forEach((item) => {
             const videoBox1 = item.closest('.members-screen');
             const videoBox2 = item.closest('#videoMediaContainer .' + peerId);
 
             [videoBox1, videoBox2].forEach((member) => {
-                console.log('3', member);
                 if (member) {
                     member.style.borderColor = audioColor;
                     member.style.borderWidth = '2px';
 
+                    show(soundIcon);
+                    hide(microphoneIcon);
+
                     setTimeout(function () {
                         audioColor = 'white';
                         member.style.borderWidth = '0px';
+
+                        hide(soundIcon);
+                        show(microphoneIcon);
                     }, 2000);
                 }
             });
@@ -3868,18 +3891,28 @@ class RoomClient {
 
         const allMembers = [...newPbProducer, ...newPbConsumer];
 
+        const currentTableMember = document.getElementById(peerId + '___pAudio');
+        const soundIcon = currentTableMember.querySelector('img');
+        const microphoneIcon = currentTableMember.querySelector('i');
+
         allMembers.forEach((item) => {
             const videoBox1 = item.closest('.members-screen');
-            const videoBox2 = item.closest('.' + peerId);
+            const videoBox2 = item.closest('#videoMediaContainer .' + peerId);
 
             [videoBox1, videoBox2].forEach((member) => {
                 if (member) {
                     member.style.borderColor = audioColor;
                     member.style.borderWidth = '2px';
 
+                    show(soundIcon);
+                    hide(microphoneIcon);
+
                     setTimeout(function () {
                         audioColor = 'white';
                         member.style.borderWidth = '0px';
+
+                        hide(soundIcon);
+                        show(microphoneIcon);
                     }, 2000);
                 }
             });

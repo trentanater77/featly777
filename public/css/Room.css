@@ -2009,7 +2009,7 @@ em-emoji-picker {
     background: #0d0e10 !important;
     border: 0 !important;
     border-radius: 8px !important;
-    overflow: hidden !important; 
+    overflow: hidden !important;
     padding: 0 3px !important;
     width: calc(100% - 48px) !important;
 }
@@ -2038,6 +2038,8 @@ em-emoji-picker {
     border-radius: 12px !important;
     height: 56px !important;
     min-height: 56px !important;
+    text-align: left !important;
+    padding: 0 20px !important;
 }
 
 .swal2-popup {
@@ -2048,6 +2050,11 @@ em-emoji-picker {
 
 .swal2-timer-progress-bar-container {
     background: #376df9;
+}
+
+.sound-icon {
+    margin-left: -8px;
+    margin-top: 6px;
 }
 
 /*--------------------------------------------------------------
@@ -2247,6 +2254,7 @@ button:hover {
 
 #roomParticipants td:not(#roomParticipants td:nth-child(2)) {
     width: 27px;
+    max-width: 27px;
 }
 
 #roomParticipants td:first-child,
