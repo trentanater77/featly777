@@ -752,6 +752,11 @@ class RoomClient {
                     });
                     elem.parentNode.removeChild(elem);
 
+                    elem2.srcObject.getTracks().forEach(function (track) {
+                        track.stop();
+                    });
+                    elem2.parentNode.removeChild(elem2);
+
                     handleAspectRatio();
                     console.log('[transportClose] Video-element-count', this.videoMediaContainer.childElementCount);
                 } else {
@@ -771,6 +776,11 @@ class RoomClient {
                         track.stop();
                     });
                     elem.parentNode.removeChild(elem);
+
+                    elem2.srcObject.getTracks().forEach(function (track) {
+                        track.stop();
+                    });
+                    elem2.parentNode.removeChild(elem2);
 
                     handleAspectRatio();
                     console.log('[closingProducer] Video-element-count', this.videoMediaContainer.childElementCount);
@@ -1248,7 +1258,8 @@ class RoomClient {
             d.parentNode.removeChild(d);
 
             //alert(this.pinnedVideoPlayerId + '==' + producer_id);
-            if (this.isVideoPinned && this.pinnedVideoPlayerId == producer_id) {
+            // if (this.isVideoPinned && this.pinnedVideoPlayerId == producer_id) {
+              if (type === mediaType.screen) {
                 this.removeVideoPinMediaContainer();
                 console.log('Remove pin container due the Producer close', {
                     producer_id: producer_id,
@@ -2582,7 +2593,7 @@ class RoomClient {
         pinChatMessage.querySelector('p').innerText = this.getId(id).innerText;
         show(pinChatMessage);
         chatMsger.style.maxHeight = `calc(var(--msger-height) - (225px + ${pinChatMessage.offsetHeight}px))`;
-        showSnackbar('Message pinned')
+        showSnackbar('Message pinned');
     }
 
     unpinMessage() {
@@ -2609,11 +2620,11 @@ class RoomClient {
             .writeText(text)
             .then(() => {
                 // this.userLog('success', 'Message copied!', 'top-end', 1000);
-                showSnackbar('Message copied!')
+                showSnackbar('Message copied!');
             })
             .catch((err) => {
                 // this.userLog('error', err, 'top-end', 2000);
-                showSnackbar('Error')
+                showSnackbar('Error');
             });
     }
 

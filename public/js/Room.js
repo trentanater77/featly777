@@ -61,7 +61,7 @@ const lS = new LocalStorage();
 // ####################################################
 
 let currentTheme = 'dark';
-let swalBackground = 'var(--secondary-bg)'; 
+let swalBackground = 'var(--secondary-bg)';
 
 let rc = null;
 let producer = null;
@@ -1137,9 +1137,11 @@ function handleButtons() {
     };
     startScreenButton.onclick = () => {
         rc.produce(RoomClient.mediaType.screen);
+        // show(videoPinMediaContainer);
     };
     stopScreenButton.onclick = () => {
         rc.closeProducer(RoomClient.mediaType.screen);
+        // hide(videoPinMediaContainer);
     };
     fileShareButton.onclick = () => {
         rc.selectFileToShare(rc.peer_id, true);

@@ -36,7 +36,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    width: 100%;
+    width: 100% !important;
     /* height: calc(100vh - (88px + 126px));*/
     height: fit-content;
     overflow: hidden;
@@ -332,6 +332,7 @@ input[type='range'] {
         height: 100vh;
         margin: 0;
         flex-direction: column;
+        gap: 0;
     }
 
     .video-conteiner-box {
@@ -347,5 +348,10 @@ input[type='range'] {
         border-radius: 0;
         overflow: visible;
         flex: 1 1;
+    }
+
+    #videoMediaContainer > .Camera::before {
+        content: '';
+        border: 0;
     }
 }
