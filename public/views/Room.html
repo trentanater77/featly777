@@ -560,8 +560,8 @@
             </main>
         </section>
 
-        <div id="videoPinMediaContainer">
-            <div class="share-center-box">
+        <div id="videoPinMediaContainer" class="hidden">
+            <div class="share-center-box hidden">
                 <span>Your screen is visible to other members</span>
                 <button onclick="stopScreenButton.click()">Stop demo</button>
             </div>
@@ -657,10 +657,11 @@
                     <div id="roomParticipants"></div>
                 </main>
             </section>
-            <div class="video-conteiner-box all-members-view">
+
+            <div class="video-conteiner-box">
                 <div id="videoMediaContainer">
                     <div class="Camera hidden" id="producerCameraBox">
-                      <p class="member-name"></p>
+                        <p class="member-name"></p>
                     </div>
                     <!-- <div class="Camera"></div> -->
                 </div>

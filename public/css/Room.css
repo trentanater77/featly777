@@ -1448,6 +1448,7 @@ input:checked + .slider:before {
     overflow: hidden;
     background: #151519;
     border-right: 2px solid var(--control-bg);
+    z-index: 9;
 }
 
 .msger {

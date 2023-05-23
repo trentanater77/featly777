@@ -730,13 +730,13 @@ class RoomClient {
             if (!audio) {
                 this.localVideoStream = stream;
                 this.videoProducerId = producer.id;
-                elem = await this.handleProducer(producer.id, type, stream, videoMediaContainer);
+                elem = await this.handleProducer(producer.id, type, stream, producerCameraBox);
                 elem2 = await this.handleProducer(producer.id, type, stream, membersPeerScreen);
                 //if (!screen && !isEnumerateDevices) enumerateVideoDevices(stream);
             } else {
                 this.localAudioStream = stream;
                 this.audioProducerId = producer.id;
-                au = await this.handleProducer(producer.id, type, stream, videoMediaContainer);
+                au = await this.handleProducer(producer.id, type, stream, producerCameraBox);
                 //if (!isEnumerateDevices) enumerateAudioDevices(stream);
             }
 
@@ -1150,7 +1150,7 @@ class RoomClient {
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, this.peer_id, true);
                 this.handleTS(elem.id, ts.id);
-                this.handlePN(elem.id, pn.id, d.id, isScreen);
+                this.handlePN(elem.id, pn.id, d.id, isScreen, true);
                 if (!isScreen) this.handleVP(elem.id, vp.id);
                 this.checkPeerInfoStatus(this.peer_info);
                 if (isScreen) pn.click();
@@ -1260,6 +1260,8 @@ class RoomClient {
             //alert(this.pinnedVideoPlayerId + '==' + producer_id);
             // if (this.isVideoPinned && this.pinnedVideoPlayerId == producer_id) {
             if (type === mediaType.screen) {
+                const pinnedVideo = document.getElementById(`${producer_id}__video`);
+                pinnedVideo.remove();
                 this.removeVideoPinMediaContainer();
                 console.log('Remove pin container due the Producer close', {
                     producer_id: producer_id,
@@ -1290,6 +1292,7 @@ class RoomClient {
                 this.event(_EVENTS.stopVideo);
                 break;
             case mediaType.screen:
+                console.log('2!!!!!');
                 this.setIsScreen(false);
                 this.event(_EVENTS.stopScreen);
                 break;
@@ -1489,7 +1492,7 @@ class RoomClient {
                 BUTTONS.consumerVideo.muteAudioButton && this.handleAU(au.id);
                 this.handlePV(id + '___' + pv.id);
                 this.handleKO(ko.id);
-                this.handlePN(elem.id, pn.id, d.id, remoteIsScreen);
+                this.handlePN(elem.id, pn.id, d.id, remoteIsScreen, false);
                 this.popupPeerInfo(p.id, peer_info);
                 this.checkPeerInfoStatus(peer_info);
                 if (!remoteIsScreen && remotePrivacyOn) this.setVideoPrivacyStatus(remotePeerId, remotePrivacyOn);
@@ -1544,14 +1547,19 @@ class RoomClient {
             if (d) {
                 d.parentNode.removeChild(d);
                 //alert(this.pinnedVideoPlayerId + '==' + consumer_id);
-                if (this.isVideoPinned && this.pinnedVideoPlayerId == consumer_id) {
-                    this.removeVideoPinMediaContainer();
-                    console.log('Remove pin container due the Consumer close', {
-                        consumer_id: consumer_id,
-                        consumer_kind: consumer_kind,
-                    });
-                }
+                // if (this.pinnedVideoPlayerId == consumer_id) {
+                const pinnedVideo = document.getElementById(`${consumer_id}__video`);
+                pinnedVideo.remove();
+                console.log('REMOVE!!!!!!!', consumer_id + '__video');
+                this.removeVideoPinMediaContainer();
+                console.log('Remove pin container due the Consumer close', {
+                    consumer_id: consumer_id,
+                    consumer_kind: consumer_kind,
+                });
+                // }˝
             }
+
+            console.log({ consumer_kind }, this.pinnedVideoPlayerId == consumer_id);
 
             handleAspectRatio();
             console.log(
@@ -2148,7 +2156,7 @@ class RoomClient {
         }
     }
 
-    handlePN(elemId, pnId, camId, isScreen = false) {
+    handlePN(elemId, pnId, camId, isScreen = false, isProducer) {
         let videoPlayer = this.getId(elemId);
         let btnPn = this.getId(pnId);
         let cam = this.getId(camId);
@@ -2165,9 +2173,15 @@ class RoomClient {
                     cam.style.height = '100%';
                     this.togglePin(pinVideoPosition.value);
                     this.videoPinMediaContainer.appendChild(cam);
-                    this.videoPinMediaContainer.style.display = 'block';
+                    // this.videoPinMediaContainer.style.display = 'block';
+                    show(videoPinMediaContainer);
+                    if (isProducer) {
+                        show(videoPinMediaContainer.querySelector('.share-center-box'));
+                    }
+
                     this.pinnedVideoPlayerId = elemId;
                     setColor(btnPn, 'lime');
+                    console.log('1!@!2111!!!!');
                 } else {
                     if (this.pinnedVideoPlayerId != videoPlayer.id) {
                         this.isVideoPinned = true;
@@ -2226,11 +2240,12 @@ class RoomClient {
     // ####################################################
 
     removeVideoPinMediaContainer() {
-        this.videoPinMediaContainer.style.display = 'none';
-        this.videoMediaContainer.style.top = 0;
-        this.videoMediaContainer.style.right = null;
-        this.videoMediaContainer.style.width = '100%';
-        this.videoMediaContainer.style.height = '100%';
+        hide(videoPinMediaContainer);
+        hide(videoPinMediaContainer.querySelector('.share-center-box'));
+        // this.videoMediaContainer.style.top = 0;
+        // this.videoMediaContainer.style.right = null;
+        // this.videoMediaContainer.style.width = '100%';
+        // this.videoMediaContainer.style.height = '100%';
         this.pinnedVideoPlayerId = null;
         this.isVideoPinned = false;
     }
@@ -3406,7 +3421,7 @@ class RoomClient {
             e.preventDefault();
             this.closeVideo(true);
         });
-        this.handlePN(video.id, pn.id, d.id);
+        this.handlePN(video.id, pn.id, d.id, false);
         if (!this.isMobileDevice) {
             this.setTippy(pn.id, 'Toggle Pin video player', 'top-end');
             this.setTippy(e.id, 'Close video player', 'top-end');

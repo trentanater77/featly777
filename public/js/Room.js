@@ -759,7 +759,7 @@ function roomIsReady() {
 
     BLOCKS.popups.membersScreens && show(membersScreens);
 
-    // show(producerCameraBox);
+    show(producerCameraBox);
 
     //invite popup
     document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
@@ -1030,6 +1030,11 @@ function handleButtons() {
         show(allScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.remove('speaks-now-view');
         toggleClass(viewPopup, 'show-popup');
+
+        const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
+        allSpeakers.forEach((speaker) => {
+            show(speaker);
+        });
     };
 
     speakScreenView.onclick = () => {
@@ -1159,6 +1164,7 @@ function handleButtons() {
     };
     startScreenButton.onclick = () => {
         rc.produce(RoomClient.mediaType.screen);
+        // show(videoPinMediaContainer.querySelector('.share-center-box'));
         // show(videoPinMediaContainer);
     };
     stopScreenButton.onclick = () => {
