@@ -1137,7 +1137,7 @@ label {
 }
 
 .body-wrap.landing {
-    background-color: #0D0E10;
+    background-color: #0d0e10;
 }
 
 .hero {
@@ -1162,7 +1162,6 @@ label {
         gap: 1.18vw;
     }
 
-
     .terms-of-use.landing .hero-inner {
         display: grid;
         grid-template-columns: 1fr;
@@ -1184,10 +1183,10 @@ label {
     top: -45%;
     left: -5%;
     display: block;
-    content: "";
+    content: '';
     width: 45.465vw;
     height: 90.4vh;
-    opacity: .95;
+    opacity: 0.95;
 }
 
 .hero-logo {
@@ -1198,9 +1197,7 @@ label {
     margin-bottom: 7.1vh;
 }
 
-
-
-.terms-of-use.landing .hero-paragraph{
+.terms-of-use.landing .hero-paragraph {
     font-weight: 500;
     font-size: 1.6vh;
     line-height: 2.5vh;
@@ -1216,7 +1213,7 @@ label {
         left: -10%;
         width: 115.465vw;
         height: 151.4vh;
-        opacity: .95;
+        opacity: 0.95;
     }
 
     .terms-of-use.landing .hero-inner .hero-copy:before {
@@ -1224,7 +1221,7 @@ label {
         left: 20%;
         width: 90.465vw;
         height: 100.4vh;
-        opacity: .75;
+        opacity: 0.75;
     }
 
     .landing.main .hero-copy,
@@ -1234,8 +1231,7 @@ label {
         align-items: center;
     }
 
-     .hero-inner .hero-copy:before {
-
+    .hero-inner .hero-copy:before {
     }
 }
 
@@ -1249,12 +1245,11 @@ label {
     z-index: 1;
 }
 
-
 .hero-logo .logo img {
     object-fit: contain;
     height: 100%;
+    min-height: 40px;
 }
-
 
 .main.landing .hero-copy {
     margin-bottom: 12.5vh;
@@ -1270,18 +1265,16 @@ label {
     z-index: 1;
 }
 
-
-
 .hero .button-make-feat {
     padding: 1.35vh 1.25vw;
-    background: linear-gradient(105.88deg, #4F22C8 0%, #8C6BE6 100%, #8C6BE6 100%), #2E2E36;
+    background: linear-gradient(105.88deg, #4f22c8 0%, #8c6be6 100%, #8c6be6 100%), #2e2e36;
     border-radius: 1.25vh;
     font-weight: 700;
     font-size: 1.875vh;
     line-height: 2.5vh;
     align-items: center;
     text-align: center;
-    color: #F8F8F8;
+    color: #f8f8f8;
     box-shadow: none;
     border: none;
     width: 15.2vw;
@@ -1298,10 +1291,9 @@ label {
     }
 
     .terms-of-use.landing .hero-title,
-    .terms-of-use.landing .hero-paragraph{
+    .terms-of-use.landing .hero-paragraph {
         text-align: left;
     }
-
 
     .hero .button-make-feat {
         margin-left: auto;
@@ -1346,7 +1338,7 @@ label {
 }
 
 .hero-term-info a {
-    color: #8C6BE6;
+    color: #8c6be6;
 }
 
 .hero-term-info a:hover {

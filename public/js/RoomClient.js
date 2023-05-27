@@ -3910,6 +3910,18 @@ class RoomClient {
         const soundIcon = currentTableMember.querySelector('img');
         const microphoneIcon = currentTableMember.querySelector('i');
 
+        if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+            const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
+            const currentSpeakNow = videoMediaContainer.querySelector('.Camera.' + peerId);
+
+            allSpeakers.forEach((speaker) => {
+                hide(speaker);
+            });
+
+            if (peerId === this.peer_id) show(producerCameraBox);
+            show(currentSpeakNow);
+        }
+
         allMembers.forEach((item) => {
             const videoBox1 = item.closest('.members-screen');
             const videoBox2 = item.closest('#videoMediaContainer .' + peerId);

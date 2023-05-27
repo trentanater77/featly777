@@ -123,6 +123,10 @@
     border-radius: 12px;
 }
 
+.speaks-now-view #videoMediaContainer > .Camera::before {
+  border: 0px;
+}
+
 .Camera {
     position: relative;
     /* overflow: hidden; */
@@ -322,8 +326,19 @@ input[type='range'] {
         top: 0;
         height: 100vh;
         margin: 0;
-        flex-direction: column;
         gap: 0;
+    }
+
+    @media (orientation: portrait) {
+        #videoMediaContainer {
+            flex-direction: column;
+        }
+    }
+
+    @media (orientation: landscape) {
+        #videoMediaContainer {
+            flex-direction: row;
+        }
     }
 
     .video-conteiner-box {
@@ -334,7 +349,7 @@ input[type='range'] {
 
     #videoMediaContainer .Camera {
         height: 100%;
-        /* min-height: 100%; */
+        min-height: 0px;
         max-height: 100%;
         border-radius: 0;
         overflow: visible;
