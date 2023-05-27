@@ -1,95 +1,114 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-    <!-- https://github.com/mikecao/umami -->
+    <head>
+        <!-- https://github.com/mikecao/umami -->
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDQNY8YQ4T"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDQNY8YQ4T"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+            function gtag() {
+                dataLayer.push(arguments);
+            }
 
-        gtag('js', new Date());
+            gtag('js', new Date());
 
-        gtag('config', 'G-QDQNY8YQ4T');
-    </script>
+            gtag('config', 'G-QDQNY8YQ4T');
+        </script>
 
-    <!-- Title and Icon -->
+        <!-- Title and Icon -->
 
-    <title>FeatlyTalk, Free Video Calls, Messaging and Screen Sharing</title>
-    <link rel="shortcut icon" href="../images/logo.jpg"/>
-    <link rel="apple-touch-icon" href="../images/logo.jpg"/>
+        <title>FeatlyTalk, Free Video Calls, Messaging and Screen Sharing</title>
+        <link rel="shortcut icon" href="../images/logo.jpg" />
+        <link rel="apple-touch-icon" href="../images/logo.jpg" />
 
-    <!-- Meta Information -->
+        <!-- Meta Information -->
 
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
+        <meta
             name="description"
             content="FeatlyTalk  powered by WebRTC and mediasoup, Real-time Simple Secure Fast video calls, messaging and screen sharing capabilities in the browser."
-    />
-    <meta
+        />
+        <meta
             name="keywords"
             content="webrtc, featly, mediasoup, mediasoup-client, self hosted, voip, sip, real-time communications, chat, messaging, meet, webrtc stun, webrtc turn, webrtc p2p, webrtc , video meeting, video chat, video conference, multi video chat, multi video conference, peer to peer, p2p, , rtc, alternative to, zoom, microsoft teams, google meet, jitsi, meeting"
-    />
+        />
 
-    <!-- https://ogp.me -->
+        <!-- https://ogp.me -->
 
-    <meta property="og:type" content="app-webrtc"/>
-    <meta property="og:site_name" content="FeatlyTalk "/>
-    <meta property="og:title" content="Click the link to make a call."/>
-    <meta
+        <meta property="og:type" content="app-webrtc" />
+        <meta property="og:site_name" content="FeatlyTalk " />
+        <meta property="og:title" content="Click the link to make a call." />
+        <meta
             property="og:description"
             content="FeatlyTalk  calling provides real-time video calls, messaging and screen sharing."
-    />
-    <meta property="og:image" content="https://talk.featly.io/images/featlytalk.png"/>
+        />
+        <meta property="og:image" content="https://talk.featly.io/images/featlytalk.png" />
 
-    <!-- StyleSheet -->
+        <!-- StyleSheet -->
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600"/>
-    <link rel="stylesheet" href="../css/landing.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" />
+        <link rel="stylesheet" href="../css/landing.css" />
 
-    <!-- Js scripts -->
+        <!-- Js scripts -->
 
-    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
-    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-</head>
-<body class="is-boxed has-animations">
-<div class="body-wrap landing main">
-    <main>
-        <section class="hero-logo">
-            <a class="logo" href="/">
-                <img class="header-logo-image" src="../images/logo.svg" alt="featlytalk-webrtc-logo"/>
-            </a>
-        </section>
-        <section class="hero">
-            <div class="hero-inner">
-                <div class="hero-copy">
-                    <h1 class="hero-title mt-0">
-                        Featly - solution for remote music lessons, where you start conversation in just one click
-                        without registration.
-                    </h1>
-                    <button class="button-make-feat">Make Feat</button>
-                </div>
-                <div class="hero-main-image">
-                    <img class="landing-main-image" src="../images/landing/image-3.png"
-                         alt="featlytalk-webrtc-main-image"/>
-                </div>
-            </div>
-        </section>
-        <section class="hero-term-info">
-            <p>By starting to use the Featly service, you agree to the <a href="/privacy">Terms of Use</a></p>
-            <span>© 2023 Featly Inc., all rights reserved</span>
-        </section>
-    </main>
-</div>
+        <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+        <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    </head>
+    <body class="is-boxed has-animations">
+        <div class="body-wrap landing main">
+            <main>
+                <section class="hero-logo">
+                    <a class="logo" href="/">
+                        <img class="header-logo-image" src="../images/logo.svg" alt="featlytalk-webrtc-logo" />
+                    </a>
+                </section>
+                <section class="hero">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <h1 class="hero-title mt-0">
+                                Featly - solution for remote music lessons, where you start conversation in just one
+                                click without registration.
+                            </h1>
+                            <button id="joinRoomButton" class="button-make-feat" onclick="joinRoom()">Make Feat</button>
+                            <script>
+                                function generateUUID() {
+                                    // Generate random UUID v4
+                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                                        var r = (Math.random() * 16) | 0,
+                                            v = c === 'x' ? r : (r & 0x3) | 0x8;
+                                        return v.toString(16);
+                                    });
+                                }
 
-<script defer src="../js/landing.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-</body>
+                                function joinRoom() {
+                                    const roomName = generateUUID();
+
+                                    window.location.href = '/join/' + roomName;
+                                }
+                            </script>
+                        </div>
+                        <div class="hero-main-image">
+                            <img
+                                class="landing-main-image"
+                                src="../images/landing/image-3.png"
+                                alt="featlytalk-webrtc-main-image"
+                            />
+                        </div>
+                    </div>
+                </section>
+                <section class="hero-term-info">
+                    <p>By starting to use the Featly service, you agree to the <a href="/privacy">Terms of Use</a></p>
+                    <span>© 2023 Featly Inc., all rights reserved</span>
+                </section>
+            </main>
+        </div>
+
+        <script defer src="../js/landing.js"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </body>
 </html>
