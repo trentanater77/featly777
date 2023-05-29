@@ -83,7 +83,7 @@ const io = require('socket.io')(httpsServer, {
     maxHttpBufferSize: 1e7,
     transports: ['websocket'],
 });
-const host = config.listenIp // config.listenIp
+const host = config.listenIp; // config.listenIp
 
 const hostCfg = {
     protected: config.hostProtected,
@@ -480,7 +480,46 @@ function startServer() {
     // SOCKET IO
     // ####################################################
 
+    let elapsedTime = 0;
+    let startTime;
+    let timerId;
+
+    function formatTime(milliseconds) {
+        const hours = Math.floor(milliseconds / 3600000);
+        const minutes = Math.floor((milliseconds % 3600000) / 60000);
+        const seconds = Math.floor((milliseconds % 60000) / 1000);
+
+        return (
+            String(hours).padStart(2, '0') +
+            ':' +
+            String(minutes).padStart(2, '0') +
+            ':' +
+            String(seconds).padStart(2, '0')
+        );
+    }
+
+    function updateTimer() {
+        const currentTime = new Date().getTime();
+        const deltaTime = currentTime - startTime;
+        elapsedTime += deltaTime;
+
+        const time = formatTime(elapsedTime);
+
+        // Emit the updated time to all connected clients
+        io.emit('timerUpdate', time);
+
+        startTime = currentTime;
+    }
+
     io.on('connection', (socket) => {
+        console.log('A user connected');
+
+        // Start the timer when a client connects
+        if (!timerId) {
+            startTime = new Date().getTime();
+            timerId = setInterval(updateTimer, 1000);
+        }
+
         socket.on('createRoom', async ({ room_id }, callback) => {
             socket.room_id = room_id;
 
@@ -854,6 +893,17 @@ function startServer() {
         });
 
         socket.on('disconnect', () => {
+            console.log('A user disconnected');
+
+            // Stop the timer when all clients disconnect
+            if (io.engine.clientsCount === 0) {
+                clearInterval(timerId);
+                timerId = null;
+                elapsedTime = 0;
+            }
+
+            //
+
             if (!roomList.has(socket.room_id)) return;
 
             log.debug('Disconnect', getPeerName());

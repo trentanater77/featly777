@@ -32,9 +32,9 @@ const url = {
 
 const _PEER = {
     audioOn: '<i class="fas fa-microphone"></i>',
-    audioOff: '<i style="color: var(--main-color); margin-left: -2px;" class="fas fa-microphone-slash"></i>',
+    audioOff: '<i style="color: var(--main-color);" class="fas fa-microphone-slash" ></i>',
     videoOn: '<i class="fas fa-video"></i>',
-    videoOff: '<i style="color: var(--main-color);  margin-left: -1px;" class="fas fa-video-slash"></i>',
+    videoOff: '<i style="color: var(--main-color);" class="fas fa-video-slash"></i>',
     raiseHand: '<i style="color: rgb(0, 255, 71);" class="fas fa-hand-paper pulsate"></i>',
     lowerHand: '',
     acceptPeer: '<i class="fas fa-check"></i>',
@@ -2291,8 +2291,20 @@ async function getRoomParticipants(refresh = false) {
 
 async function getRoomMembers() {
     let room_info = await rc.getRoomInfo();
-    let peers = new Map(JSON.parse(room_info.peers));
-    console.log({ peers });
+    let peers = JSON.parse(room_info.peers);
+    const myId = peers[0][0];
+    const iconBox = document.getElementById(myId + '___pAudio');
+    console.log(iconBox.querySelector('i.fas.fa-microphone-slash'));
+}
+
+function toggleMyMebmerAudio() {
+    const isAudioOff = document.querySelector('tr#' + peer_name + ' i.fas.fa-microphone-slash');
+    isAudioOff ? startAudioButton.onclick() : stopAudioButton.onclick();
+}
+
+function toggleMyMebmerVideo() {
+    const isAudioOff = document.querySelector('tr#' + peer_name + ' i.fas.fa-video-slash');
+    isAudioOff ? startVideoButton.onclick() : stopVideoButton.onclick();
 }
 
 async function getParticipantsTable(peers) {
@@ -2337,22 +2349,22 @@ async function getParticipantsTable(peers) {
         if (rc.peer_id === peer_id) {
             table += `
             <tr id='${peer_name}'>
-            <td></td>
+                <td></td>
                 <td>${peer_name} (you)</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td><button>${peer_hand}</button></td>
-                <td><button id='${peer_id}___pAudio' ><img class='hidden sound-icon' src='../images/icons/sound_icon.svg' /> ${peer_audio}</button></td>
-                <td><button>${peer_video}</button></td>
+                <td><button id='${peer_id}___pAudio' onclick="toggleMyMebmerAudio()"><img class='hidden sound-icon' src='../images/icons/sound_icon.svg' /> ${peer_audio}</button></td>
+                <td><button onclick="toggleMyMebmerVideo()">${peer_video}</button></td>
             </tr>
             `;
         } else {
             if (isRulesActive && isPresenter) {
                 table += `
                 <tr id='${peer_id}'>
-                <td></td>
+                    <td></td>
                     <td>${peer_name}</td>
                     <td></td>
                     <td></td>

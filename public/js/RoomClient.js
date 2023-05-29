@@ -490,6 +490,10 @@ class RoomClient {
             }.bind(this),
         );
 
+        this.socket.on('timerUpdate', function (time) {
+            headerTimer.textContent = time;
+        });
+
         this.socket.on(
             'refreshParticipantsCount',
             function (data) {

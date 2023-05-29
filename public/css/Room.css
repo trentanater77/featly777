@@ -2258,6 +2258,15 @@ button:hover {
     max-width: 27px;
 }
 
+
+#roomParticipants td i {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #roomParticipants td:first-child,
 #roomParticipants th:first-child {
     position: absolute;
