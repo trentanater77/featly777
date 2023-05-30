@@ -494,6 +494,10 @@ class RoomClient {
             headerTimer.textContent = time;
         });
 
+        this.socket.on('showStartRecordingMessage', function (data) {
+            showSnackbar(data);
+        });
+
         this.socket.on(
             'refreshParticipantsCount',
             function (data) {
@@ -2811,6 +2815,7 @@ class RoomClient {
         console.log('MediaRecorder supported options', options);
         options = { mimeType: options[0] };
         try {
+            this.socket.emit('startRecordingMessage', 'Screen recording started');
             if (this.isMobileDevice) {
                 // on mobile devices recording camera + audio
                 let newStream = this.getNewStream(this.localVideoStream, this.localAudioStream);

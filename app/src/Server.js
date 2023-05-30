@@ -477,7 +477,7 @@ function startServer() {
     }
 
     // ####################################################
-    // SOCKET IO
+    // TIMER
     // ####################################################
 
     let elapsedTime = 0;
@@ -511,17 +511,21 @@ function startServer() {
         startTime = currentTime;
     }
 
+    // ####################################################
+    // SOCKET IO
+    // ####################################################
+
     io.on('connection', (socket) => {
         console.log('A user connected');
 
-        // Start the timer when a client connects
-        if (!timerId) {
-            startTime = new Date().getTime();
-            timerId = setInterval(updateTimer, 1000);
-        }
-
         socket.on('createRoom', async ({ room_id }, callback) => {
             socket.room_id = room_id;
+
+            // Start the timer when a client connects
+            if (!timerId) {
+                startTime = new Date().getTime();
+                timerId = setInterval(updateTimer, 1000);
+            }
 
             if (roomList.has(socket.room_id)) {
                 callback({ error: 'already exists' });
@@ -531,6 +535,11 @@ function startServer() {
                 roomList.set(socket.room_id, new Room(socket.room_id, worker, io));
                 callback({ room_id: socket.room_id });
             }
+        });
+
+        socket.on('startRecordingMessage', (text) => {
+            if (!roomList.has(socket.room_id)) return;
+            io.emit('showStartRecordingMessage', text);
         });
 
         socket.on('getPeerCounts', async ({}, callback) => {
