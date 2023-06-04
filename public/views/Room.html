@@ -223,17 +223,23 @@
         <header class="header">
             <img class="header-logo" src="../images/featlyLogo.svg" alt="logo" />
             <nav id="headerNav" class="header-nav">
-                <a href="#">What is Featly?</a>
-                <a href="#"> Examples of using</a>
+                <a href="/">What is Featly?</a>
             </nav>
             <div id="headerCenterBlock" class="hidden header-center-block">
                 <h1>Videomeeting</h1>
                 <span id="headerTimer">00:00:00</span>
             </div>
-            <div class="header-burger">
+            <div id="headerBurgerBtn" class="header-burger" onclick="toggleBurgerMenu()">
                 <span></span>
             </div>
         </header>
+
+        <div id="headerBurgerMenu" class="header-burger-menu">
+            <button id="closeBurgerMenu" onclick="toggleBurgerMenu()">
+                <i class="fa-sharp fa-solid fa-xmark"></i>
+            </button>
+            <a href="/">What is Featly?</a>
+        </div>
 
         <div id="membersScreens" class="members-screens hidden">
             <div id="membersScreenHeader" class="members-screens-header">
@@ -247,7 +253,7 @@
                 <!-- <div id="membersProducerMicrophone" class="members-microphone">
                     <i class="fa-solid fa-microphone"></i>
                 </div> -->
-                <!-- <span id="membersPeerName">Name</span> -->
+                <span id="membersPeerName"></span>
             </div>
         </div>
 

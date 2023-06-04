@@ -769,7 +769,7 @@ function roomIsReady() {
     //
 
     membersTitlePeerName.innerText = peer_name;
-    // membersPeerName.innerText = peer_name;
+    membersPeerName.innerText = peer_name;
 
     getRoomParticipants();
 
@@ -1133,14 +1133,17 @@ function handleButtons() {
     startAudioButton.onclick = () => {
         setAudioButtonsDisabled(true);
         if (!isEnumerateAudioDevices) initEnumerateAudioDevices();
-        rc.produce(RoomClient.mediaType.audio, microphoneSelect.value);
+        // rc.produce(RoomClient.mediaType.audio, microphoneSelect.value);
+        rc.resumeProducer(RoomClient.mediaType.audio);
+
         rc.updatePeerInfo(peer_name, rc.peer_id, 'audio', true);
-        // rc.resumeProducer(RoomClient.mediaType.audio);
+
         membersProducerMicrophone.remove();
     };
     stopAudioButton.onclick = () => {
         setAudioButtonsDisabled(true);
-        rc.closeProducer(RoomClient.mediaType.audio);
+        // rc.closeProducer(RoomClient.mediaType.audio);
+        rc.pauseProducer(RoomClient.mediaType.audio);
         rc.updatePeerInfo(peer_name, rc.peer_id, 'audio', false);
 
         const mic = document.createElement('div');
@@ -1148,20 +1151,20 @@ function handleButtons() {
         mic.className = 'members-microphone';
         mic.innerHTML = '<i class="fas fa-microphone-slash"></i>';
         membersPeerScreen.appendChild(mic);
-        // rc.pauseProducer(RoomClient.mediaType.audio);
     };
     startVideoButton.onclick = () => {
         setVideoButtonsDisabled(true);
         if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
-        rc.produce(RoomClient.mediaType.video, videoSelect.value);
-
-        // rc.resumeProducer(RoomClient.mediaType.video);
+        // rc.produce(RoomClient.mediaType.video, videoSelect.value);
+        rc.updatePeerInfo(peer_name, rc.peer_id, 'video', true);
+        rc.resumeProducer(RoomClient.mediaType.video);
     };
     stopVideoButton.onclick = () => {
         setVideoButtonsDisabled(true);
-        rc.closeProducer(RoomClient.mediaType.video);
-        producerCameraBox.querySelector('.Camera').remove();
-        // rc.pauseProducer(RoomClient.mediaType.video);
+        // rc.closeProducer(RoomClient.mediaType.video, true);
+        // producerCameraBox.querySelector('.Camera').remove();
+        rc.updatePeerInfo(peer_name, rc.peer_id, 'video', false);
+        rc.pauseProducer(RoomClient.mediaType.video);
     };
     startScreenButton.onclick = () => {
         rc.produce(RoomClient.mediaType.screen);
@@ -1602,10 +1605,10 @@ function handleRoomClientEvents() {
     });
     rc.on(RoomClient.EVENTS.startVideo, () => {
         console.log('Room Client start video');
+        setVideoButtonsDisabled(false);
         hide(startVideoButton);
         show(stopVideoButton);
         setColor(startVideoButton, 'var(--main-color)');
-        setVideoButtonsDisabled(false);
     });
     rc.on(RoomClient.EVENTS.pauseVideo, () => {
         console.log('Room Client pause video');
@@ -1619,10 +1622,10 @@ function handleRoomClientEvents() {
     });
     rc.on(RoomClient.EVENTS.stopVideo, () => {
         console.log('Room Client stop video');
-
+        setVideoButtonsDisabled(false);
         hide(stopVideoButton);
         show(startVideoButton);
-        setVideoButtonsDisabled(false);
+
         isVideoPrivacyActive = false;
     });
     rc.on(RoomClient.EVENTS.startScreen, () => {
@@ -1721,6 +1724,10 @@ function userLog(icon, message, position, timer = 3000) {
     });
 }
 
+function toggleBurgerMenu() {
+    headerBurgerMenu.classList.toggle('showMenu');
+}
+
 function saveDataToFile(dataURL, fileName) {
     const a = document.createElement('a');
     a.style.display = 'none';
@@ -1773,13 +1780,13 @@ function toggleClassElements(className, displayState) {
 }
 
 function setAudioButtonsDisabled(disabled) {
-    startAudioButton.disabled = disabled;
-    stopAudioButton.disabled = disabled;
+    // startAudioButton.disabled = disabled;
+    // stopAudioButton.disabled = disabled;
 }
 
 function setVideoButtonsDisabled(disabled) {
-    startVideoButton.disabled = disabled;
-    stopVideoButton.disabled = disabled;
+    // startVideoButton.disabled = disabled;
+    // stopVideoButton.disabled = disabled;
 }
 
 async function sound(name) {
@@ -2304,8 +2311,8 @@ function toggleMyMebmerAudio() {
 }
 
 function toggleMyMebmerVideo() {
-    const isAudioOff = document.querySelector('tr#' + peer_name + ' i.fas.fa-video-slash');
-    isAudioOff ? startVideoButton.onclick() : stopVideoButton.onclick();
+    const isVideoOff = document.querySelector('tr#' + peer_name + ' i.fas.fa-video-slash');
+    isVideoOff ? startVideoButton.onclick() : stopVideoButton.onclick();
 }
 
 async function getParticipantsTable(peers) {

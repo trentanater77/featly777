@@ -521,12 +521,6 @@ function startServer() {
         socket.on('createRoom', async ({ room_id }, callback) => {
             socket.room_id = room_id;
 
-            // Start the timer when a client connects
-            if (!timerId) {
-                startTime = new Date().getTime();
-                timerId = setInterval(updateTimer, 1000);
-            }
-
             if (roomList.has(socket.room_id)) {
                 callback({ error: 'already exists' });
             } else {
@@ -724,6 +718,12 @@ function startServer() {
                 });
             }
 
+            // Start the timer when a client connects
+            if (!timerId) {
+                startTime = new Date().getTime();
+                timerId = setInterval(updateTimer, 1000);
+            }
+
             log.debug('User joined', data);
             roomList.get(socket.room_id).addPeer(new Peer(socket.id, data));
 
@@ -866,6 +866,24 @@ function startServer() {
             roomList.get(socket.room_id).getPeers().get(socket.id).updatePeerInfo(data);
             roomList.get(socket.room_id).closeProducer(socket.id, data.producer_id);
         });
+
+        socket.on('pauseConsumer', (data) => {
+            if (!roomList.has(socket.room_id)) return;
+
+            log.debug('Producer paused', data);
+
+            io.emit('pauseConsumer', data);
+        });
+
+
+        socket.on('resumeConsumer', (data) => {
+          if (!roomList.has(socket.room_id)) return;
+
+          log.debug('Producer resumed', data);
+
+          io.emit('resumeConsumer', data);
+      });
+
 
         socket.on('resume', async (_, callback) => {
             await consumer.resume();
