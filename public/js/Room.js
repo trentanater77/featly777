@@ -784,7 +784,7 @@ function roomIsReady() {
     }
 
     BUTTONS.main.chatButton && show(chatButton);
-    BUTTONS.main.reactionButton && show(reactionButton);
+    // BUTTONS.main.reactionButton && show(reactionButton);
     BUTTONS.main.participantsButton && show(participantsButton);
     !BUTTONS.chat.chatSaveButton && hide(chatSaveButton);
     BUTTONS.chat.chatEmojiButton && show(chatEmojiButton);
@@ -1182,9 +1182,9 @@ function handleButtons() {
         rc.shareVideo('all');
     };
 
-    reactionButton.onclick = () => {
-        rc.handleFakeAudioVolume();
-    };
+    // reactionButton.onclick = () => {
+    //     rc.handleFakeAudioVolume();
+    // };
 
     videoCloseBtn.onclick = () => {
         rc.closeVideo(true);

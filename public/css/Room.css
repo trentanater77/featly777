@@ -1099,7 +1099,7 @@ input:checked + .slider:before {
     z-index: 3;
     position: absolute;
     display: grid;
-    grid-template-columns: auto auto 1fr auto auto auto auto auto auto auto 1fr auto;
+    grid-template-columns: auto auto 1fr auto auto auto auto auto auto 1fr auto;
     background: var(--control-bg);
     padding: 12px 24px;
     height: 126px;
