@@ -2119,7 +2119,7 @@ function mouseUp() {
 
 function mouseMove() {
     if (wbIsEraser) {
-        wbCanvas.hoverCursor = 'not-allowed';
+        wbCanvas.hoverCursor = 'url("../images/icons/eraser-icon.png"), auto';
         return;
     } else {
         wbCanvas.hoverCursor = 'move';
