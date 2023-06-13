@@ -237,6 +237,39 @@ function makeId(length) {
 // ENUMERATE DEVICES
 // ####################################################
 
+initSettingButton.onclick = () => {
+    toggle(initSettingPopup);
+    initSettingPopup.classList.contains('hide')
+        ? document.removeEventListener('click', (event) =>
+              clickOutsideInitSettingPopup(event, initSettingButton, initSettingPopup),
+          )
+        : document.addEventListener('click', (event) =>
+              clickOutsideInitSettingPopup(event, initSettingButton, initSettingPopup),
+          );
+};
+
+function clickOutsideInitSettingPopup(event, trigger, element) {
+    const targetElement = event.target;
+
+    if (
+        !initSettingPopup.contains(targetElement) &&
+        !initSettingButton.contains(targetElement) &&
+        !showSettingsBtn.contains(targetElement)
+    ) {
+        hide(initSettingPopup);
+        document.removeEventListener('click', (event) => clickOutsideInitSettingPopup(event, trigger, element));
+    }
+}
+
+function clickOutsidePopup(event, trigger, element) {
+    const targetElement = event.target;
+
+    if (!trigger.contains(targetElement)) {
+        element.classList.remove('show-popup');
+        document.removeEventListener('click', (event) => clickOutsidePopup(event, trigger, element));
+    }
+}
+
 const initVideoButtonDOM = document.getElementById('initVideoButton');
 const initAudioButtonDOM = document.getElementById('initAudioButton');
 const initAudioButtonText = document.querySelector('.init-audio-button-box p span');
@@ -952,17 +985,26 @@ function handleButtons() {
     //     shareRoom(true);
     // };
     showSettingsBtn.onclick = () => {
-        toggle(initSettingPopup);
-        toggleClass(morePopup, 'show-popup');
+        // toggle(initSettingPopup);
+        initSettingButton.onclick();
+        // toggleClass(morePopup, 'show-popup');
     };
 
     showViewPopupBtn.onclick = () => {
         toggleClass(viewPopup, 'show-popup');
+
+        viewPopup.classList.contains('show-popup')
+            ? document.addEventListener('click', (event) => clickOutsidePopup(event, showViewPopupBtn, viewPopup))
+            : document.removeEventListener('click', (event) => clickOutsidePopup(event, showViewPopupBtn, viewPopup));
     };
 
     settingsButton.onclick = () => {
         // rc.toggleMySettings();
         toggleClass(morePopup, 'show-popup');
+
+        morePopup.classList.contains('show-popup')
+            ? document.addEventListener('click', (event) => clickOutsidePopup(event, settingsButton, morePopup))
+            : document.removeEventListener('click', (event) => clickOutsidePopup(event, settingsButton, morePopup));
     };
     mySettingsCloseBtn.onclick = () => {
         rc.toggleMySettings();
@@ -1030,7 +1072,7 @@ function handleButtons() {
         removeMenuChecks();
         show(allScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.remove('speaks-now-view');
-        toggleClass(viewPopup, 'show-popup');
+        // toggleClass(viewPopup, 'show-popup');
 
         const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
         allSpeakers.forEach((speaker) => {
@@ -1043,7 +1085,7 @@ function handleButtons() {
         removeMenuChecks();
         show(speakScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.add('speaks-now-view');
-        toggleClass(viewPopup, 'show-popup');
+        // toggleClass(viewPopup, 'show-popup');
     };
 
     document.addEventListener('fullscreenchange', function (e) {
@@ -1108,11 +1150,11 @@ function handleButtons() {
     };
     startRecButton.onclick = () => {
         rc.startRecording();
-        toggleClass(morePopup, 'show-popup');
+        // toggleClass(morePopup, 'show-popup');
     };
     stopRecButton.onclick = () => {
         rc.stopRecording();
-        toggleClass(morePopup, 'show-popup');
+        // toggleClass(morePopup, 'show-popup');
         showSnackbar('Record saved');
     };
     pauseRecButton.onclick = () => {
