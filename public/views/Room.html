@@ -338,7 +338,12 @@
                 <span>More</span>
 
                 <div id="morePopup" class="vertical-select-popup">
-                    <div id="startRecButton" class="vertical-select-item">
+                    <div class="mobile-more-popup-box">
+                        <h2>More</h2>
+                        <img class="close-icon" src="../images/icons/close_icon.svg" alt="close" />
+                    </div>
+
+                    <div id="startRecButton" class="vertical-select-item desktop-element">
                         <img src="../images/icons/rec_icon.svg" alt="" />
                         <span>Record a meeting</span>
                     </div>
@@ -348,8 +353,46 @@
                         <span>Stop record</span>
                     </div>
 
-                    <div id="showSettingsBtn" class="vertical-select-item">
+                    <div id="showSettingsBtn" class="vertical-select-item desktop-element">
                         <img src="../images/icons/settings_icon.svg" alt="" /> <span>Settings</span>
+                    </div>
+
+                    <div class="vertical-select-item mobile-element">
+                        <img src="../images/icons/members_icon.svg" alt="" />
+                        <span id="mobileMembersPopupCount">2 members</span>
+                    </div>
+
+                    <div class="vertical-select-item mobile-element" onclick="copyRoomURL()">
+                        <img src="../images/icons/plus_icon.svg" alt="" />
+                        <span>Invite to a meeting</span>
+                    </div>
+
+                    <div class="vertical-select-item mobile-element">
+                        <img src="../images/icons/speaks_now.svg" alt="" />
+                        <span>Speaks now</span>
+                    </div>
+
+                    <div
+                        id="mobileStartScreenButton"
+                        class="vertical-select-item mobile-element"
+                        onclick="startScreenButton.onclick()"
+                    >
+                        <img src="../images/icons/share_icon.svg" alt="" />
+                        <span>Share screen</span>
+                    </div>
+
+                    <div
+                        id="mobileStopScreenButton"
+                        class="vertical-select-item mobile-element hidden"
+                        onclick="stopScreenButton.onclick()"
+                    >
+                        <img src="../images/icons/share_icon.svg" alt="" />
+                        <span>Stop demo</span>
+                    </div>
+
+                    <div class="vertical-select-item mobile-element">
+                        <img src="../images/icons/switch_camera.svg" alt="" />
+                        <span>Switch camera</span>
                     </div>
                 </div>
             </div>
@@ -363,6 +406,21 @@
                     <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Exit</span>
                 </button>
             </div>
+        </div>
+
+        <div id="mobileSettingsControl" class="mobile-settings-control hidden">
+            <div class="mobile-settings-control-box">
+                <h2>Videomeeting</h2>
+                <div class="mobile-settings-control-members">
+                    <div class="mobile-settings-control-members">
+                        <i class="fa-solid fa-user"></i><span id="mobileMembersCount">0</span>
+                    </div>
+                    <div class="mobile-settings-control-members">
+                        <i class="fa-sharp fa-regular fa-clock"></i><span id="mobileTimer">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+            <button id="mobileShowSettingsBtn" class="fa-solid fa-gear"></button>
         </div>
 
         <section id="mySettings" class="fadein center hidden">

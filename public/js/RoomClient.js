@@ -492,6 +492,7 @@ class RoomClient {
 
         this.socket.on('timerUpdate', function (time) {
             headerTimer.textContent = time;
+            mobileTimer.textContent = time;
         });
 
         this.socket.on('pauseConsumer', function (id) {

@@ -254,7 +254,8 @@ function clickOutsideInitSettingPopup(event, trigger, element) {
     if (
         !initSettingPopup.contains(targetElement) &&
         !initSettingButton.contains(targetElement) &&
-        !showSettingsBtn.contains(targetElement)
+        !showSettingsBtn.contains(targetElement) &&
+        !mobileShowSettingsBtn.contains(targetElement)
     ) {
         hide(initSettingPopup);
         document.removeEventListener('click', (event) => clickOutsideInitSettingPopup(event, trigger, element));
@@ -793,6 +794,8 @@ function roomIsReady() {
 
     BLOCKS.popups.membersScreens && show(membersScreens);
 
+    show(mobileSettingsControl);
+
     show(producerCameraBox);
 
     //invite popup
@@ -1217,6 +1220,24 @@ function handleButtons() {
         rc.closeProducer(RoomClient.mediaType.screen);
         // hide(videoPinMediaContainer);
     };
+    mobileStartScreenButton.onclick = () => {
+        rc.produce(RoomClient.mediaType.screen);
+        // show(videoPinMediaContainer.querySelector('.share-center-box'));
+        // show(videoPinMediaContainer);
+        hide(mobileStartScreenButton);
+        show(mobileStopScreenButton);
+    };
+    mobileStopScreenButton.onclick = () => {
+        rc.closeProducer(RoomClient.mediaType.screen);
+        // hide(videoPinMediaContainer);
+        hide(mobileStopScreenButton);
+        show(mobileStartScreenButton);
+    };
+
+    mobileShowSettingsBtn.onclick = () => {
+        initSettingButton.onclick();
+    };
+
     fileShareButton.onclick = () => {
         rc.selectFileToShare(rc.peer_id, true);
     };
@@ -2510,6 +2531,8 @@ function setParticipantsTippy(peers) {
 
 function refreshParticipantsCount(count, adapt = true) {
     participantsTitle.innerHTML = `${count} members`;
+    mobileMembersPopupCount.innerHTML = `${count} members`;
+    mobileMembersCount.innerText = count;
     if (adapt) adaptAspectRatio(count);
 }
 

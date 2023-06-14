@@ -274,6 +274,7 @@ video:fullscreen {
     opacity: 1;
 }
 
+.Camera video,
 .mirror {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
