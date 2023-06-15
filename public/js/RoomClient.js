@@ -1123,7 +1123,7 @@ class RoomClient {
                 elem.volume = 0;
                 elem.poster = image.poster;
                 elem.style.objectFit = isScreen ? 'contain' : 'var(--videoObjFit)';
-                elem.className = this.isMobileDevice || isScreen ? '' : 'mirror';
+                // elem.className = this.isMobileDevice || isScreen ? '' : 'mirror';
                 vb = document.createElement('div');
                 vb.setAttribute('id', this.peer_id + '__vb');
                 vb.className = 'videoMenuBar fadein';
@@ -1169,6 +1169,10 @@ class RoomClient {
                 placement.appendChild(d);
 
                 this.attachMediaStream(elem, stream, type, 'Producer');
+
+                if (elem.clientHeight > elem.clientWidth) {
+                    elem.className = 'vertical-orientation';
+                }
                 this.myVideoEl = elem;
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, this.peer_id, true);
@@ -1424,7 +1428,7 @@ class RoomClient {
                 d = document.createElement('div');
                 sp = document.createElement('span');
                 sp.innerText = peer_name;
-                d.className = 'Camera members-screen';
+                d.className = 'Camera members-screen ' + remotePeerId;
                 d.id = id + '__video';
                 elem = document.createElement('video');
                 elem.setAttribute('id', id);
@@ -1508,16 +1512,11 @@ class RoomClient {
 
                 placement.appendChild(d);
 
-                // const videoBox = document.querySelector('.video-conteiner-box');
-
-                // if (videoMediaContainer.scrollHeight + 285 > videoBox.scrollHeight) {
-                //     videoBox.style.alignItems = 'start';
-                //     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                // }
-
-                // console.log('!!!!',{ videoMediaContainer: videoMediaContainer.scrollHeight, videoBox: videoBox.scrollHeight });
-
                 this.attachMediaStream(elem, stream, type, 'Consumer');
+
+                if (elem.clientHeight > elem.clientWidth) {
+                    elem.className = 'vertical-orientation';
+                }
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, remotePeerId);
                 this.handleTS(elem.id, ts.id);
@@ -1631,11 +1630,8 @@ class RoomClient {
         // let peer_id = peer_info.peer_id;
         // let peer_name = peer_info.peer_name;
         // let peer_audio = peer_info.peer_audio;
-
         // this.removeVideoOff(peer_id);
-
         // // console.log({ peer_info });
-
         // // if (peer_video) {
         // // } else {
         // //     console.log(document.querySelectorAll(`video[name="${peer_id}"]`));
@@ -1649,7 +1645,6 @@ class RoomClient {
         // au = document.createElement('button');
         // au.id = peer_id + '__audio';
         // au.className = peer_audio ? html.audioOn : html.audioOff;
-
         // if (remotePeer) {
         //     pv = document.createElement('input');
         //     pv.id = peer_id + '___pVolume';
@@ -1674,7 +1669,6 @@ class RoomClient {
         // i.className = 'member-name';
         // i.innerText = peer_name;
         // i.id = peer_id + '__img';
-
         // if (remotePeer) {
         //     p = document.createElement('p');
         //     p.id = peer_id + '__name';
@@ -1683,7 +1677,6 @@ class RoomClient {
         //     d.appendChild(p);
         //     this.popupPeerInfo(p.id, peer_info);
         // }
-
         // h = document.createElement('i');
         // h.id = peer_id + '__hand';
         // // h.className = html.userHand;
@@ -1704,16 +1697,13 @@ class RoomClient {
         // }
         // vb.appendChild(au);
         // d.appendChild(i);
-
         // d.appendChild(h);
         // d.appendChild(pm);
         // d.appendChild(vb);
         // // this.videoMediaContainer.appendChild(d);
         // // membersPeerScreen.appendChild(d);
         // // placement.appendChild(d);
-
         // console.log({ videoMediaContainer, membersPeerScreen });
-
         // BUTTONS.videoOff.muteAudioButton && this.handleAU(au.id);
         // if (remotePeer) {
         //     this.handlePV('remotePeer___' + pv.id);
@@ -1723,7 +1713,6 @@ class RoomClient {
         //     this.handleKO(ko.id);
         // }
         // this.handleDD(d.id, peer_id, !remotePeer);
-
         // this.setVideoAvatarImgName(i.id, peer_name);
         // this.getId(i.id).style.display = 'block';
         // handleAspectRatio();
@@ -3909,18 +3898,42 @@ class RoomClient {
         const microphoneIcon = currentTableMember.querySelector('i');
 
         // getRoomMembers();
-
+        // peer_info.is_mobile_device
         if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+            // --------- Desktop & Mobile -------- //
             const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
             const currentSpeakNow = videoMediaContainer.querySelector('.Camera.' + peerId);
 
-            allSpeakers.forEach((speaker) => {
-                hide(speaker);
-            });
+            if ((peerId !== this.peer_id && peer_info.is_mobile_device) || !peer_info.is_mobile_device) {
+                allSpeakers.forEach((speaker) => {
+                    hide(speaker);
+                });
 
-            if (peerId === this.peer_id) show(producerCameraBox);
-            show(currentSpeakNow);
+                show(currentSpeakNow);
+            }
+
+            if (peerId === this.peer_id && !peer_info.is_mobile_device) show(producerCameraBox);
+
+            // --------- Desktop -------- //
+
+            if (!peer_info.is_mobile_device) {
+                const allSpeakersMembers = membersScreens.querySelectorAll('.Camera');
+                const currentSpeakNowMembers = membersScreens.querySelector('.Camera.' + peerId);
+
+                allSpeakersMembers.forEach((speaker) => {
+                    show(speaker);
+                });
+
+                show(membersPeerScreen);
+
+                if (peerId === this.peer_id) {
+                    hide(membersPeerScreen);
+                } else {
+                    hide(currentSpeakNowMembers);
+                }
+            }
         }
+        // }
 
         allMembers.forEach((item) => {
             const videoBox1 = item.closest('.members-screen');
@@ -3962,16 +3975,41 @@ class RoomClient {
         const soundIcon = currentTableMember.querySelector('img');
         const microphoneIcon = currentTableMember.querySelector('i');
 
+        // getRoomMembers();
+        // peer_info.is_mobile_device
         if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+            // --------- Desktop & Mobile -------- //
             const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
             const currentSpeakNow = videoMediaContainer.querySelector('.Camera.' + peerId);
 
-            allSpeakers.forEach((speaker) => {
-                hide(speaker);
-            });
+            if ((peerId !== this.peer_id && peer_info.is_mobile_device) || !peer_info.is_mobile_device) {
+                allSpeakers.forEach((speaker) => {
+                    hide(speaker);
+                });
 
-            if (peerId === this.peer_id) show(producerCameraBox);
-            show(currentSpeakNow);
+                show(currentSpeakNow);
+            }
+
+            if (peerId === this.peer_id && !peer_info.is_mobile_device) show(producerCameraBox);
+
+            // --------- Desktop -------- //
+
+            if (!peer_info.is_mobile_device) {
+                const allSpeakersMembers = membersScreens.querySelectorAll('.Camera');
+                const currentSpeakNowMembers = membersScreens.querySelector('.Camera.' + peerId);
+
+                allSpeakersMembers.forEach((speaker) => {
+                    show(speaker);
+                });
+
+                show(membersPeerScreen);
+
+                if (peerId === this.peer_id) {
+                    hide(membersPeerScreen);
+                } else {
+                    hide(currentSpeakNowMembers);
+                }
+            }
         }
 
         allMembers.forEach((item) => {

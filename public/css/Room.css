@@ -493,8 +493,8 @@ a {
     border: 1px solid #2e2e36;
     border-radius: 14px;
     width: 308px;
-    top: 104px;
-    right: 16px;
+    top: 12px;
+    right: 10px;
     z-index: 9;
     overflow: hidden;
     padding: 3px;
@@ -550,7 +550,7 @@ a {
     display: flex;
     justify-content: space-between;
     padding: 11px 15px 8px;
-    cursor: move;
+    /* cursor: move; */
 }
 
 .members-screens-header h2 {
@@ -2015,7 +2015,23 @@ span.highlight {
     }
 
     #membersScreens {
+        height: 162px;
+        overflow: hidden;
+        width: 90px;
+        top: 60px;
+    }
+
+    #membersPeerName {
+        font-size: 24px;
+    }
+
+    .members-screens-header {
         display: none;
+    }
+
+    #membersPeerScreen {
+        width: 100%;
+        min-height: 154px;
     }
 
     .chat-msger-controls {
@@ -2212,8 +2228,8 @@ em-emoji-picker {
 }
 
 .sound-icon {
-    margin-left: -8px;
-    margin-top: 6px;
+    margin-left: -2px;
+    margin-top: 4px;
 }
 
 /*--------------------------------------------------------------

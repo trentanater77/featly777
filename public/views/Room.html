@@ -232,12 +232,12 @@
 
         <div id="headerBurgerMenu" class="header-burger-menu">
             <button id="closeBurgerMenu" onclick="toggleBurgerMenu()">
-                <i class="fa-sharp fa-solid fa-xmark"></i>
+                <img class="close-icon" src="../images/icons/close_icon.svg" alt="close" />
             </button>
             <a href="/">What is Featly?</a>
         </div>
 
-        <div id="membersScreens" class="members-screens hidden">
+        <div id="membersScreens" class="members-screens minify hidden">
             <div id="membersScreenHeader" class="members-screens-header">
                 <h2 id="membersTitlePeerName">Name</h2>
                 <div class="members-buttons-box">
@@ -367,12 +367,17 @@
                         <span>Invite to a meeting</span>
                     </div>
 
-                    <div class="vertical-select-item mobile-element">
+                    <div class="vertical-select-item mobile-element" id="mobileSpeakScreenView">
                         <img src="../images/icons/speaks_now.svg" alt="" />
                         <span>Speaks now</span>
                     </div>
 
-                    <div
+                    <div class="vertical-select-item mobile-element hidden" id="mobileAllScreenView">
+                        <img src="../images/icons/all_view_icon.svg" alt="" />
+                        <span>All members</span>
+                    </div>
+
+                    <!-- <div
                         id="mobileStartScreenButton"
                         class="vertical-select-item mobile-element"
                         onclick="startScreenButton.onclick()"
@@ -388,12 +393,12 @@
                     >
                         <img src="../images/icons/share_icon.svg" alt="" />
                         <span>Stop demo</span>
-                    </div>
+                    </div> -->
 
-                    <div class="vertical-select-item mobile-element">
+                    <!-- <div class="vertical-select-item mobile-element">
                         <img src="../images/icons/switch_camera.svg" alt="" />
                         <span>Switch camera</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

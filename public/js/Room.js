@@ -792,7 +792,7 @@ function roomIsReady() {
     BLOCKS.header.headerCenterBlock && show(headerCenterBlock);
     BLOCKS.control.control && show(control);
 
-    BLOCKS.popups.membersScreens && show(membersScreens);
+    BLOCKS.popups.membersScreens && !peer_info.is_mobile_device && show(membersScreens);
 
     show(mobileSettingsControl);
 
@@ -840,7 +840,7 @@ function roomIsReady() {
     } else {
         // rc.makeDraggable(chatRoom, chatHeader);
         rc.makeDraggable(mySettings, mySettingsHeader);
-        rc.makeDraggable(membersScreens, membersScreenHeader);
+        // rc.makeDraggable(membersScreens, membersScreenHeader);
 
         // rc.makeDraggable(participants, participantsHeader);
         // rc.makeDraggable(whiteboard, whiteboardHeader);
@@ -1067,28 +1067,53 @@ function handleButtons() {
     }
 
     fullScreenView.onclick = () => {
+        hide(participants);
+        hide(chatRoom);
         document.documentElement.requestFullscreen();
     };
 
     allScreenView.onclick = () => {
-        document.exitFullscreen();
+        if (document.fullscreen) document.exitFullscreen();
         removeMenuChecks();
         show(allScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.remove('speaks-now-view');
         // toggleClass(viewPopup, 'show-popup');
 
-        const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
+        const allSpeakers = document.querySelectorAll('.Camera');
         allSpeakers.forEach((speaker) => {
             show(speaker);
         });
+        show(membersPeerScreen);
+        minifyMembersScreens.onclick();
     };
 
     speakScreenView.onclick = () => {
-        document.exitFullscreen();
+        if (document.fullscreen) document.exitFullscreen();
         removeMenuChecks();
         show(speakScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.add('speaks-now-view');
         // toggleClass(viewPopup, 'show-popup');
+        minifyMembersScreens.onclick();
+        rc.handleFakeAudioVolume();
+    };
+
+    mobileSpeakScreenView.onclick = () => {
+        hide(mobileSpeakScreenView);
+        show(mobileAllScreenView);
+        document.querySelector('.video-conteiner-box').classList.add('speaks-now-view');
+
+        show(membersScreens);
+    };
+
+    mobileAllScreenView.onclick = () => {
+        show(mobileSpeakScreenView);
+        hide(mobileAllScreenView);
+        document.querySelector('.video-conteiner-box').classList.remove('speaks-now-view');
+        const allSpeakers = videoMediaContainer.querySelectorAll('.Camera');
+        allSpeakers.forEach((speaker) => {
+            show(speaker);
+        });
+        hide(membersScreens);
     };
 
     document.addEventListener('fullscreenchange', function (e) {
@@ -1220,22 +1245,23 @@ function handleButtons() {
         rc.closeProducer(RoomClient.mediaType.screen);
         // hide(videoPinMediaContainer);
     };
-    mobileStartScreenButton.onclick = () => {
-        rc.produce(RoomClient.mediaType.screen);
-        // show(videoPinMediaContainer.querySelector('.share-center-box'));
-        // show(videoPinMediaContainer);
-        hide(mobileStartScreenButton);
-        show(mobileStopScreenButton);
-    };
-    mobileStopScreenButton.onclick = () => {
-        rc.closeProducer(RoomClient.mediaType.screen);
-        // hide(videoPinMediaContainer);
-        hide(mobileStopScreenButton);
-        show(mobileStartScreenButton);
-    };
+    // mobileStartScreenButton.onclick = () => {
+    //     rc.produce(RoomClient.mediaType.screen);
+    //     // show(videoPinMediaContainer.querySelector('.share-center-box'));
+    //     // show(videoPinMediaContainer);
+    //     hide(mobileStartScreenButton);
+    //     show(mobileStopScreenButton);
+    // };
+    // mobileStopScreenButton.onclick = () => {
+    //     rc.closeProducer(RoomClient.mediaType.screen);
+    //     // hide(videoPinMediaContainer);
+    //     hide(mobileStopScreenButton);
+    //     show(mobileStartScreenButton);
+    // };
 
     mobileShowSettingsBtn.onclick = () => {
         initSettingButton.onclick();
+        console.log('!!!');
     };
 
     fileShareButton.onclick = () => {
