@@ -1101,8 +1101,8 @@ function handleButtons() {
         hide(mobileSpeakScreenView);
         show(mobileAllScreenView);
         document.querySelector('.video-conteiner-box').classList.add('speaks-now-view');
-
         show(membersScreens);
+        hide(producerCameraBox);
     };
 
     mobileAllScreenView.onclick = () => {
