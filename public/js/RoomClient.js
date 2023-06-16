@@ -1576,6 +1576,10 @@ class RoomClient {
 
                 this.socket.emit('refreshParticipantsCount');
 
+                if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+                    this.handleFakeAudioVolume();
+                }
+
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, remotePeerId);
                 this.handleTS(elem.id, ts.id);
