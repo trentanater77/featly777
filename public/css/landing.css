@@ -1153,7 +1153,7 @@ label {
     position: relative;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .main.landing .hero-inner {
         display: grid;
         grid-template-columns: 1fr;
@@ -1207,7 +1207,7 @@ label {
     z-index: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .main.landing .hero-inner .hero-copy:before {
         top: -15%;
         left: -10%;
@@ -1285,7 +1285,7 @@ label {
     min-height: 50px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .main.landing .hero-title {
         text-align: center;
     }
@@ -1322,7 +1322,7 @@ label {
     margin-top: 19vh;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .hero-term-info {
         text-align: center;
         flex-direction: column;
@@ -1785,7 +1785,7 @@ main {
     background-size: contain;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .terms-of-use.landing main {
         padding: 11.3vh 10.972vw 10vh 8.68vw;
         background: none;

@@ -379,7 +379,7 @@ a {
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .connecting-box {
         flex-direction: row;
     }
@@ -749,11 +749,19 @@ a {
     z-index: 9;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .invite-popup {
         left: 0;
         bottom: -12px;
         padding-bottom: 70px;
+    }
+
+    .members-microphone {
+        width: 25px;
+        height: 25px;
+    }
+    .members-microphone i {
+        font-size: 11px;
     }
 }
 
@@ -967,7 +975,7 @@ input:checked + .slider:before {
     display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .header {
         padding: 16px;
         height: 56px;
@@ -1184,7 +1192,7 @@ input:checked + .slider:before {
     max-width: 24px;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
     .exit-button #exitButton {
         display: flex;
         flex-direction: row;
@@ -1233,7 +1241,7 @@ input:checked + .slider:before {
     cursor: default;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .mobile-hide,
     #exitButton span,
     #exitButton i,
@@ -1343,7 +1351,7 @@ input:checked + .slider:before {
     display: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .vertical-select-popup {
         position: fixed !important;
         left: 0 !important;
@@ -1962,7 +1970,7 @@ span.highlight {
     color: inherit;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .chat-msger-controls button {
         padding: 0 6px;
     }
@@ -2349,7 +2357,7 @@ button:hover {
     border-right: 2px solid var(--control-bg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     #participants {
         display: none;
     }

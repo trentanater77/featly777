@@ -43,6 +43,50 @@
     margin: auto;
 }
 
+@media (orientation: portrait) {
+    #videoMediaContainer.grid-three,
+    #videoMediaContainer.grid-four {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 50%;
+    }
+
+    #videoMediaContainer.grid-five,
+    #videoMediaContainer.grid-six {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 33% 33% 33%;
+    }
+
+    #videoMediaContainer.grid-three > div:last-child,
+    #videoMediaContainer.grid-five > div:last-child {
+        width: 100vw !important;
+    }
+}
+
+@media (orientation: landscape) {
+    #videoMediaContainer.grid-three,
+    #videoMediaContainer.grid-four {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 50%;
+    }
+
+    #videoMediaContainer.grid-five,
+    #videoMediaContainer.grid-six {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-template-rows: 50% 50%;
+    }
+
+    #videoMediaContainer.grid-three > div:nth-last-child(2),
+    #videoMediaContainer.grid-five > div:nth-last-child(3) {
+        min-height: 100vh;
+        height: 100vh !important;
+        margin-top: 200px !important;
+    }
+}
+
 #videoPinMediaContainer {
     z-index: 1;
     position: absolute;
@@ -323,7 +367,7 @@ input[type='range'] {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     #videoMediaContainer {
         top: 0;
         height: 100vh;
@@ -352,8 +396,7 @@ input[type='range'] {
     }
 
     #videoMediaContainer > .Camera {
-        border: 2px solid black;
-        border-width: 1px 2px;
+        border: 1px solid black;
     }
 
     #videoMediaContainer > .Camera::after {
@@ -373,12 +416,12 @@ input[type='range'] {
         }
 
         #videoMediaContainer > .Camera {
-            border-width: 4px 1px;
+            border-width: 1px;
         }
     }
 }
 
-/* @media (min-width: 769px) { */
+/* @media (min-width: 1024px) { */
 .video-conteiner-box.speaks-now-view {
     overflow-y: hidden;
     padding: 0px;

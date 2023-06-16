@@ -1573,7 +1573,7 @@ function handleInputs() {
         show(chatMessageLabelBox);
         if (chatMessage.value.length === 0) hide(chatMessageLabelBox);
 
-        if (window.matchMedia('(max-width: 769px)').matches) {
+        if (window.matchMedia('(max-width: 1024px)').matches) {
             chatMessageWrapper.style.height = 'auto';
             chatMessageWrapper.style.height =
                 this.scrollHeight === 56 ? this.scrollHeight + 'px' : this.scrollHeight + 6 + 'px';

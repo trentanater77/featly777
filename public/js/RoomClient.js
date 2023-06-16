@@ -94,7 +94,7 @@ const _EVENTS = {
     roomUnlock: 'roomUnlock',
 };
 
-const isMobileView = window.matchMedia('(max-width: 769px)').matches;
+const isMobileView = window.matchMedia('(max-width: 1024px)').matches;
 
 let recordedBlobs;
 class RoomClient {
@@ -518,6 +518,39 @@ class RoomClient {
             function (data) {
                 console.log('Participants Count:', data);
                 participantsCount = data.peer_counts;
+
+                console.log(
+                    '!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!',
+                );
+
+                if (this.peer_info.is_mobile_device) {
+                    if (participantsCount === 2) {
+                        videoMediaContainer.classList.remove('grid-three');
+                    }
+
+                    if (participantsCount === 3) {
+                        videoMediaContainer.classList.add('grid-three');
+                        videoMediaContainer.classList.remove('grid-four');
+                    }
+
+                    if (participantsCount === 4) {
+                        videoMediaContainer.classList.remove('grid-three');
+                        videoMediaContainer.classList.add('grid-four');
+                        videoMediaContainer.classList.remove('grid-five');
+                    }
+
+                    if (participantsCount === 5) {
+                        videoMediaContainer.classList.remove('grid-four');
+                        videoMediaContainer.classList.add('grid-five');
+                        videoMediaContainer.classList.remove('grid-six');
+                    }
+
+                    if (participantsCount === 6) {
+                        videoMediaContainer.classList.remove('grid-five');
+                        videoMediaContainer.classList.add('grid-six');
+                    }
+                }
+
                 adaptAspectRatio(participantsCount);
             }.bind(this),
         );
@@ -1170,9 +1203,34 @@ class RoomClient {
 
                 this.attachMediaStream(elem, stream, type, 'Producer');
 
-                if (elem.clientHeight > elem.clientWidth) {
+                if (elem.clientHeight > elem.clientWidth || this.peer_info.is_mobile_device) {
                     elem.className = 'vertical-orientation';
+
+                    if (this.videoMediaContainer.childElementCount === 3) {
+                        videoMediaContainer.classList.add('grid-three');
+                        videoMediaContainer.classList.remove('grid-four');
+                    }
+
+                    if (this.videoMediaContainer.childElementCount === 4) {
+                        videoMediaContainer.classList.remove('grid-three');
+                        videoMediaContainer.classList.add('grid-four');
+                        videoMediaContainer.classList.remove('grid-five');
+                    }
+
+                    if (this.videoMediaContainer.childElementCount === 5) {
+                        videoMediaContainer.classList.remove('grid-four');
+                        videoMediaContainer.classList.add('grid-five');
+                        videoMediaContainer.classList.remove('grid-six');
+                    }
+
+                    if (this.videoMediaContainer.childElementCount === 6) {
+                        videoMediaContainer.classList.remove('grid-five');
+                        videoMediaContainer.classList.add('grid-six');
+                    }
                 }
+
+                this.socket.emit('refreshParticipantsCount');
+
                 this.myVideoEl = elem;
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, this.peer_id, true);
@@ -1514,9 +1572,38 @@ class RoomClient {
 
                 this.attachMediaStream(elem, stream, type, 'Consumer');
 
-                if (elem.clientHeight > elem.clientWidth) {
+                if (elem.clientHeight > elem.clientWidth || peer_info.is_mobile_device) {
                     elem.className = 'vertical-orientation';
+
+                    // if (this.videoMediaContainer.childElementCount === 2) {
+                    //     videoMediaContainer.classList.remove('grid-three');
+                    // }
+
+                    // if (this.videoMediaContainer.childElementCount === 3) {
+                    //     videoMediaContainer.classList.add('grid-three');
+                    //     videoMediaContainer.classList.remove('grid-four');
+                    // }
+
+                    // if (this.videoMediaContainer.childElementCount === 4) {
+                    //     videoMediaContainer.classList.remove('grid-three');
+                    //     videoMediaContainer.classList.add('grid-four');
+                    //     videoMediaContainer.classList.remove('grid-five');
+                    // }
+
+                    // if (this.videoMediaContainer.childElementCount === 5) {
+                    //     videoMediaContainer.classList.remove('grid-four');
+                    //     videoMediaContainer.classList.add('grid-five');
+                    //     videoMediaContainer.classList.remove('grid-six');
+                    // }
+
+                    // if (this.videoMediaContainer.childElementCount === 6) {
+                    //     videoMediaContainer.classList.remove('grid-five');
+                    //     videoMediaContainer.classList.add('grid-six');
+                    // }
                 }
+
+                this.socket.emit('refreshParticipantsCount');
+
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, remotePeerId);
                 this.handleTS(elem.id, ts.id);
@@ -1601,6 +1688,8 @@ class RoomClient {
                 '[removeConsumer - ' + consumer_kind + '] Video-element-count',
                 this.videoMediaContainer.childElementCount,
             );
+
+            this.socket.emit('refreshParticipantsCount');
         }
 
         if (consumer_kind === 'audio') {
@@ -2478,7 +2567,7 @@ class RoomClient {
         document.getElementById('chatMessageLabel').style.color = '#828282';
         document.querySelector('#chatMessageLabel span').innerText = '0';
 
-        if (window.matchMedia('(max-width: 769px)').matches) {
+        if (window.matchMedia('(max-width: 1024px)').matches) {
             chatMessageWrapper.style.height = '56px';
             chatMsger.style.maxHeight = `calc(100vh - 142px)`;
         }
