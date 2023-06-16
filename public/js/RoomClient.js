@@ -519,10 +519,6 @@ class RoomClient {
                 console.log('Participants Count:', data);
                 participantsCount = data.peer_counts;
 
-                console.log(
-                    '!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!!@!@!@!',
-                );
-
                 if (this.peer_info.is_mobile_device) {
                     if (participantsCount === 2) {
                         videoMediaContainer.classList.remove('grid-three');
@@ -1205,7 +1201,9 @@ class RoomClient {
 
                 if (elem.clientHeight > elem.clientWidth || this.peer_info.is_mobile_device) {
                     elem.className = 'vertical-orientation';
+                }
 
+                if (this.peer_info.is_mobile_device) {
                     if (this.videoMediaContainer.childElementCount === 3) {
                         videoMediaContainer.classList.add('grid-three');
                         videoMediaContainer.classList.remove('grid-four');
@@ -1574,32 +1572,6 @@ class RoomClient {
 
                 if (elem.clientHeight > elem.clientWidth || peer_info.is_mobile_device) {
                     elem.className = 'vertical-orientation';
-
-                    // if (this.videoMediaContainer.childElementCount === 2) {
-                    //     videoMediaContainer.classList.remove('grid-three');
-                    // }
-
-                    // if (this.videoMediaContainer.childElementCount === 3) {
-                    //     videoMediaContainer.classList.add('grid-three');
-                    //     videoMediaContainer.classList.remove('grid-four');
-                    // }
-
-                    // if (this.videoMediaContainer.childElementCount === 4) {
-                    //     videoMediaContainer.classList.remove('grid-three');
-                    //     videoMediaContainer.classList.add('grid-four');
-                    //     videoMediaContainer.classList.remove('grid-five');
-                    // }
-
-                    // if (this.videoMediaContainer.childElementCount === 5) {
-                    //     videoMediaContainer.classList.remove('grid-four');
-                    //     videoMediaContainer.classList.add('grid-five');
-                    //     videoMediaContainer.classList.remove('grid-six');
-                    // }
-
-                    // if (this.videoMediaContainer.childElementCount === 6) {
-                    //     videoMediaContainer.classList.remove('grid-five');
-                    //     videoMediaContainer.classList.add('grid-six');
-                    // }
                 }
 
                 this.socket.emit('refreshParticipantsCount');
