@@ -1374,7 +1374,7 @@ function handleButtons() {
         const isShow = !searchChatBox.classList.contains('hidden');
         const isShowPin = !pinChatMessage.classList.contains('hidden');
         const differeceSize = isMobileView ? 142 : 225;
-        const screenSize = isMobileView ? '100vh' : 'var(--msger-height)';
+        const screenSize = isMobileView ? '100svh' : 'var(--msger-height)';
 
         if (isShow) {
             showChatSearch(differeceSize, screenSize, isShowPin);
@@ -1578,7 +1578,7 @@ function handleInputs() {
             chatMessageWrapper.style.height =
                 this.scrollHeight === 56 ? this.scrollHeight + 'px' : this.scrollHeight + 6 + 'px';
 
-            chatMsger.style.maxHeight = `calc(100vh - (84px + ${this.scrollHeight}px))`;
+            chatMsger.style.maxHeight = `calc(100svh - (84px + ${this.scrollHeight}px))`;
 
             hide(searchChatBox);
             hideChatSearch();

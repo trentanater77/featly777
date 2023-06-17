@@ -94,7 +94,7 @@ const _EVENTS = {
     roomUnlock: 'roomUnlock',
 };
 
-const isMobileView = window.matchMedia('(max-width: 1024px)').matches;
+const isMobileView = window.matchMedia('(max-width: 1023px)').matches;
 
 let recordedBlobs;
 class RoomClient {
@@ -2545,7 +2545,7 @@ class RoomClient {
 
         if (window.matchMedia('(max-width: 1024px)').matches) {
             chatMessageWrapper.style.height = '56px';
-            chatMsger.style.maxHeight = `calc(100vh - 142px)`;
+            chatMsger.style.maxHeight = `calc(100svh - 142px)`;
         }
 
         const chatMessageLabelBox = chatMessageLabel.querySelector('p');
