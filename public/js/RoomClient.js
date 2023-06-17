@@ -1588,6 +1588,9 @@ class RoomClient {
                     this.handleFakeAudioVolume();
                 }
 
+
+                showSnackbar(peer_name + ' joined');
+
                 this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, remotePeerId);
                 this.handleTS(elem.id, ts.id);
