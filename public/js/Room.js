@@ -2,6 +2,10 @@
 
 if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.href.substr(4, location.href.length - 4);
 
+if (location.href.includes('?invite')) {
+    initSubmitButton.innerText = 'Join to Feat';
+}
+
 /**
  * FeatlyTalk SFU - Room component
  *
@@ -768,7 +772,7 @@ function joinRoom(peer_name, room_id) {
 }
 
 function copyRoomURL() {
-    navigator.clipboard.writeText(RoomURL);
+    navigator.clipboard.writeText(RoomURL + '?invite');
     showSnackbar('Link copied');
 }
 
