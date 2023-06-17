@@ -798,12 +798,6 @@ function roomIsReady() {
 
     show(producerCameraBox);
 
-    //invite popup
-    document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
-    BLOCKS.popups.invitePopup && show(invitePopup);
-    setTimeout(() => hide(invitePopup), 10000);
-    //
-
     membersTitlePeerName.innerText = peer_name;
     membersPeerName.innerText = peer_name;
 

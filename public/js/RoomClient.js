@@ -292,6 +292,12 @@ class RoomClient {
         }
         this.refreshParticipantsCount();
         console.log('06.2 Participants Count ---->', participantsCount);
+        if (participantsCount === 1) {
+            //invite popup
+            document.querySelector('#invitePopup .invite-popup-input span').innerText = RoomURL;
+            show(invitePopup);
+            setTimeout(() => hide(invitePopup), 10000);
+        }
         // notify && participantsCount == 1 ? shareRoom() : sound('joined');
         if (notify && participantsCount == 1) {
             // shareRoom();
@@ -714,6 +720,7 @@ class RoomClient {
         let mediaConstraints = {};
         let audio = false;
         let screen = false;
+
         switch (type) {
             case mediaType.audio:
                 this.isAudioAllowed = true;
@@ -735,6 +742,7 @@ class RoomClient {
             default:
                 return;
         }
+
         if (!this.device.canProduce('video') && !audio) {
             return console.error('Cannot produce video');
         }
