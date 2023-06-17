@@ -2016,6 +2016,7 @@ span.highlight {
     }
 
     .chat-content {
+        padding-bottom: 16px;
         height: 100%;
         display: flex;
         justify-content: space-between;
