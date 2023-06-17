@@ -1639,6 +1639,10 @@ class RoomClient {
 
     removeConsumer(consumer_id, consumer_kind) {
         console.log('Remove consumer', { consumer_id: consumer_id, consumer_kind: consumer_kind });
+        const element = document.getElementById(`${consumer_id}__video`);
+        const consumer_name = element.querySelector('span').textContent;
+
+        showSnackbar(consumer_name + ' left');
 
         let elem = this.getId(consumer_id);
         if (elem) {

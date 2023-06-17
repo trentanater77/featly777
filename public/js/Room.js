@@ -67,6 +67,7 @@ const lS = new LocalStorage();
 let currentTheme = 'dark';
 let swalBackground = 'var(--secondary-bg)';
 
+let isLeaveBtn = false;
 let rc = null;
 let producer = null;
 let participantsCount = 0;
@@ -771,6 +772,10 @@ function joinRoom(peer_name, room_id) {
     }
 }
 
+window.onbeforeunload = function () {
+    if (!isLeaveBtn && peer_info.is_mobile_device) return 'Are you sure you want to leave this page?';
+};
+
 function copyRoomURL() {
     navigator.clipboard.writeText(RoomURL + '?invite');
     showSnackbar('Link copied');
@@ -980,7 +985,8 @@ function handleButtons() {
     //     isButtonsBarOver = false;
     // };
     exitButton.onclick = () => {
-        rc.exitRoom();
+        isLeaveBtn = true;
+        preLeavePopup();
     };
     // shareButton.onclick = () => {
     //     shareRoom(true);
@@ -1758,11 +1764,7 @@ function handleRoomClientEvents() {
     });
     rc.on(RoomClient.EVENTS.exitRoom, () => {
         console.log('Room Client leave room');
-        if (surveyActive) {
-            leaveFeedback();
-        } else {
-            openURL('/newroom');
-        }
+        leaveFeedback();
     });
 }
 
@@ -1792,6 +1794,32 @@ function leaveFeedback() {
             openURL(url.survey);
         } else {
             openURL('/');
+        }
+    });
+}
+
+function preLeavePopup() {
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showDenyButton: true,
+        background: swalBackground,
+        // imageUrl: image.feedback,
+        title: 'Leave the meeting',
+        text: 'Do you want to leave the meeting?',
+        confirmButtonText: `Yes`,
+        denyButtonText: `Cancel`,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+        },
+    }).then((result) => {
+        if (result.isConfirmed) {
+            rc.exitRoom();
+        } else {
+            isLeaveBtn = false;
         }
     });
 }
