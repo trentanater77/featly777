@@ -134,6 +134,7 @@ const views = {
     permission: path.join(__dirname, '../../', 'public/views/permission.html'),
     privacy: path.join(__dirname, '../../', 'public/views/privacy.html'),
     room: path.join(__dirname, '../../', 'public/views/Room.html'),
+    terms: path.join(__dirname, '../../', 'public/views/terms.html'),
 };
 
 let announcedIP = config.mediasoup.webRtcTransport.listenIps[0].announcedIp; // AnnouncedIP (server public IPv4)
@@ -279,6 +280,11 @@ function startServer() {
     // featlytalk about
     app.get(['/about'], (req, res) => {
         res.sendFile(views.about);
+    });
+
+    // featlytalk about
+    app.get(['/terms'], (req, res) => {
+        res.sendFile(views.terms);
     });
 
     // ####################################################
@@ -875,15 +881,13 @@ function startServer() {
             io.emit('pauseConsumer', data);
         });
 
-
         socket.on('resumeConsumer', (data) => {
-          if (!roomList.has(socket.room_id)) return;
+            if (!roomList.has(socket.room_id)) return;
 
-          log.debug('Producer resumed', data);
+            log.debug('Producer resumed', data);
 
-          io.emit('resumeConsumer', data);
-      });
-
+            io.emit('resumeConsumer', data);
+        });
 
         socket.on('resume', async (_, callback) => {
             await consumer.resume();

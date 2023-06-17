@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <!-- https://github.com/mikecao/umami -->
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDQNY8YQ4T"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-QDQNY8YQ4T');
+        </script>
+
+        <!-- Title and Icon -->
+
+        <title>FeatlyTalk SFU - Terms of Use.</title>
+        <link rel="shortcut icon" href="../images/logo.jpg" />
+        <link rel="apple-touch-icon" href="../images/logo.jpg" />
+
+        <!-- Meta Information -->
+
+        <meta charset=" utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- https://ogp.me -->
+
+        <meta property="og:type" content="app-webrtc" />
+        <meta property="og:site_name" content="FeatlyTalk SFU" />
+        <meta property="og:title" content="Click the link to make a call." />
+        <meta
+            property="og:description"
+            content="FeatlyTalk SFU calling provides real-time HD quality and latency simply not available with traditional technology."
+        />
+        <meta property="og:image" content="https://talk.featly.io/images/featlytalksfu.png" />
+
+        <!-- StyleSheet -->
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" />
+        <link rel="stylesheet" href="../css/landing.css" />
+
+        <!-- Js scripts -->
+
+        <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+        <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    </head>
+    <body class="is-boxed has-animations">
+        <div class="body-wrap landing main terms">
+            <img
+                class="landing-main-image terms-image"
+                src="../images/landing/terms-of-use-image.png"
+                alt="featlytalk-webrtc-main-image"
+            />
+            <main class="no-overflow">
+                <section class="hero-logo">
+                    <a class="logo" href="/">
+                        <img class="header-logo-image" src="../images/logo.svg" alt="featlytalk-webrtc-logo" />
+                    </a>
+                </section>
+                <section class="hero">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <h1 class="hero-title mt-0 title-terms">Terms of Use</h1>
+                            <p class="paragraph-terms">
+                                <b> FeatlyTalk SFU</b> has an integrated
+                                <a href="https://mediasoup.org/">mediasoup server</a>. Routing is a multiparty topology,
+                                where each participant sends its media to this server and receives all other's media
+                                from it. Thanks to the SFU architecture, it allows having many users connected in the
+                                same room. The media streams are encrypted using Secure Real-time Transport Protocol
+                                (SRTP). <br /><br />
+                                If you record a meeting, the recording of the meeting is temporarily stored on
+                                <b>Your browser</b>
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob">Blob</a>, then will be
+                                downloaded on Your PC/Mobile Device. <br /><br />
+                                We use Umami to track aggregated usage statistics in order to improve our service. The
+                                maker of <b>FeatlyTalk SFU</b> has no intention of using personally or selling any of
+                                the above-mentioned data.
+                            </p>
+                        </div>
+                        <!-- <div class="hero-main-image">
+                            <img
+                                class="landing-main-image"
+                                src="../images/landing/terms-of-use-image.png"
+                                alt="featlytalk-webrtc-main-image"
+                            />
+                        </div> -->
+                    </div>
+                </section>
+                <section class="hero-term-info terms-bottom">
+                    <p><a href="/">What is Featly?</a></p>
+                    <span>© 2023 Featly Inc., all rights reserved</span>
+                </section>
+            </main>
+        </div>
+        <script defer src="../js/landing.js"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </body>
+</html>
