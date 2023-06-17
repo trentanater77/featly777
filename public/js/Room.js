@@ -1793,7 +1793,7 @@ function leaveFeedback() {
         if (result.isConfirmed) {
             openURL(url.survey);
         } else {
-            openURL('/newroom');
+            openURL('/');
         }
     });
 }
