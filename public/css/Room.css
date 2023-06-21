@@ -678,7 +678,6 @@ a {
 #snackbar {
     position: fixed;
     left: 50%;
-    bottom: 138px;
     transform: translateX(-50%);
     padding: 10px 20px;
     background: #2c2c39;
@@ -687,11 +686,23 @@ a {
     color: #f8f8f8;
     font-size: 14px;
     line-height: 22px;
-    height: 56px;
-    z-index: 9;
+    z-index: 99;
     font-weight: 500;
     border: 1px solid #4b4b4b;
-    height: 42px;
+    min-height: 42px;
+    width: fit-content;
+    max-width: 320px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    bottom: 130px;
+    transition: 0.3s opacity, 0.3s visibility, 0.3s bottom;
+}
+
+#snackbar.showSnackbar {
+    bottom: 138px;
+    opacity: 1;
+    visibility: visible;
 }
 
 /*--------------------------------------------------------------

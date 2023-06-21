@@ -515,8 +515,12 @@ class RoomClient {
             });
         });
 
-        this.socket.on('showStartRecordingMessage', function (data) {
-            showSnackbar(data);
+        this.socket.on('showStartRecordingMessage', function (data_peer_id) {
+            if (data_peer_id === this.id) {
+                showSnackbar('Record started');
+            } else {
+                showSnackbar('One of the participants started recording the conference');
+            }
         });
 
         this.socket.on(
@@ -1587,7 +1591,6 @@ class RoomClient {
                 if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
                     this.handleFakeAudioVolume();
                 }
-
 
                 showSnackbar(peer_name + ' joined');
 
@@ -2927,7 +2930,6 @@ class RoomClient {
         console.log('MediaRecorder supported options', options);
         options = { mimeType: options[0] };
         try {
-            this.socket.emit('startRecordingMessage', 'Screen recording started');
             if (this.isMobileDevice) {
                 // on mobile devices recording camera + audio
                 let newStream = this.getNewStream(this.localVideoStream, this.localAudioStream);
@@ -2938,6 +2940,7 @@ class RoomClient {
                 this.handleMediaRecorder();
                 this.event(_EVENTS.startRec);
                 this.sound('recStart');
+                this.socket.emit('startRecordingMessage', this.peer_id);
             } else {
                 // on desktop devices recording screen/window... + audio
                 const constraints = { video: true };
@@ -2951,6 +2954,7 @@ class RoomClient {
                         this.handleMediaRecorder();
                         this.event(_EVENTS.startRec);
                         this.sound('recStart');
+                        this.socket.emit('startRecordingMessage', this.peer_id);
                     })
                     .catch((err) => {
                         console.error('Error Unable to recording the screen + audio', err);

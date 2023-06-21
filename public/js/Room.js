@@ -784,10 +784,10 @@ function copyRoomURL() {
 const snackbar = document.getElementById('snackbar');
 
 function showSnackbar(text) {
-    if (snackbar.classList.contains('hidden')) {
+    if (!snackbar.classList.contains('showSnackbar')) {
         snackbar.querySelector('span').innerText = text;
-        toggle(snackbar);
-        setTimeout(() => toggle(snackbar), 3000);
+        snackbar.classList.add('showSnackbar');
+        setTimeout(() => snackbar.classList.remove('showSnackbar'), 3000);
     }
 }
 

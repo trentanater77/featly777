@@ -537,9 +537,9 @@ function startServer() {
             }
         });
 
-        socket.on('startRecordingMessage', (text) => {
+        socket.on('startRecordingMessage', (peer_id) => {
             if (!roomList.has(socket.room_id)) return;
-            io.emit('showStartRecordingMessage', text);
+            io.emit('showStartRecordingMessage', peer_id);
         });
 
         socket.on('getPeerCounts', async ({}, callback) => {
