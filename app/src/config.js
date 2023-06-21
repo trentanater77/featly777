@@ -146,7 +146,7 @@ module.exports = {
 // const ifaces = os.networkInterfaces();
 
 // const getLocalIp = () => {
-//     let localIp = '178.155.27.209';
+//     let localIp = '193.233.123.169';
 //     Object.keys(ifaces).forEach((ifname) => {
 //         for (const iface of ifaces[ifname]) {
 //             // Ignore IPv6 and 127.0.0.1
@@ -173,7 +173,7 @@ module.exports = {
 //     hostUsername: '',
 //     hostPassword: '',
 //     // app listen on
-//     listenIp: '178.155.27.209',
+//     listenIp: '193.233.123.169',
 //     listenPort: process.env.PORT || 443,
 //     // ssl/README.md
 //     sslCrt: '../ssl/cert.pem',
@@ -270,8 +270,8 @@ module.exports = {
 //         webRtcTransport: {
 //             listenIps: [
 //                 {
-//                     ip: '192.168.1.154',
-//                     announcedIp: '178.155.27.209', // replace by public static IP address https://api.ipify.org or put '' and will be auto-detected on server start
+//                     ip: '192.168.0.154',
+//                     announcedIp: '193.233.123.169', // replace by public static IP address https://api.ipify.org or put '' and will be auto-detected on server start
 //                 },
 //             ],
 //             initialAvailableOutgoingBitrate: 1000000,
