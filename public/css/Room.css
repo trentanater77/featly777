@@ -2851,6 +2851,42 @@ progress {
     z-index: 1;
 }
 
+#timeEnd {
+    background: #141418;
+    border-radius: 12px;
+    padding: 8px;
+    padding-right: 3px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+#timeEnd.showTimeEnd {
+    opacity: 1;
+    visibility: visible;
+    bottom: 12px;
+}
+
+.time-end-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-end-text span {
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+}
+
 .whiteboard-footer span {
     font-weight: 400;
     font-size: 16px;
@@ -2859,7 +2895,8 @@ progress {
     margin-left: 4px;
 }
 
-.whiteboard-footer button {
+.whiteboard-footer button,
+#timeEnd button {
     background: #2c2c39;
     border-radius: 12px;
     height: 56px;

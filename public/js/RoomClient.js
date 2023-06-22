@@ -501,6 +501,26 @@ class RoomClient {
             mobileTimer.textContent = time;
         });
 
+        this.socket.on('overTimerUpdate', function (time) {
+            if (!timeEnd.classList.contains('showTimeEnd')) {
+                timeEnd.classList.add('showTimeEnd');
+            }
+            timeEndTimer.textContent = time;
+        });
+
+        this.socket.on('resetCountdownTimer', function () {
+            if (timeEnd.classList.contains('showTimeEnd')) {
+                timeEnd.classList.remove('showTimeEnd');
+            }
+        });
+
+        this.socket.on(
+            'exitRoomForTime',
+            function () {
+                this.exit(true);
+            }.bind(this),
+        );
+
         this.socket.on('pauseConsumer', function (id) {
             const cameras = document.querySelectorAll(`video[name="${id}"]`);
             cameras.forEach((camera) => {
@@ -950,6 +970,10 @@ class RoomClient {
         } catch (err) {
             console.error('Produce error:', err);
         }
+    }
+
+    resetCountdownTimer() {
+        this.socket.emit('resetCountdownTimer');
     }
 
     startMyAudio() {
@@ -2956,6 +2980,7 @@ class RoomClient {
                         this.sound('recStart');
                         this.socket.emit('startRecordingMessage', this.peer_id);
                     })
+
                     .catch((err) => {
                         console.error('Error Unable to recording the screen + audio', err);
                         this.userLog('error', 'Unable to recording the screen + audio reason: ' + err, 'top-end');

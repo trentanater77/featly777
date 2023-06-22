@@ -489,11 +489,16 @@ function startServer() {
     let elapsedTime = 0;
     let startTime;
     let timerId;
+    let isOverProceed = false;
 
-    function formatTime(milliseconds) {
+    function formatTime(milliseconds, withoutHours) {
         const hours = Math.floor(milliseconds / 3600000);
         const minutes = Math.floor((milliseconds % 3600000) / 60000);
         const seconds = Math.floor((milliseconds % 60000) / 1000);
+
+        if (withoutHours) {
+            return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        }
 
         return (
             String(hours).padStart(2, '0') +
@@ -509,12 +514,47 @@ function startServer() {
         const deltaTime = currentTime - startTime;
         elapsedTime += deltaTime;
 
-        const time = formatTime(elapsedTime);
+        const time = formatTime(elapsedTime, false);
 
-        // Emit the updated time to all connected clients
         io.emit('timerUpdate', time);
 
         startTime = currentTime;
+
+        if (time === '00:50:00' || time === '01:50:00' || time === '02:50:00' || time === '03:50:00') {
+            isOverProceed = true;
+        }
+
+        if (isOverProceed) {
+            countdown();
+        }
+    }
+
+    let countdownMinutes = 9;
+    let countdownSeconds = 59;
+
+    function countdown() {
+        var formattedMinutes = String(countdownMinutes).padStart(2, '0');
+        var formattedSeconds = String(countdownSeconds).padStart(2, '0');
+        const overTime = formattedMinutes + ':' + formattedSeconds;
+        io.emit('overTimerUpdate', overTime);
+
+        countdownSeconds--;
+
+        if (countdownSeconds < 0) {
+            countdownMinutes--;
+            countdownSeconds = 59;
+        }
+
+        if (countdownMinutes === 0 && countdownSeconds === 0) {
+            io.emit('exitRoomForTime');
+            resetCountdown();
+        }
+    }
+
+    function resetCountdown() {
+        countdownMinutes = 9;
+        countdownSeconds = 59;
+        isOverProceed = false;
     }
 
     // ####################################################
@@ -540,6 +580,12 @@ function startServer() {
         socket.on('startRecordingMessage', (peer_id) => {
             if (!roomList.has(socket.room_id)) return;
             io.emit('showStartRecordingMessage', peer_id);
+        });
+
+        socket.on('resetCountdownTimer', () => {
+            if (!roomList.has(socket.room_id)) return;
+            resetCountdown();
+            io.emit('resetCountdownTimer');
         });
 
         socket.on('getPeerCounts', async ({}, callback) => {
