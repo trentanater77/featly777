@@ -32,7 +32,7 @@ dependencies: {
  * FeatlyTalk SFU - Server component
  *
  * @link    GitHub: https://https://github.com/Featly-Inc/talk
- * @link    Official Live demo: https://talk.featly.io
+ * @link    Official Live demo: https://featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfo@featly.app or purchase directly via CodeCanyon
  * @license CodeCanyon:

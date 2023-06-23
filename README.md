@@ -5,13 +5,13 @@
 <hr />
 
 <p align="center">
-    <a href="https://talk.featly.io/">talk.featly.io</a>
+    <a href="https://featly.io/">featly.io</a>
 </p>
 
 <hr />
 
 <p align="center">
-    <a href="https://talk.featly.io/">
+    <a href="https://featly.io/">
         <img src="public/images/logo.svg">
     </a>
 </p>
@@ -59,7 +59,7 @@
 <br/>
 
 -   You can `join` directly to `room` by going to
--   https://talk.featly.io/join?room=test&password=0&name=featlytalksfu&audio=0&video=0&screen=0&notify=0
+-   https://featly.io/join?room=test&password=0&name=featlytalksfu&audio=0&video=0&screen=0&notify=0
 
     | Params   | Type           | Description     |
     | -------- | -------------- | --------------- |
@@ -83,7 +83,7 @@ Embedding a meeting into a service or app using an iframe.
 ```html
 <iframe
     allow="camera; microphone; display-capture; fullscreen; clipboard-read; clipboard-write; autoplay"
-    src="https://talk.featly.io/newroom"
+    src="https://featly.io/newroom"
     style="height: 100%; width: 100%; border: 0px;"
 ></iframe>
 ```
@@ -196,15 +196,15 @@ To `Self-Host FeatlyTalk SFU` on `Your` dedicated `Server`, read [this documenta
 
 <br/>
 
--   The API documentation uses [swagger](https://swagger.io/) at https://localhost:3010/api/v1/docs or check it on live [here](https://talk.featly.io/api/v1/docs).
+-   The API documentation uses [swagger](https://swagger.io/) at https://localhost:3010/api/v1/docs or check it on live [here](https://featly.io/api/v1/docs).
 
 ```bash
 # The response will give you a entrypoint / Room URL for your meeting.
 $ curl -X POST "http://localhost:3010/api/v1/meeting" -H "authorization: featlytalksfu_default_secret" -H "Content-Type: application/json"
-$ curl -X POST "https://talk.featly.io/api/v1/meeting" -H "authorization: featlytalksfu_default_secret" -H "Content-Type: application/json"
+$ curl -X POST "https://featly.io/api/v1/meeting" -H "authorization: featlytalksfu_default_secret" -H "Content-Type: application/json"
 # The response will give you a entrypoint / URL for the direct join to the meeting.
 $ curl -X POST "http://localhost:3010/api/v1/join" -H "authorization: featlytalksfu_default_secret" -H "Content-Type: application/json" --data '{"room":"test","name":"featlytalksfu","audio":"0","video":"0","screen":"0","notify":"0"}'
-$ curl -X POST "https://stalk.featly.io/api/v1/join" -H "authorization: featlytalksfu_default_secret" -H "Content-Type: application/json" --data '{"room":"test","name":"featlytalksfu","audio":"0","video":"0","screen":"0","notify":"0"}'
+$ curl -X POST "https://sfeatly.io/api/v1/join" -H "authorization: featlytalksfu_default_secret" -H "Content-Type: application/json" --data '{"room":"test","name":"featlytalksfu","audio":"0","video":"0","screen":"0","notify":"0"}'
 ```
 
 </details>
@@ -248,7 +248,7 @@ If you need help to deploy `FeatlyTalk SFU` instance on `your dedicated cloud se
 
 <a target="_blank" href="https://hetzner.cloud/?ref=XdRifCzCK3bn"><img src="public/sponsors/Hetzner.png" style="width: 220px;"></a>
 
-https://talk.featly.io
+https://featly.io
 
 
 </details>

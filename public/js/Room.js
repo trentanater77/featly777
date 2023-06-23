@@ -10,7 +10,7 @@ if (location.href.includes('?invite')) {
  * FeatlyTalk SFU - Room component
  *
  * @link    GitHub: https://github.com/Featly-Inc/talk
- * @link    Official Live demo: https://talk.featly.io
+ * @link    Official Live demo: https://featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfok@featly.app or purchase directly via CodeCanyon
  * @license CodeCanyon:
@@ -2086,7 +2086,9 @@ function whiteboardAddObj(type) {
                 inputAttributes: {
                     accept: wbImageInput,
                     'aria-label': 'Select the image',
+                    id: 'chatFileInput',
                 },
+                inputLabel: 'Browse file...',
                 showDenyButton: true,
                 confirmButtonText: `OK`,
                 denyButtonText: `Cancel`,

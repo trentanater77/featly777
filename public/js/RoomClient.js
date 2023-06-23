@@ -4,7 +4,7 @@
  * FeatlyTalk SFU - Room component
  *
  * @link    GitHub: https://github.com/Featly-Inc/talk
- * @link    Official Live demo: https://talk.featly.io
+ * @link    Official Live demo: https://featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfok@featly.app or purchase directly via CodeCanyon
  * @license CodeCanyon:
@@ -3134,13 +3134,16 @@ class RoomClient {
             background: swalBackground,
             imageAlt: 'featlytalk-file-sharing',
             // imageUrl: image.share,
+
             position: 'center',
             title: 'Share file',
             input: 'file',
             inputAttributes: {
                 accept: this.fileSharingInput,
                 'aria-label': 'Select file',
+                id: 'chatFileInput',
             },
+            inputLabel: 'Browse file...',
             showDenyButton: true,
             confirmButtonText: `Send`,
             denyButtonText: `Cancel`,
@@ -3160,6 +3163,7 @@ class RoomClient {
     sendFileInformations(file, peer_id, broadcast = false) {
         this.fileToSend = file;
         //
+
         if (this.fileToSend && this.fileToSend.size > 0) {
             if (!this.thereIsParticipants()) {
                 return userLog('info', 'No participants detected', 'top-end');
@@ -3177,14 +3181,27 @@ class RoomClient {
                 this.rightMsgAvatar,
                 this.peer_name,
                 this.peer_id,
-                'Send File: \n' + this.toHtmlJson(fileInfo),
-                'all',
+                // 'Send File: \n' + this.toHtmlJson(fileInfo),
+                '',
                 'all',
             );
             // send some metadata about our file to peers in the room
             this.socket.emit('fileInfo', fileInfo);
             setTimeout(() => {
                 this.sendFileData(peer_id, broadcast);
+
+                const reader = new FileReader();
+
+                reader.onload = (readerEvent) => {
+                    // Convert the image data to base64 format
+                    const lastMessage = chatMsger.querySelector('.msg:last-child');
+                    const blockForImg = lastMessage.querySelector('.msg-text');
+                    const img = document.createElement('img');
+                    img.src = readerEvent.target.result;
+                    blockForImg.insertBefore(img, blockForImg.firstElementChild);
+                };
+
+                reader.readAsDataURL(file);
             }, 1000);
         } else {
             userLog('error', 'File not selected or empty.', 'top-end');
@@ -3213,8 +3230,8 @@ class RoomClient {
             this.leftMsgAvatar,
             this.incomingFileInfo.peer_name,
             this.incomingFileInfo.peer_id,
-            'Receive File: \n' + this.toHtmlJson(this.incomingFileInfo),
-            'all',
+            // 'Receive File: \n' + this.toHtmlJson(this.incomingFileInfo),
+            '',
             'all',
         );
         receiveFileInfo.innerHTML = fileToReceiveInfo;
@@ -3339,26 +3356,32 @@ class RoomClient {
         if (isImageURL(this.incomingFileInfo.fileName)) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                Swal.fire({
-                    allowOutsideClick: false,
-                    background: swalBackground,
-                    position: 'center',
-                    title: 'Received file',
-                    text: this.incomingFileInfo.fileName + ' size ' + this.bytesToSize(this.incomingFileInfo.fileSize),
-                    imageUrl: e.target.result,
-                    imageAlt: 'featlytalk-file-img-download',
-                    showDenyButton: true,
-                    confirmButtonText: `Save`,
-                    denyButtonText: `Cancel`,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown',
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp',
-                    },
-                }).then((result) => {
-                    if (result.isConfirmed) this.saveBlobToFile(blob, file);
-                });
+                const lastMessage = chatMsger.querySelector('.msg:last-child');
+                const blockForImg = lastMessage.querySelector('.msg-text');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                blockForImg.insertBefore(img, blockForImg.firstElementChild);
+
+                // Swal.fire({
+                //     allowOutsideClick: false,
+                //     background: swalBackground,
+                //     position: 'center',
+                //     title: 'Received file',
+                //     text: this.incomingFileInfo.fileName + ' size ' + this.bytesToSize(this.incomingFileInfo.fileSize),
+                //     imageUrl: e.target.result,
+                //     imageAlt: 'featlytalk-file-img-download',
+                //     showDenyButton: true,
+                //     confirmButtonText: `Save`,
+                //     denyButtonText: `Cancel`,
+                //     showClass: {
+                //         popup: 'animate__animated animate__fadeInDown',
+                //     },
+                //     hideClass: {
+                //         popup: 'animate__animated animate__fadeOutUp',
+                //     },
+                // }).then((result) => {
+                //     if (result.isConfirmed) this.saveBlobToFile(blob, file);
+                // });
             };
             // blob where is stored downloaded file
             reader.readAsDataURL(blob);

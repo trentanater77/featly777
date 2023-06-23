@@ -1803,9 +1803,8 @@ input:checked + .slider:before {
 
 .msg-info {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 3px;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .msg-info-name {
@@ -1815,6 +1814,7 @@ input:checked + .slider:before {
     font-size: 14px;
     line-height: 22px;
     color: var(--main-color);
+    margin-bottom: 5px;
 }
 
 .msg-info-time {
@@ -1834,6 +1834,10 @@ input:checked + .slider:before {
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
+}
+
+.msg-text img {
+    max-width: 100%;
 }
 
 .msg-text pre {
@@ -2867,6 +2871,23 @@ progress {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s;
+}
+
+.swal2-popup.swal2-modal #swal2-input {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+}
+
+.swal2-popup.swal2-modal label {
+    color: #fff;
+    cursor: pointer;
+    margin-left: 26px;
+    margin-top: 2em;
+    border: 1px solid grey;
+    border-radius: 12px;
+    padding: 3px 8px;
+    margin-bottom: -40px;
 }
 
 #timeEnd.showTimeEnd {
