@@ -496,13 +496,12 @@ a {
     top: 12px;
     right: 10px;
     z-index: 9;
-    overflow: hidden;
     padding: 3px;
     display: flex;
     flex-direction: column;
     gap: 3px;
-    transition: height 0.3s ease-in-out;
     max-height: 95svh;
+    height: auto;
     overflow-y: auto;
 }
 
@@ -521,6 +520,7 @@ a {
 
 .members-screens.minify {
     height: 64px;
+    overflow: hidden;
 }
 
 .minify .members-screens-header img {

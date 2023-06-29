@@ -1038,12 +1038,8 @@ function handleButtons() {
         rc.openTab(e, 'tabLanguages');
     };
     minifyMembersScreens.onclick = () => {
-        membersScreens.classList.toggle('minify');
-
-        if (membersScreens.classList.contains('minify')) {
-            membersScreens.style.overflowY = 'hidden';
-        } else {
-            membersScreens.style.overflowY = 'auto';
+        if (document.querySelector('.video-conteiner-box').classList.contains('speaks-now-view')) {
+            membersScreens.classList.toggle('minify');
         }
     };
     searchChatInput.oninput = (e) => {
@@ -1081,6 +1077,10 @@ function handleButtons() {
         removeMenuChecks();
         show(allScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.remove('speaks-now-view');
+        if (!membersScreens.classList.contains('minify')) {
+            membersScreens.classList.add('minify');
+        }
+
         // toggleClass(viewPopup, 'show-popup');
 
         const allSpeakers = document.querySelectorAll('.Camera');
@@ -1096,6 +1096,7 @@ function handleButtons() {
         removeMenuChecks();
         show(speakScreenView.querySelector('.vertical-select-item-done'));
         document.querySelector('.video-conteiner-box').classList.add('speaks-now-view');
+
         // toggleClass(viewPopup, 'show-popup');
         minifyMembersScreens.onclick();
         rc.handleFakeAudioVolume();
