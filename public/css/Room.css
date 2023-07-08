@@ -2602,7 +2602,7 @@ button:hover {
 #sendFileDiv,
 #receiveFileDiv {
     z-index: 8;
-    display: none;
+    display: none !important;
     padding: 20px;
     margin: auto;
     min-width: 320px;
@@ -2611,10 +2611,6 @@ button:hover {
     border-radius: var(--border-radius);
     color: #fff;
     overflow: hidden;
-}
-
-#receiveFileDiv {
-    display: none !important;
 }
 
 #sendAbortBtn,
