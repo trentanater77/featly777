@@ -3138,12 +3138,12 @@ class RoomClient {
             position: 'center',
             title: 'Share file',
             input: 'file',
-            inputAttributes: {
-                accept: this.fileSharingInput,
-                'aria-label': 'Select file',
-                id: 'chatFileInput',
-            },
-            inputLabel: 'Browse file...',
+            // inputAttributes: {
+            //     accept: this.fileSharingInput,
+            //     'aria-label': 'Select file',
+            //     id: 'chatFileInput',
+            // },
+            // inputLabel: 'Browse file...',
             showDenyButton: true,
             confirmButtonText: `Send`,
             denyButtonText: `Cancel`,
@@ -3194,11 +3194,31 @@ class RoomClient {
 
                 reader.onload = (readerEvent) => {
                     // Convert the image data to base64 format
+
+                    const pictureFormats = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'tiff', 'webp', 'bmp'];
+                    const fileFormat = fileInfo.fileName.split('.').pop();
+                    const isPicture = pictureFormats.find((format) => fileFormat === format);
+
                     const lastMessage = chatMsger.querySelector('.msg:last-child');
                     const blockForImg = lastMessage.querySelector('.msg-text');
-                    const img = document.createElement('img');
-                    img.src = readerEvent.target.result;
-                    blockForImg.insertBefore(img, blockForImg.firstElementChild);
+
+                    if (!!isPicture) {
+                        const img = document.createElement('img');
+                        img.src = readerEvent.target.result;
+
+                        img.addEventListener('click', (e) => {
+                            picturePreview(readerEvent.target.result);
+                        });
+
+                        blockForImg.insertBefore(img, blockForImg.firstElementChild);
+                    } else {
+                        const icon = document.createElement('i');
+                        icon.className = 'fa-solid fa-file';
+                        const span = document.createElement('span');
+                        span.innerText = fileInfo.fileName;
+                        icon.appendChild(span);
+                        blockForImg.insertBefore(icon, blockForImg.firstElementChild);
+                    }
                 };
 
                 reader.readAsDataURL(file);
@@ -3353,13 +3373,19 @@ class RoomClient {
         this.incomingFileData = [];
 
         // if file is image, show the preview
-        if (isImageURL(this.incomingFileInfo.fileName)) {
+        if (isImageURL(file)) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const lastMessage = chatMsger.querySelector('.msg:last-child');
                 const blockForImg = lastMessage.querySelector('.msg-text');
+
                 const img = document.createElement('img');
                 img.src = e.target.result;
+
+                img.addEventListener('click', () => {
+                    picturePreview(e.target.result);
+                });
+
                 blockForImg.insertBefore(img, blockForImg.firstElementChild);
 
                 // Swal.fire({
@@ -3386,6 +3412,15 @@ class RoomClient {
             // blob where is stored downloaded file
             reader.readAsDataURL(blob);
         } else {
+            const lastMessage = chatMsger.querySelector('.msg:last-child');
+            const blockForImg = lastMessage.querySelector('.msg-text');
+
+            const icon = document.createElement('i');
+            icon.className = 'fa-solid fa-file';
+            const span = document.createElement('span');
+            span.innerText = file;
+            icon.appendChild(span);
+            blockForImg.insertBefore(icon, blockForImg.firstElementChild);
             // not img file
             Swal.fire({
                 allowOutsideClick: false,

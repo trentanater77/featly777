@@ -1280,6 +1280,13 @@ function handleButtons() {
     //     rc.handleFakeAudioVolume();
     // };
 
+    closePicturePreview.onclick = () => {
+        const picturePreview = document.getElementById('picturePreview');
+        hide(picturePreview);
+        const img = document.querySelector('#picturePreview > img');
+        img.remove();
+    };
+
     videoCloseBtn.onclick = () => {
         rc.closeVideo(true);
     };
@@ -1468,6 +1475,20 @@ function setSelectsInit() {
         console.log('04.4 ----> Get Local Storage Devices after', lS.getLocalStorageDevices());
     }
     if (initVideoSelect.value) changeCamera(initVideoSelect.value);
+}
+
+function picturePreview(src) {
+    const img = document.createElement('img');
+    img.src = src;
+
+    img.addEventListener('click', (e) => {
+        window.open(src, 'image').document.write("<img src='" + src + "' alt='something' />");
+    });
+
+    const picturePreview = document.getElementById('picturePreview');
+    picturePreview.appendChild(img);
+
+    show(picturePreview);
 }
 
 function changeCamera(deviceId) {
