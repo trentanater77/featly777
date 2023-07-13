@@ -19,5 +19,3 @@ config.js
 docker-compose.yml
 docker-push.sh
 .vercel
-
-/app/ssl/
