@@ -815,7 +815,7 @@ class RoomClient {
                 this.localVideoStream = stream;
                 this.videoProducerId = producer.id;
                 elem = await this.handleProducer(producer.id, type, stream, producerCameraBox);
-                elem2 = await this.handleProducer(producer.id, type, stream, membersPeerScreen);
+                // elem2 = await this.handleProducer(producer.id, type, stream, membersPeerScreen);
                 //if (!screen && !isEnumerateDevices) enumerateVideoDevices(stream);
             } else {
                 this.localAudioStream = stream;
@@ -836,10 +836,10 @@ class RoomClient {
                     });
                     elem.parentNode.removeChild(elem);
 
-                    elem2.srcObject.getTracks().forEach(function (track) {
-                        track.stop();
-                    });
-                    elem2.parentNode.removeChild(elem2);
+                    // elem2.srcObject.getTracks().forEach(function (track) {
+                    //     track.stop();
+                    // });
+                    // elem2.parentNode.removeChild(elem2);
 
                     handleAspectRatio();
                     console.log('[transportClose] Video-element-count', this.videoMediaContainer.childElementCount);
@@ -861,10 +861,10 @@ class RoomClient {
                     });
                     elem.parentNode.removeChild(elem);
 
-                    elem2.srcObject.getTracks().forEach(function (track) {
-                        track.stop();
-                    });
-                    elem2.parentNode.removeChild(elem2);
+                    // elem2.srcObject.getTracks().forEach(function (track) {
+                    //     track.stop();
+                    // });
+                    // elem2.parentNode.removeChild(elem2);
 
                     handleAspectRatio();
                     console.log('[closingProducer] Video-element-count', this.videoMediaContainer.childElementCount);
