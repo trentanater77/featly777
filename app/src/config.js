@@ -128,8 +128,8 @@ module.exports = {
         webRtcTransport: {
             listenIps: [
                 {
-                    ip: '62.171.169.98',
-                    announcedIp: '62.171.169.98', // replace by public static IP address https://api.ipify.org or put '' and will be auto-detected on server start
+                    ip: '74.136.102.225',
+                    announcedIp: '18.216.69.148', // replace by public static IP address https://api.ipify.org or put '' and will be auto-detected on server start
                 },
             ],
             initialAvailableOutgoingBitrate: 1000000,
