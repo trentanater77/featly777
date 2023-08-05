@@ -4,7 +4,7 @@ const os = require('os');
 const ifaces = os.networkInterfaces();
 
 const getLocalIp = () => {
-    let localIp = '18.216.69.148';
+    let localIp = '74.136.102.225';
     Object.keys(ifaces).forEach((ifname) => {
         for (const iface of ifaces[ifname]) {
             // Ignore IPv6 and 127.0.0.1
