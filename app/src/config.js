@@ -31,7 +31,7 @@ module.exports = {
     hostUsername: 'username',
     hostPassword: 'password',
     // app listen on
-    listenIp: '62.171.169.98',
+    listenIp: '18.216.69.148',
     listenPort: process.env.PORT || 443,
     // ssl/README.md
     sslCrt: '../ssl/cert.pem',
