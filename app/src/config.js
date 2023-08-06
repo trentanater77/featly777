@@ -129,7 +129,7 @@ sslKey: '/etc/letsencrypt/live/chatspheres.com/privkey.pem',
         webRtcTransport: {
             listenIps: [
                 {
-                    ip: '74.136.102.225',
+                    ip: '0.0.0.0',
                     announcedIp: '18.216.69.148', // replace by public static IP address https://api.ipify.org or put '' and will be auto-detected on server start
                 },
             ],
