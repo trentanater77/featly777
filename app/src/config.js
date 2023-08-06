@@ -34,8 +34,9 @@ module.exports = {
     listenIp: '18.216.69.148',
     listenPort: process.env.PORT || 443,
     // ssl/README.md
-    sslCrt: '../ssl/cert.pem',
-    sslKey: '../ssl/privkey.pem',
+  sslCrt: '/etc/letsencrypt/live/chatspheres.com/fullchain.pem',
+sslKey: '/etc/letsencrypt/live/chatspheres.com/privkey.pem',
+
     /*
     Ngrok
         1. Goto https://ngrok.com
