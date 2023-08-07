@@ -73,6 +73,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+
+
+
 const options = {
     key: fs.readFileSync(config.sslKey, 'utf-8'),
     cert: fs.readFileSync(config.sslCrt, 'utf-8'),
@@ -198,6 +201,26 @@ function startServer() {
             next();
         }
     });
+
+    //to add page to list rooms
+app.get('/joinurspheres', (req, res) => {
+  if(!hostCfg.authenticated) {
+  return res.redirect('/login'); 
+}
+    const rooms = [];
+
+roomList.forEach(room => {
+  rooms.push({
+    id: room.id, 
+    name: room.name,
+    // other details 
+  });
+});
+
+
+  res.render('rooms', { rooms });  
+});
+    
 
     // main page
     app.get(['/'], (req, res) => {
