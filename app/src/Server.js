@@ -203,21 +203,34 @@ function startServer() {
     });
 
     //to add page to list rooms
+// Serve HTML
 app.get('/joinurspheres', (req, res) => {
- 
-    const rooms = [];
+  if (!hostCfg.authenticated) {
+    return res.redirect('/login');
+  }
 
-roomList.forEach(room => {
-  rooms.push({
-    id: room.id, 
-    name: room.name,
-    // other details 
+  // Serve the HTML file (assuming it's saved in a public directory)
+  res.sendFile(path.join(__dirname, 'public/joinurspheres.html'));
+});
+
+// Provide JSON data for rooms
+app.get('/api/rooms', (req, res) => {
+  if (!hostCfg.authenticated) {
+    return res.redirect('/login');
+  }
+
+  const rooms = [];
+  roomList.forEach(room => {
+    rooms.push({
+      id: room.id,
+      name: room.name,
+      // other details
+    });
   });
+
+  res.json({ rooms: rooms });
 });
 
-
-  res.render('rooms', { rooms });  
-});
     
 
     // main page
