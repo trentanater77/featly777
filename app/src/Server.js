@@ -204,9 +204,7 @@ function startServer() {
 
     //to add page to list rooms
 app.get('/joinurspheres', (req, res) => {
-  if(!hostCfg.authenticated) {
-  return res.redirect('/login'); 
-}
+ 
     const rooms = [];
 
 roomList.forEach(room => {
