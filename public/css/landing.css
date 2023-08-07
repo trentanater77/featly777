@@ -38,6 +38,7 @@ pre {
 a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+    z-index: 2;
 }
 abbr[title] {
     border-bottom: none;
