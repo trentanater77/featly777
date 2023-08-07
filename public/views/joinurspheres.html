@@ -1,1 +1,31 @@
+<html>
+<head>
+  <title>JoinUrSpheres Rooms</title>
+</head>
+<body>
 
+  <h1>Available Rooms</h1>
+
+  <div id="room-list">
+  </div>
+
+  <script>
+    // Fetch room data from server
+    fetch('/joinurspheres')
+      .then(response => response.json())
+      .then(data => {
+        // Get room list DOM element
+        const roomList = document.getElementById('room-list');
+
+        // Loop through rooms and add to DOM
+        data.rooms.forEach(room => {
+          const roomElement = document.createElement('div');
+          roomElement.textContent = room.name;
+          
+          roomList.appendChild(roomElement);
+        });
+      });
+  </script>
+
+</body>
+</html>
