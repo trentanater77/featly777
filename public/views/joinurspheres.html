@@ -8,8 +8,7 @@
 
   <div id="room-list">
   </div>
-
-  <script>
+<script>
    fetch('https://chatspheres.com/api/rooms')
   .then(response => {
     if (!response.ok) {
@@ -27,7 +26,7 @@
 
     data.rooms.forEach(room => {
       const roomElement = document.createElement('div');
-      roomElement.textContent = room.name;
+      roomElement.textContent = room.id; // Use room.id since there is no room.name
 
       roomList.appendChild(roomElement);
     });
@@ -35,8 +34,8 @@
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
   });
-    
-  </script>
+</script>
+
 
 </body>
 </html>
