@@ -214,9 +214,7 @@ app.get('/joinurspheres', (req, res) => {
 
 // Provide JSON data for rooms
 app.get('/api/rooms', (req, res) => {
-  if (!hostCfg.authenticated) {
-    return res.redirect('/login');
-  }
+  
 
   const rooms = [];
   roomList.forEach(room => {
