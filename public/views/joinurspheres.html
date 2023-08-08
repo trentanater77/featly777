@@ -26,9 +26,14 @@
 
     data.rooms.forEach(room => {
       const roomElement = document.createElement('div');
-      roomElement.textContent = room.id; // Use room.id since there is no room.name
+      const roomLink = document.createElement('a'); // Create link element
 
-      roomList.appendChild(roomElement);
+      // Assuming the join URL can be constructed using the room ID
+      roomLink.href = `https://chatspheres.com/join/${room.id}`;
+      roomLink.textContent = `Join Room ${room.id}`; // Display room ID or name if available
+
+      roomElement.appendChild(roomLink); // Append the link to the div
+      roomList.appendChild(roomElement); // Append the div to the room list
     });
   })
   .catch(error => {
