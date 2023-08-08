@@ -28,6 +28,10 @@
           roomList.appendChild(roomElement);
         });
       });
+.catch(error => {
+    console.error('There was an error fetching the rooms:', error);
+  });
+    
   </script>
 
 </body>
