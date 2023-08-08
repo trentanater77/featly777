@@ -205,8 +205,7 @@ function startServer() {
     //to add page to list rooms
 // Serve HTML
 app.get('/joinurspheres', (req, res) => {
-  if (!hostCfg.authenticated) {
-    return res.redirect('/login');
+  
   }
 
   // Serve the HTML file (assuming it's saved in a public directory)
