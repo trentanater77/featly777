@@ -206,7 +206,7 @@ function startServer() {
 // Serve HTML
 app.get('/joinurspheres', (req, res) => {
   
-  }
+  
 
   // Serve the HTML file (assuming it's saved in a public directory)
   res.sendFile(path.join(__dirname, 'public/views/joinurspheres.html'));
