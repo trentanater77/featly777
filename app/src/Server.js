@@ -202,32 +202,7 @@ function startServer() {
         }
     });
 
-    //to add page to list rooms
-// Serve HTML
-app.get('/joinurspheres', (req, res) => {
-  
-  
-
-  // Serve the HTML file (assuming it's saved in a public directory)
-  res.sendFile(path.join(__dirname, 'public/views/joinurspheres.html'));
-});
-
-// Provide JSON data for rooms
-app.get('/api/rooms', (req, res) => {
-  
-
-  const rooms = [];
-  roomList.forEach(room => {
-    rooms.push({
-      id: room.id,
-     
-      // other details
-    });
-  });
-
-  res.json({ rooms: rooms });
-});
-
+   
     
 
     // main page
