@@ -210,7 +210,7 @@ app.get('/joinurspheres', (req, res) => {
   }
 
   // Serve the HTML file (assuming it's saved in a public directory)
-  res.sendFile(path.join(__dirname, 'public/joinurspheres.html'));
+  res.sendFile(path.join(__dirname, 'public/views/joinurspheres.html'));
 });
 
 // Provide JSON data for rooms
