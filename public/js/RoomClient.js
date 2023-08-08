@@ -392,9 +392,10 @@ class RoomClient {
                             break;
 
                         case 'failed':
-                            console.warn('Producer Transport failed');
-                            this.producerTransport.close();
-                            break;
+    console.warn('Producer Transport failed', state);
+    console.log(this.producerTransport); // Corrected line
+    this.producerTransport.close();
+    break;
 
                         default:
                             break;
