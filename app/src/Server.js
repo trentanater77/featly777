@@ -220,7 +220,7 @@ app.get('/api/rooms', (req, res) => {
   roomList.forEach(room => {
     rooms.push({
       id: room.id,
-      name: room.name,
+     
       // other details
     });
   });
