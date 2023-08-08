@@ -10,26 +10,30 @@
   </div>
 
   <script>
-    // Fetch room data from server
-     fetch('https://chatspheres.com/api/rooms')
-      .then(response => response.json())
-      .then(data => {
-        // Get room list DOM element
-        const roomList = document.getElementById('room-list');
+   fetch('https://chatspheres.com/api/rooms')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (!data.rooms) {
+      console.error('No rooms property in response data');
+      return;
+    }
 
-        // Loop through rooms and add to DOM
-        data.rooms.forEach(room => {
-          const roomElement = document.createElement('div');
-          const roomLink = document.createElement('a');
-      roomLink.href = `/join?room=${room.id}`; // Link to join the room
-          roomElement.textContent = room.name;
+    const roomList = document.getElementById('room-list');
 
-           roomElement.appendChild(roomLink);
-          roomList.appendChild(roomElement);
-        });
-      });
-.catch(error => {
-    console.error('There was an error fetching the rooms:', error);
+    data.rooms.forEach(room => {
+      const roomElement = document.createElement('div');
+      roomElement.textContent = room.name;
+
+      roomList.appendChild(roomElement);
+    });
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
   });
     
   </script>
