@@ -5,7 +5,7 @@ const Logger = require('./Logger');
 const log = new Logger('Room');
 
 module.exports = class Room {
-    constructor(room_id, worker, io) {
+    constructor(room_id, worker, io, description) { // add description parameter
         this.id = room_id;
         this.worker = worker;
         this.router = null;
@@ -16,8 +16,14 @@ module.exports = class Room {
         this._isLocked = false;
         this._isLobbyEnabled = false;
         this._roomPassword = null;
+        this.description = description; // add description property
         this.peers = new Map();
         this.createTheRouter();
+    }
+
+    // You may also want to add a method to get the description
+    getDescription() {
+        return this.description;
     }
 
     // ####################################################
