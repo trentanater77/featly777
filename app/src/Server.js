@@ -622,7 +622,7 @@ app.post('/api/rooms', (req, res) => {
             } else {
                 log.debug('Created room', { room_id: socket.room_id });
                 let worker = await getMediasoupWorker();
-                roomList.set(socket.room_id, new Room(socket.room_id, worker, io));
+                roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description));
                 callback({ room_id: socket.room_id });
             }
         });
