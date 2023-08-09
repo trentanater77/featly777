@@ -21,7 +21,7 @@ a:hover {
 
 /* Hero Term Info Section */
 .hero-term-info {
-    background-color: #FF6F61; /* Coral for the terms info section */
+    background-color: #00BFFF; /* Coral for the terms info section */
     color: #FFFFFF; /* White for the text color */
 }
 
@@ -39,6 +39,4 @@ a:hover {
     cursor: pointer;
 }
 
-.button-make-feat:hover {
-    background-color: #FF6F61; /* Coral for the button hover */
-}
+
