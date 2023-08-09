@@ -32,7 +32,12 @@
       roomLink.href = `https://chatspheres.com/join/${room.id}`;
       roomLink.textContent = `Join Room ${room.id}`; // Display room ID or name if available
 
+       const roomDescription = document.createElement('p'); // Create paragraph element for description
+  roomDescription.textContent = room.description; // Set the text to the room's description
+
+
       roomElement.appendChild(roomLink); // Append the link to the div
+      roomElement.appendChild(roomDescription); // Append the description to the div
       roomList.appendChild(roomElement); // Append the div to the room list
     });
   })
