@@ -1076,7 +1076,7 @@ label {
 }
 
 .button-primary:hover {
-  background: #FF6F61;
+  background: #00BFFF;
   background: linear-gradient(65deg, #FF6F61 0, #00BFFF 100%);
   border-radius: 6px; 
 }
