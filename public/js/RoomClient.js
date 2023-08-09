@@ -229,19 +229,25 @@ class RoomClient {
         );
     }
 
+    getDescription() {
+    return document.getElementById('initInputDescription').value;
+}
+
     // ####################################################
     // GET STARTED
     // ####################################################
 
-    async createRoom(room_id) {
-        await this.socket
-            .request('createRoom', {
-                room_id,
-            })
-            .catch((err) => {
-                console.log('Create room error:', err);
-            });
-    }
+  async createRoom(room_id) {
+    const description = this.getDescription();
+    await this.socket
+        .request('createRoom', {
+            room_id,
+            description
+        })
+        .catch((err) => {
+            console.log('Create room error:', err);
+        });
+}
 
     async join(data) {
         this.socket
