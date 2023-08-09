@@ -2,6 +2,10 @@
 body {
     background-color: #8A9597; /* Cool Grey for the background */
     color: #00BFFF; /* Deep Sky Blue for the text color */
+    position: relative; /* Allows child elements to be positioned relative to the body */
+    min-height: 100vh; /* Ensures full viewport height */
+    margin: 0; /* Removes default margin */
+    padding-bottom: 50px; /* Space for the terms info section */
 }
 
 /* Primary Color - Deep Sky Blue */
@@ -21,8 +25,14 @@ a:hover {
 
 /* Hero Term Info Section */
 .hero-term-info {
-    background-color: #00BFFF; /* Coral for the terms info section */
+    background-color: #FF6F61; /* Coral for the terms info section */
     color: #FFFFFF; /* White for the text color */
+    position: absolute; /* Absolute positioning */
+    bottom: 0; /* Aligns to the bottom of the parent (body) element */
+    width: 100%; /* Full width */
+    height: 50px; /* Set height */
+    text-align: center; /* Center the text */
+    line-height: 50px; /* Vertically centers the text */
 }
 
 /* Main Button */
@@ -39,4 +49,6 @@ a:hover {
     cursor: pointer;
 }
 
-
+.button-make-feat:hover {
+    background-color: #FF6F61; /* Coral for the button hover */
+}
