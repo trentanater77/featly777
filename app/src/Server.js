@@ -1,7 +1,7 @@
 'use strict';
 
 /*
-███████ ███████ ██████  ██    ██ ███████ ██████ 
+███████ ███████ ██████  ██    ██ ███████ ██████  
 ██      ██      ██   ██ ██    ██ ██      ██   ██ 
 ███████ █████   ██████  ██    ██ █████   ██████  
      ██ ██      ██   ██  ██  ██  ██      ██   ██ 
@@ -32,10 +32,10 @@ dependencies: {
  * FeatlyTalk SFU - Server component
  *
  * @link    GitHub: https://https://github.com/Featly-Inc/talk
- * @link    Official Live demo: https://featly.io
+ * @link    Official Live demo: https://talk.featly.io
  * @license For open source use: AGPLv3
  * @license For commercial or closed source, contact us at cfo@featly.app or purchase directly via CodeCanyon
- * @license CodeCanyon:
+ * @license CodeCanyon: 
  * @author  Featly Inc. - dmitry.lazarev@featly.app
  * @version 2.0.1
  *
@@ -73,12 +73,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-
-
-
 const options = {
-    key: fs.readFileSync(config.sslKey, 'utf-8'),
-    cert: fs.readFileSync(config.sslCrt, 'utf-8'),
+    key: fs.readFileSync(path.join(__dirname, config.sslKey), 'utf-8'),
+    cert: fs.readFileSync(path.join(__dirname, config.sslCrt), 'utf-8'),
 };
 
 const httpsServer = https.createServer(options, app);
@@ -86,7 +83,7 @@ const io = require('socket.io')(httpsServer, {
     maxHttpBufferSize: 1e7,
     transports: ['websocket'],
 });
-const host = config.listenIp; // config.listenIp
+const host = 'https://talk.featly.io' // config.listenIp
 
 const hostCfg = {
     protected: config.hostProtected,
@@ -137,7 +134,6 @@ const views = {
     permission: path.join(__dirname, '../../', 'public/views/permission.html'),
     privacy: path.join(__dirname, '../../', 'public/views/privacy.html'),
     room: path.join(__dirname, '../../', 'public/views/Room.html'),
-    terms: path.join(__dirname, '../../', 'public/views/terms.html'),
 };
 
 let announcedIP = config.mediasoup.webRtcTransport.listenIps[0].announcedIp; // AnnouncedIP (server public IPv4)
@@ -201,9 +197,6 @@ function startServer() {
             next();
         }
     });
-
-   
-    
 
     // main page
     app.get(['/'], (req, res) => {
@@ -286,11 +279,6 @@ function startServer() {
     // featlytalk about
     app.get(['/about'], (req, res) => {
         res.sendFile(views.about);
-    });
-
-    // featlytalk about
-    app.get(['/terms'], (req, res) => {
-        res.sendFile(views.terms);
     });
 
     // ####################################################
@@ -489,87 +477,10 @@ function startServer() {
     }
 
     // ####################################################
-    // TIMER
-    // ####################################################
-
-    let elapsedTime = 0;
-    let startTime;
-    let timerId;
-    let isOverProceed = false;
-
-    function formatTime(milliseconds, withoutHours) {
-        const hours = Math.floor(milliseconds / 3600000);
-        const minutes = Math.floor((milliseconds % 3600000) / 60000);
-        const seconds = Math.floor((milliseconds % 60000) / 1000);
-
-        if (withoutHours) {
-            return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-        }
-
-        return (
-            String(hours).padStart(2, '0') +
-            ':' +
-            String(minutes).padStart(2, '0') +
-            ':' +
-            String(seconds).padStart(2, '0')
-        );
-    }
-
-    function updateTimer() {
-        const currentTime = new Date().getTime();
-        const deltaTime = currentTime - startTime;
-        elapsedTime += deltaTime;
-
-        const time = formatTime(elapsedTime, false);
-
-        io.emit('timerUpdate', time);
-
-        startTime = currentTime;
-
-        if (time === '00:50:00' || time === '01:50:00' || time === '02:50:00' || time === '03:50:00') {
-            isOverProceed = true;
-        }
-
-        if (isOverProceed) {
-            countdown();
-        }
-    }
-
-    let countdownMinutes = 9;
-    let countdownSeconds = 59;
-
-    function countdown() {
-        var formattedMinutes = String(countdownMinutes).padStart(2, '0');
-        var formattedSeconds = String(countdownSeconds).padStart(2, '0');
-        const overTime = formattedMinutes + ':' + formattedSeconds;
-        io.emit('overTimerUpdate', overTime);
-
-        countdownSeconds--;
-
-        if (countdownSeconds < 0) {
-            countdownMinutes--;
-            countdownSeconds = 59;
-        }
-
-        if (countdownMinutes === 0 && countdownSeconds === 0) {
-            io.emit('exitRoomForTime');
-            resetCountdown();
-        }
-    }
-
-    function resetCountdown() {
-        countdownMinutes = 9;
-        countdownSeconds = 59;
-        isOverProceed = false;
-    }
-
-    // ####################################################
     // SOCKET IO
     // ####################################################
 
     io.on('connection', (socket) => {
-        console.log('A user connected');
-
         socket.on('createRoom', async ({ room_id }, callback) => {
             socket.room_id = room_id;
 
@@ -581,17 +492,6 @@ function startServer() {
                 roomList.set(socket.room_id, new Room(socket.room_id, worker, io));
                 callback({ room_id: socket.room_id });
             }
-        });
-
-        socket.on('startRecordingMessage', (peer_id) => {
-            if (!roomList.has(socket.room_id)) return;
-            io.emit('showStartRecordingMessage', peer_id);
-        });
-
-        socket.on('resetCountdownTimer', () => {
-            if (!roomList.has(socket.room_id)) return;
-            resetCountdown();
-            io.emit('resetCountdownTimer');
         });
 
         socket.on('getPeerCounts', async ({}, callback) => {
@@ -776,12 +676,6 @@ function startServer() {
                 });
             }
 
-            // Start the timer when a client connects
-            if (!timerId) {
-                startTime = new Date().getTime();
-                timerId = setInterval(updateTimer, 1000);
-            }
-
             log.debug('User joined', data);
             roomList.get(socket.room_id).addPeer(new Peer(socket.id, data));
 
@@ -925,22 +819,6 @@ function startServer() {
             roomList.get(socket.room_id).closeProducer(socket.id, data.producer_id);
         });
 
-        socket.on('pauseConsumer', (data) => {
-            if (!roomList.has(socket.room_id)) return;
-
-            log.debug('Producer paused', data);
-
-            io.emit('pauseConsumer', data);
-        });
-
-        socket.on('resumeConsumer', (data) => {
-            if (!roomList.has(socket.room_id)) return;
-
-            log.debug('Producer resumed', data);
-
-            io.emit('resumeConsumer', data);
-        });
-
         socket.on('resume', async (_, callback) => {
             await consumer.resume();
             callback();
@@ -976,17 +854,6 @@ function startServer() {
         });
 
         socket.on('disconnect', () => {
-            console.log('A user disconnected');
-
-            // Stop the timer when all clients disconnect
-            if (io.engine.clientsCount === 0) {
-                clearInterval(timerId);
-                timerId = null;
-                elapsedTime = 0;
-            }
-
-            //
-
             if (!roomList.has(socket.room_id)) return;
 
             log.debug('Disconnect', getPeerName());
