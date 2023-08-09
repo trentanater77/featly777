@@ -64,8 +64,8 @@ dfn {
     font-style: italic;
 }
 mark {
-    background-color: #ff0;
-    color: #000;
+    background-color: #FF6F61;
+    color: #8A9597;
 }
 small {
     font-size: 80%;
@@ -198,7 +198,7 @@ html {
     box-sizing: inherit;
 }
 body {
-    background: #1d2026;
+    background: #00BFFF;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
@@ -206,7 +206,7 @@ hr {
     border: 0;
     display: block;
     height: 1px;
-    background: #242830;
+    background: #FF6F61;
     margin-top: 24px;
     margin-bottom: 24px;
 }
@@ -260,7 +260,7 @@ table {
     width: 100%;
 }
 tr {
-    border-bottom: 1px solid #242830;
+    border-bottom: 1px solid #00BFFF;
 }
 th {
     text-align: left;
@@ -282,7 +282,7 @@ html {
     line-height: 30px;
 }
 body {
-    color: #8a94a7;
+    color: #00BFFF;
     font-size: 1rem;
 }
 body,
@@ -293,7 +293,7 @@ textarea {
     font-family: 'IBM Plex Sans', sans-serif;
 }
 a {
-    color: #8a94a7;
+    color: #FF6F61;
     text-decoration: underline;
 }
 a:hover,
@@ -314,7 +314,7 @@ h6,
 .h5,
 .h6 {
     clear: both;
-    color: #fff;
+    color: #FF6F61;
     font-weight: 600;
 }
 h1,
@@ -506,7 +506,7 @@ code,
 kbd,
 tt,
 var {
-    background: #1d2026;
+    background: #00BFFF;
 }
 pre {
     font-size: 16px;
@@ -635,7 +635,7 @@ label {
     width: 100%;
     display: block;
     height: 1px;
-    background: #242830;
+    background: #00BFFF;
 }
 .has-bottom-divider {
     position: relative;
@@ -648,7 +648,7 @@ label {
     width: 100%;
     display: block;
     height: 1px;
-    background: #242830;
+    background: #00BFFF;
 }
 .m-0 {
     margin: 0;
@@ -943,12 +943,12 @@ label {
 }
 .input,
 .textarea {
-    background-color: #fff;
+    background-color: #00BFFF;
     border-width: 1px;
     border-style: solid;
-    border-color: #242830;
+    border-color: #00BFFF;
     border-radius: 2px;
-    color: #8a94a7;
+    color: #00BFFF;
     max-width: 100%;
     width: 100%;
 }
@@ -1044,7 +1044,7 @@ label {
     line-height: 16px;
     text-decoration: none !important;
     text-transform: uppercase;
-    background-color: #242830;
+    background-color: #FF6F61;
     color: #fff !important;
     border: none;
     border-radius: 2px;
@@ -1056,7 +1056,7 @@ label {
     white-space: nowrap;
 }
 .button:hover {
-    background: #262a33;
+    background: #8A9597;
 }
 .button:active {
     outline: 0;
@@ -1113,7 +1113,7 @@ label {
     line-height: 24px;
     letter-spacing: -0.1px;
     font-weight: 600;
-    color: #8a94a7;
+    color: #00BFFF;
     text-transform: uppercase;
     text-decoration: none;
     line-height: 16px;
@@ -1130,7 +1130,7 @@ label {
         left: 0;
         width: 100%;
         height: 700px;
-        background: #242830;
+        background: #00BFFF;
         background: linear-gradient(80deg, rgba(36, 40, 48, 0.5) 0%, rgba(36, 40, 48, 0) 100%);
         -webkit-transform-origin: 0;
         transform-origin: 0;
@@ -1270,14 +1270,14 @@ label {
 
 .hero .button-make-feat {
     padding: 1.35vh 1.25vw;
-    background: linear-gradient(105.88deg, #4f22c8 0%, #8c6be6 100%, #8c6be6 100%), #2e2e36;
+    background: #00BFFF
     border-radius: 1.25vh;
     font-weight: 700;
     font-size: 1.875vh;
     line-height: 2.5vh;
     align-items: center;
     text-align: center;
-    color: #f8f8f8;
+    color: #00BFFF;
     box-shadow: none;
     border: none;
     width: 15.2vw;
@@ -1425,12 +1425,12 @@ label {
     top: 41.9%;
     width: 28.03%;
     height: 37.37%;
-    background: linear-gradient(to left top, #00bffb, rgba(0, 191, 251, 0));
+    background: #00BFFF
     -webkit-transform: rotateZ(45deg);
     transform: rotateZ(45deg);
 }
 .hero-figure-box-01::before {
-    background: linear-gradient(to left, #15181d 0%, rgba(21, 24, 29, 0) 60%);
+    background: #00BFFF
     -webkit-transform: rotateZ(45deg) scale(1.5);
     transform: rotateZ(45deg) scale(1.5);
 }
@@ -1439,12 +1439,12 @@ label {
     top: 64.1%;
     width: 37.87%;
     height: 50.5%;
-    background: linear-gradient(to left top, #0270d7, rgba(2, 112, 215, 0));
+    background: linear-gradient(to left top, #00BFFF, rgba(2, 112, 215, 0));
     -webkit-transform: rotateZ(-45deg);
     transform: rotateZ(-45deg);
 }
 .hero-figure-box-02::before {
-    background: linear-gradient(to top, #15181d 0%, rgba(21, 24, 29, 0) 60%);
+    background: linear-gradient(to top, #00BFFF 0%, rgba(21, 24, 29, 0) 60%);
     -webkit-transform: rotateZ(-45deg) scale(1.5);
     transform: rotateZ(-45deg) scale(1.5);
 }
@@ -1453,10 +1453,10 @@ label {
     top: -56.8%;
     width: 56.81%;
     height: 75.75%;
-    background: linear-gradient(to left top, #00bffb, rgba(0, 191, 251, 0));
+    background: linear-gradient(to left top, #00BFFF, rgba(0, 191, 251, 0));
 }
 .hero-figure-box-03::before {
-    background: linear-gradient(to left, #15181d 0%, rgba(21, 24, 29, 0) 60%);
+    background: linear-gradient(to left, #00BFFF 0%, rgba(21, 24, 29, 0) 60%);
     -webkit-transform: rotateZ(45deg) scale(1.5);
     transform: rotateZ(45deg) scale(1.5);
 }
@@ -1465,7 +1465,7 @@ label {
     top: -8%;
     width: 45.45%;
     height: 60.6%;
-    background: linear-gradient(to left top, #0270d7, rgba(2, 112, 215, 0));
+    background: linear-gradient(to left top, #00BFFF, rgba(2, 112, 215, 0));
     -webkit-transform: rotateZ(-135deg);
     transform: rotateZ(-135deg);
 }
@@ -1477,7 +1477,7 @@ label {
 .hero-figure-box-05,
 .hero-figure-box-06,
 .hero-figure-box-07 {
-    background-color: #242830;
+    background-color: #00BFFF;
     box-shadow: -20px 32px 64px rgba(0, 0, 0, 0.25);
 }
 .hero-figure-box-05 {
@@ -1509,7 +1509,7 @@ label {
     top: 81.6%;
     width: 19.51%;
     height: 26.01%;
-    background: #0270d7;
+    background: #00BFFF;
     -webkit-transform: rotateZ(-22deg);
     transform: rotateZ(-22deg);
 }
@@ -1523,7 +1523,7 @@ label {
     top: -17.9%;
     width: 6.63%;
     height: 8.83%;
-    background: #00bffb;
+    background: #00BFFF;
     -webkit-transform: rotateZ(-52deg);
     transform: rotateZ(-52deg);
 }
@@ -1757,7 +1757,7 @@ label {
     }
 }
 .is-boxed {
-    background: #242830;
+    background: #8A9597;
 }
 .body-wrap {
     background: #1d2026;
@@ -1817,7 +1817,7 @@ main {
     letter-spacing: 0px;
 }
 .site-footer a {
-    color: #8a94a7;
+    color: #8A9597;
     text-decoration: none;
 }
 .site-footer a:hover,
@@ -2082,7 +2082,7 @@ main {
     justify-content: center;
     text-align: center;
     white-space: nowrap;
-    background-color: #242830;
+    background-color: #00BFFF;
     color: #fff !important;
     box-shadow: none;
     max-width: 100%;
