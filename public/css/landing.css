@@ -1068,22 +1068,17 @@ label {
     padding: 8px 24px;
     height: 32px;
 }
-:root {
-  --primary-color: #00BFFF;
-  --secondary-color: #FF6F61; 
-  --accent-color: #8A9597;
-}
 
 .button-primary {
-  background: var(--primary-color); 
-  background: linear-gradient(65deg, var(--primary-color) 0, var(--secondary-color) 100%);
-  border-radius: 6px; 
+  background: #00BFFF;
+  background: linear-gradient(65deg, #00BFFF 0, #FF6F61 100%); 
+  border-radius: 6px;
 }
 
 .button-primary:hover {
-  background: var(--secondary-color);
-  background: linear-gradient(65deg, var(--secondary-color) 0, var(--primary-color) 100%);
-  border-radius: 6px;
+  background: #FF6F61;
+  background: linear-gradient(65deg, #FF6F61 0, #00BFFF 100%);
+  border-radius: 6px; 
 }
 .button-block {
     display: flex;
