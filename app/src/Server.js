@@ -204,7 +204,7 @@ function startServer() {
     }); //below is new code
 // to add page to list rooms
 // Serve HTML
-const roomList = [];
+const roomList = new Map();
 
 app.get('/joinurspheres', (req, res) => {
   // Serve the HTML file (assuming it's saved in a public directory)
@@ -213,8 +213,16 @@ app.get('/joinurspheres', (req, res) => {
 
 // Provide JSON data for rooms
 app.get('/api/rooms', (req, res) => {
-  console.log(roomList); // Log the roomList for debugging
-  res.json({ rooms: roomList });
+  const rooms = [];
+  roomList.forEach((room, id) => {
+    rooms.push({
+      id: id,
+      description: room.description // Adjust this to your Room class definition
+      // other details
+    });
+  });
+  console.log(rooms); // Log the rooms for debugging
+  res.json({ rooms: rooms });
 });
 
 app.post('/api/rooms', (req, res) => {
@@ -230,13 +238,11 @@ app.post('/api/rooms', (req, res) => {
   const id = uuidv4();
 
   // add the room to your roomList
-  roomList.push({ id: id, ...room }); // Use push if roomList is an array
+  roomList.set(id, room); // Use set if roomList is a Map
 
   // respond to client
   res.json({ success: true, room: { id: id, ...room } });
 });
-
-
 
 
     
