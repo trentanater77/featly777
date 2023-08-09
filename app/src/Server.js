@@ -74,16 +74,17 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const options = {
-    key: fs.readFileSync(path.join(__dirname, config.sslKey), 'utf-8'),
-    cert: fs.readFileSync(path.join(__dirname, config.sslCrt), 'utf-8'),
+    key: fs.readFileSync(config.sslKey, 'utf-8'),
+    cert: fs.readFileSync(config.sslCrt, 'utf-8'),
 };
+
 
 const httpsServer = https.createServer(options, app);
 const io = require('socket.io')(httpsServer, {
     maxHttpBufferSize: 1e7,
     transports: ['websocket'],
 });
-const host = 'https://talk.featly.io' // config.listenIp
+const host = 'https://chatspheres.com' // config.listenIp
 
 const hostCfg = {
     protected: config.hostProtected,
