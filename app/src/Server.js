@@ -63,6 +63,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = yamlJS.load(path.join(__dirname + '/../api/swagger.yaml'));
 const Sentry = require('@sentry/node');
 const { CaptureConsole } = require('@sentry/integrations');
+const { v4: uuidv4 } = require('uuid');
 
 // Slack API
 const CryptoJS = require('crypto-js');
@@ -200,36 +201,55 @@ function startServer() {
         } else {
             next();
         }
-    });
- //to add page to list rooms
+    }); //below is new code
+// to add page to list rooms
 // Serve HTML
-app.get('/joinurspheres', (req, res) => {
-  
-  
+    const roomList = new Map();
 
+app.get('/joinurspheres', (req, res) => {
   // Serve the HTML file (assuming it's saved in a public directory)
-  res.sendFile(path.join(__dirname, 'public/views/joinurspheres.html'));
+  res.sendFile(path.join(__dirname, '../../', 'public/views/joinurspheres.html'));
 });
 
 // Provide JSON data for rooms
 app.get('/api/rooms', (req, res) => {
-  
-
   const rooms = [];
-  roomList.forEach(room => {
+  roomList.forEach((room, id) => {
     rooms.push({
-      id: room.id,
-         description: room.description,
-     
+      id: id,
+      description: room.description,
       // other details
     });
   });
-
   res.json({ rooms: rooms });
 });
 
+app.post('/api/rooms', (req, res) => {
+  const description = req.body.description; // get the description from request body
 
-   
+  // create room object
+  const room = {
+    description: description,
+    // other properties...
+  };
+
+  // generate unique ID using uuid
+  const id = uuidv4();
+
+  // add the room to your roomList (or however you store rooms)
+  roomList.set(id, room); // Use set if roomList is a Map
+
+  // respond to client
+  res.json({ success: true, room: { id: id, ...room } });
+});
+
+
+
+
+
+
+    
+   //above is new code
     
 
     // main page
