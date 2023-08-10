@@ -62,3 +62,14 @@ a:hover {
 .button-make-feat:hover {
     background-color: #FF6F61; /* Coral for the button hover */
 }
+
+.description {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    padding: 20px;
+    color: #333; /* Feel free to change this to match your site's color scheme */
+    background-color: #f4f4f4; /* This provides a subtle background to set the section apart; adjust as needed */
+    margin: 20px auto; /* Adds some margin to separate the section from others */
+    max-width: 800px; /* Controls the width of the content */
+}
