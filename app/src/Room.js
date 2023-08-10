@@ -5,7 +5,7 @@ const Logger = require('./Logger');
 const log = new Logger('Room');
 
 module.exports = class Room {
-    constructor(room_id, worker, io, description) { // add description parameter
+    constructor(room_id, worker, io, description, room_limit) { // add room_limit parameter
         this.id = room_id;
         this.worker = worker;
         this.router = null;
@@ -22,28 +22,20 @@ module.exports = class Room {
         this.createTheRouter();
     }
 
-getRoomLimit() {
+    // ...
+
+    getRoomLimit() {
         return this.room_limit;
     }
 
     setRoomLimit(limit) {
         this.room_limit = limit;
     }
-}
 
-
-
-
-
-
-
-
-
-    
-    // You may also want to add a method to get the description
     getDescription() {
         return this.description;
     }
+}
 
     // ####################################################
     // ROUTER
