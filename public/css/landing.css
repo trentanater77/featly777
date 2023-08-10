@@ -5,17 +5,26 @@ body {
     position: relative; /* Allows child elements to be positioned relative to the body */
     min-height: 100vh; /* Ensures full viewport height */
     margin: 0; /* Removes default margin */
-    padding-bottom: 50px; /* Space for the terms info section */
+    padding-bottom: 80px; /* Space for the terms info section */
+    font-family: 'IBM Plex Sans', sans-serif; /* Using a clean and professional font */
 }
 
 /* Primary Color - Deep Sky Blue */
-.hero-title, .button-make-feat, a {
-    color: #00BFFF; /* Deep Sky Blue for the hero title and buttons */
+.hero-title {
+    color: #00BFFF; /* Deep Sky Blue for the hero title */
+    font-size: 36px; /* Increase hero title size */
+    font-weight: 600; /* Bold hero title */
+    line-height: 1.2; /* Spacing between hero title lines */
+}
+
+.button-make-feat, a {
+    color: #00BFFF; /* Deep Sky Blue for buttons and links */
+    font-size: 18px; /* Increase button and link size */
 }
 
 /* Secondary Color - Coral */
 a:hover {
-    color: white; /* Coral for the hover color on links */
+    color: #00BFFF; /* Coral for the hover color on links */
 }
 
 /* Hero Logo Section */
@@ -30,9 +39,10 @@ a:hover {
     position: absolute; /* Absolute positioning */
     bottom: 0; /* Aligns to the bottom of the parent (body) element */
     width: 100%; /* Full width */
-    height: 50px; /* Set height */
+    height: 80px; /* Set height */
     text-align: center; /* Center the text */
-    line-height: 50px; /* Vertically centers the text */
+    line-height: 80px; /* Vertically centers the text */
+    font-size: 20px; /* Increase terms info text size */
 }
 
 /* Main Button */
@@ -40,15 +50,15 @@ a:hover {
     background-color: #00BFFF; /* Deep Sky Blue for the button background */
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 20px 40px; /* Increase button padding */
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 20px; /* Increase button text size */
     margin: 4px 2px;
     cursor: pointer;
 }
 
 .button-make-feat:hover {
-  
+    background-color: #FF6F61; /* Coral for the button hover */
 }
