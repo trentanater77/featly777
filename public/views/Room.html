@@ -128,24 +128,19 @@
                 <button id="initSettingButton" class="fa-solid fa-gear circle-button"></button>
             </div>
 
-            <form class="init-input-error-box">
-                <div class="input-box">
-                    <input id="initInputName" required type="text" name="name" class="init-common" />
-                    <label>Your name</label>
-                </div>
-<div class="input-box"> <!-- Add this div for the description input -->
-        <input id="initInputDescription" required type="text" name="description" class="init-common" />
+          <form class="init-input-error-box">
+    <div class="input-box">
+        <input id="initInputDescription" required type="text" name="description" class="init-common" onkeyup="checkFields()" />
         <label>Description of the meeting</label>
     </div>
-                <div class="input-box">
-    <input id="initInputRoomLimit" required type="number" name="room_limit" class="init-common" min="1" />
-    <label>Room Limit</label>
-</div>
+    <div class="input-box">
+        <input id="initInputRoomLimit" required type="number" name="room_limit" class="init-common" min="1" onkeyup="checkFields()" />
+        <label>Room Limit</label>
+    </div>
 
-                
+    <button id="initSubmitButton" type="submit" class="init-common" disabled>Create Feat</button>
+</form>
 
-                <button id="initSubmitButton" type="submit" class="init-common">Create Feat</button>
-            </form>
 
             <span class="init-limit-text">Up to 10 members. No time limit</span>
             <span class="init-terms-text"
@@ -993,6 +988,20 @@
                 </div>
             </main>
         </section>
+
+        <script> 
+            
+            function checkFields() {
+    const description = document.getElementById("initInputDescription").value;
+    const roomLimit = document.getElementById("initInputRoomLimit").value;
+    
+    if (description && roomLimit) {
+        document.getElementById("initSubmitButton").disabled = false;
+    } else {
+        document.getElementById("initSubmitButton").disabled = true;
+    }
+}
+ </script>
 
         <!--
     Start Google Translate
