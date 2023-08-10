@@ -134,10 +134,33 @@
                     <label>Your name</label>
                 </div>
 <div class="input-box"> <!-- Add this div for the description input -->
-        <input id="initInputDescription" required type="text" name="description" class="init-common" />
+        <input id="initInputDescription" required type="text" name="description" class="init-common" onkeyup="checkFields()" />
         <label>Description of the meeting</label>
     </div>
-                
+                <div class="input-box">
+        <input id="initInputRoomLimit" required type="number" name="room_limit" class="init-common" min="1" onkeyup="checkFields()" />
+        <label>Room Limit</label>
+    </div>
+
+
+
+
+
+
+                <script>
+
+                 function checkFields() {
+    const description = document.getElementById("initInputDescription").value;
+    const roomLimit = document.getElementById("initInputRoomLimit").value;
+    
+    if (description && roomLimit) {
+        document.getElementById("initSubmitButton").disabled = false;
+    } else {
+        document.getElementById("initSubmitButton").disabled = true;
+    }
+}
+   
+                </script> 
 
                 <button id="initSubmitButton" type="submit" class="init-common">Create Feat</button>
             </form>
