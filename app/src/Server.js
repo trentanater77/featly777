@@ -178,6 +178,8 @@ function startServer() {
     app.use(express.json());
     app.use(express.static(dir.public));
     app.use(bodyParser.urlencoded({ extended: true }));
+    //added use body parser for json
+    app.use(bodyParser.json());
     app.use(apiBasePath + '/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // api docs
 
     // all start from here
