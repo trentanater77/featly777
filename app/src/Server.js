@@ -212,12 +212,14 @@ app.get('/joinurspheres', (req, res) => {
 });
 
 // Provide JSON data for rooms
+// Provide JSON data for rooms
 app.get('/api/rooms', (req, res) => {
   const rooms = [];
   roomList.forEach((room, id) => {
     rooms.push({
       id: id,
-      description: room.description // Adjust this to your Room class definition
+      description: room.description, // Missing comma here
+      roomLimit: room.roomLimit
       // other details
     });
   });
@@ -225,12 +227,16 @@ app.get('/api/rooms', (req, res) => {
   res.json({ rooms: rooms });
 });
 
+// ... rest of the code
+
+
 app.post('/api/rooms', (req, res) => {
   const description = req.body.description; // get the description from request body
-
+const roomLimit = req.body.room_limit
   // create room object
   const room = {
     description: description,
+      roomLimit: roomLimit,
     // other properties...
   };
 
