@@ -5,7 +5,7 @@ const Logger = require('./Logger');
 const log = new Logger('Room');
 
 module.exports = class Room {
-    constructor(room_id, worker, io, description) { // add description parameter
+    constructor(room_id, worker, io, description, room_limit) { // add description parameter
         this.id = room_id;
         this.worker = worker;
         this.router = null;
@@ -17,8 +17,17 @@ module.exports = class Room {
         this._isLobbyEnabled = false;
         this._roomPassword = null;
         this.description = description; // add description property
+        this.room_limit = room_limit; //added room_limit
         this.peers = new Map();
         this.createTheRouter();
+    }
+
+    getRoomLimit() { // method to get the room limit
+        return this.room_limit;
+    }
+
+    setRoomLimit(limit) { // method to set the room limit
+        this.room_limit = limit;
     }
 
     // You may also want to add a method to get the description
