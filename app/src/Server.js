@@ -243,7 +243,7 @@ app.post('/api/rooms', (req, res) => {
     roomLimit: parseInt(roomLimit), // Convert roomLimit to integer
     // other properties...
   };
-
+console.log(room);
   // generate unique ID using uuid
   const id = uuidv4();
 
