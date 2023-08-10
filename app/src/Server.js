@@ -221,7 +221,7 @@ app.get('/api/rooms', (req, res) => {
     rooms.push({
       id: id,
       description: room.description, // Missing comma here
-      roomlimit: room.roomLimit
+      room_limit: room.roomLimit
       // other details
     });
   });
