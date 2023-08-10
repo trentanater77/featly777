@@ -232,11 +232,12 @@ app.get('/api/rooms', (req, res) => {
 
 app.post('/api/rooms', (req, res) => {
   const description = req.body.description; // get the description from request body
-const roomLimit = req.body.room_limit
+  const roomLimit = req.body.room_limit; // use the same name as in the client-side HTML form
+
   // create room object
   const room = {
     description: description,
-      roomLimit: roomLimit,
+    roomLimit: parseInt(roomLimit), // Convert roomLimit to integer
     // other properties...
   };
 
