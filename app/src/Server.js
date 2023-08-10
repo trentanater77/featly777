@@ -233,6 +233,7 @@ app.get('/api/rooms', (req, res) => {
 
 
 app.post('/api/rooms', (req, res) => {
+    console.log(req.body);
   const description = req.body.description; // get the description from request body
   const roomLimit = req.body.room_limit; // use the same name as in the client-side HTML form
 
