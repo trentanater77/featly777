@@ -621,21 +621,22 @@ console.log(room);
     // SOCKET IO
     // ####################################################
 
-    io.on('connection', (socket) => {
-        console.log('A user connected');
+  io.on('connection', (socket) => {
+    console.log('A user connected');
 
-       socket.on('createRoom', async ({ room_id, description }, callback) => {
-    socket.room_id = room_id;
+    socket.on('createRoom', async ({ room_id, description, room_limit }, callback) => {
+        socket.room_id = room_id;
 
-    if (roomList.has(socket.room_id)) {
-        callback({ error: 'already exists' });
-    } else {
-        log.debug('Created room', { room_id: socket.room_id, description: description });
-        let worker = await getMediasoupWorker();
-        roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description));
-        callback({ room_id: socket.room_id });
-    }
-});
+        if (roomList.has(socket.room_id)) {
+            callback({ error: 'already exists' });
+        } else {
+            log.debug('Created room', { room_id: socket.room_id, description: description, room_limit: room_limit });
+            let worker = await getMediasoupWorker();
+            roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description, room_limit));
+            callback({ room_id: socket.room_id });
+        }
+    });
+
 
         socket.on('startRecordingMessage', (peer_id) => {
             if (!roomList.has(socket.room_id)) return;
