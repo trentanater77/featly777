@@ -116,7 +116,6 @@
                             id="initAudioButton"
                             class="fas fa-microphone-slash"
                             onclick="handleAudio(event)"
-                            
                         ></button>
                         <p>Switch <span>on</span> microphone</p>
                     </div>
@@ -129,41 +128,20 @@
                 <button id="initSettingButton" class="fa-solid fa-gear circle-button"></button>
             </div>
 
-          <form class="init-input-error-box" data-gtm-form-interact-id="0">
-
-
-              
-    <div class="input-box">
-        
-        <input id="initInputName" required type="text" name="name" class="init-common"  data-gtm-form-interact-field-id="0">
-        <label>Your name</label>
-    </div>
-
-
-
-
-
-
-
-        <div class="input-box">
-        <input id="initInputDescription" required type="text" name="description" class="init-common" onkeyup="checkFields()" />
+            <form class="init-input-error-box">
+                <div class="input-box">
+                    <input id="initInputName" required type="text" name="name" class="init-common" />
+                    <label>Your name</label>
+                </div>
+<div class="input-box"> <!-- Add this div for the description input -->
+        <input id="initInputDescription" required type="text" name="description" class="init-common" />
         <label>Description of the meeting</label>
     </div>
-    <div class="input-box">
-        <input id="initInputRoomLimit" required type="number" name="room_limit" class="init-common" min="1" onkeyup="checkFields()" />
-        <label>Room Limit</label>
-    </div>
+                
+                
 
-
-
-
-
-
-
-              
-
-    <button id="initSubmitButton" type="submit" class="init-common" disabled>Create Feat</button>
-</form>
+                <button id="initSubmitButton" type="submit" class="init-common">Create Feat</button>
+            </form>
 
             
 
