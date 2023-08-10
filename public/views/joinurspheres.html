@@ -24,25 +24,24 @@
 
     const roomList = document.getElementById('room-list');
 
-    data.rooms.forEach(room => {
-      const roomElement = document.createElement('div');
-      const roomLink = document.createElement('a'); // Create link element
+   data.rooms.forEach(room => {
+  const roomElement = document.createElement('div');
+  const roomLink = document.createElement('a');
+  roomLink.href = `https://chatspheres.com/join/${room.id}`;
+  roomLink.textContent = `Join Room ${room.id}`;
 
-      // Assuming the join URL can be constructed using the room ID
-      roomLink.href = `https://chatspheres.com/join/${room.id}`;
-      roomLink.textContent = `Join Room ${room.id}`; // Display room ID or name if available
+  const roomDescription = document.createElement('p');
+  roomDescription.textContent = room.description;
 
-      const roomDescription = document.createElement('p'); // Create paragraph element for description
-      roomDescription.textContent = room.description; // Set the text to the room's description
+  const roomLimit = document.createElement('p'); // Create paragraph element for room limit
+  roomLimit.textContent = `Room Limit: ${room.roomLimit}`; // Set the text to the room's limit
 
-      const roomLimitElement = document.createElement('p'); // Create paragraph element for room limit
-      roomLimitElement.textContent = `Room Limit: ${room.roomLimit}`; // Set the text to the room's limit
+  roomElement.appendChild(roomLink);
+  roomElement.appendChild(roomDescription);
+  roomElement.appendChild(roomLimit); // Append the room limit to the div
+  roomList.appendChild(roomElement);
+});
 
-      roomElement.appendChild(roomLink); // Append the link to the div
-      roomElement.appendChild(roomDescription); // Append the description to the div
-      roomElement.appendChild(roomLimitElement); // Append the room limit to the div
-      roomList.appendChild(roomElement); // Append the div to the room list
-    });
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
