@@ -221,7 +221,7 @@ app.get('/api/rooms', (req, res) => {
     rooms.push({
       id: id,
       description: room.description, // Missing comma here
-      room_limit: room.roomLimit
+      room_limit: room.room_limit
       // other details
     });
   });
@@ -233,17 +233,17 @@ app.get('/api/rooms', (req, res) => {
 
 
 app.post('/api/rooms', (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
   const description = req.body.description; // get the description from request body
   const roomLimit = req.body.room_limit; // use the same name as in the client-side HTML form
 
   // create room object
   const room = {
     description: description,
-    roomLimit: parseInt(roomLimit), // Convert roomLimit to integer
+    room_limit: parseInt(roomLimit), // Convert roomLimit to integer, notice the consistent lowercase here
     // other properties...
   };
-console.log(room);
+  console.log(room);
   // generate unique ID using uuid
   const id = uuidv4();
 
@@ -253,6 +253,7 @@ console.log(room);
   // respond to client
   res.json({ success: true, room: { id: id, ...room } });
 });
+
 
 
     
