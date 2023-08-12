@@ -169,25 +169,27 @@ document.querySelector('form').addEventListener('submit', (event) => {
       const name = document.getElementById("initInputName").value;
       const description = document.getElementById("initInputDescription").value;
       const roomLimit = document.getElementById("initInputRoomLimit").value;
-
-      fetch('/api/rooms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, description, room_limit: roomLimit }) // Pay attention to the room_limit key
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          // Handle success - e.g., navigate to a new page, show a success message, etc.
-        } else {
-          // Handle error - e.g., show an error message
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+fetch('/api/rooms', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ name, description, room_limit: roomLimit }) // Pay attention to the room_limit key
+})
+.then((response) => response.json())
+.then((data) => {
+  if (data.success) {
+    // Handle success - e.g., navigate to a new page, show a success message, etc.
+    alert('Room created successfully!'); // Displaying a success message using an alert
+  } else {
+    // Handle error - e.g., show an error message
+    alert('Error creating room: ' + data.error); // Displaying an error message using an alert, assuming the error is contained in data.error
+  }
+})
+.catch((error) => {
+  console.error('Error:', error);
+  alert('An unexpected error occurred. Please try again.'); // Displaying a generic error message using an alert
+});
     }); </script>
 
 
