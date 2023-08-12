@@ -206,7 +206,7 @@ function startServer() {
     }); //below is new code
 // to add page to list rooms
 // Serve HTML
-const roomList = new Map();
+
 
 app.get('/joinurspheres', (req, res) => {
   // Serve the HTML file (assuming it's saved in a public directory)
