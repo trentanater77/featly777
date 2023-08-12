@@ -959,7 +959,7 @@ input:checked + .slider:before {
     width: 100%;
     padding: 12px 24px;
     display: grid;
-    grid-template-columns: 160px 1fr 160px;
+     grid-template-columns: auto 1fr auto;
     align-items: center;
     background: var(--control-bg);
 }
@@ -977,8 +977,10 @@ input:checked + .slider:before {
 }
 
 .header-burger {
-    display: none;
-    position: relative;
+    display: block;
+    position: fixed;
+    right: 16px; /* distance from the right edge */
+  top: 16px; /* distance from the top edge */
     width: 28px;
     height: 19px;
 }
@@ -1038,7 +1040,9 @@ input:checked + .slider:before {
     }
 
     .header-logo {
-        width: 106px;
+        width: auto;
+        height: auto;
+        display: inline-block;
     }
 }
 
