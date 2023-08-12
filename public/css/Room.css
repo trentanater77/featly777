@@ -357,7 +357,7 @@ a {
     color: #828282;
 }
 .init-terms-text a {
-    color: var(--main-color);
+    color: FF6F61
 }
 
 .init-user select {
