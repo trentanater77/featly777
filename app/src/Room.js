@@ -6,6 +6,7 @@ const log = new Logger('Room');
 
 module.exports = class Room {
     constructor(room_id, worker, io, description, room_limit) { // add description parameter
+         console.log('Room limit received in constructor:', room_limit); // Log the room_limit
         this.id = room_id;
         this.worker = worker;
         this.router = null;
