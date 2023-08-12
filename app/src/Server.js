@@ -626,6 +626,7 @@ app.post('/api/rooms', (req, res) => {
     console.log('A user connected');
 
     socket.on('createRoom', async ({ room_id, description, room_limit }, callback) => {
+        console.log('Room limit received in createRoom:', room_limit); // Log the room_limit
         socket.room_id = room_id;
 
         if (roomList.has(socket.room_id)) {
