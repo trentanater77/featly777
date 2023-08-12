@@ -1164,6 +1164,13 @@ input:checked + .slider:before {
     color: #ababaf;
 }
 
+
+
+
+.header-logos {
+    display: flex; /* Horizontally align the images */
+}
+
 /*--------------------------------------------------------------
 # Buttons bar
 --------------------------------------------------------------*/
