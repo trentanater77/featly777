@@ -240,7 +240,7 @@ app.post('/api/rooms', async (req, res) => {
   let worker = await getMediasoupWorker();
 
   // Assuming io is defined elsewhere in your code
-  let io = io;
+  
 
   // Create an instance of the Room class
   const room = new Room(id, worker, io, description, room_limit);
