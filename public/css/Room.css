@@ -1040,7 +1040,7 @@ input:checked + .slider:before {
     }
 
     .header-logo {
-        width: auto;
+        width: 160px;
         height: auto;
         display: inline-block;
     }
