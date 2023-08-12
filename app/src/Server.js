@@ -220,8 +220,8 @@ app.get('/api/rooms', (req, res) => {
   roomList.forEach((room, id) => {
     rooms.push({
       id: id,
-      description: room.description, // Missing comma here
-      room_limit: room.room_limit
+      description: room.getDescription(), // Missing comma here
+      room_limit: room.getRoomLimit()
       // other details
     });
   });
@@ -232,27 +232,26 @@ app.get('/api/rooms', (req, res) => {
 // ... rest of the code
 
 
-app.post('/api/rooms', (req, res) => {
-   console.log('Request body:', req.body);
-  const description = req.body.description; // get the description from request body
-  const roomLimit = req.body.room_limit; // use the same name as in the client-side HTML form
-
-  // create room object
-  const room = {
-    description: description,
-    room_limit: roomLimit, // Convert roomLimit to integer, notice the consistent lowercase here
-    // other properties...
-  };
-  console.log(room);
-  // generate unique ID using uuid
+app.post('/api/rooms', async (req, res) => {
+  const { description, room_limit } = req.body;
   const id = uuidv4();
 
-  // add the room to your roomList
-  roomList.set(id, room); // Use set if roomList is a Map
+  // Assuming a function getMediasoupWorker is defined to return an available worker
+  let worker = await getMediasoupWorker();
 
-  // respond to client
-  res.json({ success: true, room: { id: id, ...room } });
+  // Assuming io is defined elsewhere in your code
+  let io = io;
+
+  // Create an instance of the Room class
+  const room = new Room(id, worker, io, description, room_limit);
+
+  // Add the room to the roomList
+  roomList.set(id, room);
+
+  // Respond to client
+  res.json({ success: true, room: { id: id, description: description, room_limit: room_limit } });
 });
+
 
 
 
