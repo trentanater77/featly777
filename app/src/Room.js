@@ -40,7 +40,8 @@ module.exports = class Room {
     // ####################################################
 
     createTheRouter() {
-        const { mediaCodecs } = config.mediasoup.router;
+const mediaCodecs = config.mediasoup.router.mediaCodecs;
+
         this.worker
             .createRouter({
                 mediaCodecs,
