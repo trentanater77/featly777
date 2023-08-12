@@ -965,7 +965,7 @@ input:checked + .slider:before {
 }
 
 .header-logo {
-    width: 77px;
+    width: 160px;
     height: auto;
     display: inline-block;
 }
