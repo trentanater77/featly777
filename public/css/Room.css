@@ -37,7 +37,7 @@ html[data-theme='dark'] {
 
 :root {
     --body-bg: #8A9597;
-    --control-bg: #00BFFF;
+    --control-bg: #8A9597;
     --main-color: #FF6F61;
     --error-color: #e63b2a;
     --secondary-bg: #1d1d24;
