@@ -240,7 +240,7 @@ app.post('/api/rooms', (req, res) => {
   // create room object
   const room = {
     description: description,
-    room_limit: parseInt(roomLimit), // Convert roomLimit to integer, notice the consistent lowercase here
+    room_limit: roomLimit, // Convert roomLimit to integer, notice the consistent lowercase here
     // other properties...
   };
   console.log(room);
