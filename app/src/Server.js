@@ -212,6 +212,9 @@ app.get('/joinurspheres', (req, res) => {
   // Serve the HTML file (assuming it's saved in a public directory)
   res.sendFile(path.join(__dirname, '../../', 'public/views/joinurspheres.html'));
 });
+    
+// Continue to create the room with roomLimit...
+
 
 // Provide JSON data for rooms
 // Provide JSON data for rooms
@@ -231,25 +234,27 @@ app.get('/api/rooms', (req, res) => {
 
 // ... rest of the code
 
-
 app.post('/api/rooms', async (req, res) => {
   const { description, room_limit } = req.body;
+  var roomLimit = parseInt(room_limit);
+  if (!Number.isInteger(roomLimit) || roomLimit < 1) {
+    res.status(400).send("Invalid room limit");
+    return;
+  }
+
   const id = uuidv4();
 
   // Assuming a function getMediasoupWorker is defined to return an available worker
   let worker = await getMediasoupWorker();
 
-  // Assuming io is defined elsewhere in your code
-  
-
   // Create an instance of the Room class
-  const room = new Room(id, worker, io, description, room_limit);
+  const room = new Room(id, worker, io, description, roomLimit); // use roomLimit here
 
   // Add the room to the roomList
   roomList.set(id, room);
 
   // Respond to client
-  res.json({ success: true, room: { id: id, description: description, room_limit: room_limit } });
+  res.json({ success: true, room: { id: id, description: description, room_limit: roomLimit } });
 });
 
 
