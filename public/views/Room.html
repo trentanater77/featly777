@@ -142,7 +142,25 @@
         <label>Room Limit</label>
     </div>
 
+   <script>
+    // Call the checkFields function when the page first loads
+    window.onload = function() {
+        checkFields();
+    }
 
+    function checkFields() {
+        const name = document.getElementById("initInputName").value;
+        const description = document.getElementById("initInputDescription").value;
+        const roomLimit = document.getElementById("initInputRoomLimit").value;
+    
+        // Check if all fields have been filled out
+        if (name && description && roomLimit) {
+            document.getElementById("initSubmitButton").disabled = false;
+        } else {
+            document.getElementById("initSubmitButton").disabled = true;
+        }
+    }
+</script>
 
 
 
@@ -1050,25 +1068,7 @@ console.log('Room Limit (after parsing):', roomLimit);
             </main>
         </section>
 
-   <script>
-    // Call the checkFields function when the page first loads
-    window.onload = function() {
-        checkFields();
-    }
 
-    function checkFields() {
-        const name = document.getElementById("initInputName").value;
-        const description = document.getElementById("initInputDescription").value;
-        const roomLimit = document.getElementById("initInputRoomLimit").value;
-    
-        // Check if all fields have been filled out
-        if (name && description && roomLimit) {
-            document.getElementById("initSubmitButton").disabled = false;
-        } else {
-            document.getElementById("initSubmitButton").disabled = true;
-        }
-    }
-</script>
 
 
         
