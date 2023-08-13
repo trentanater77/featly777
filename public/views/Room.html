@@ -164,18 +164,26 @@
 
 <script>
 document.querySelector('form').addEventListener('submit', (event) => {
-      event.preventDefault();
+  event.preventDefault();
 
-      const name = document.getElementById("initInputName").value;
-      const description = document.getElementById("initInputDescription").value;
-      const roomLimit = document.getElementById("initInputRoomLimit").value;
-fetch('/api/rooms', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ name, description, room_limit: roomLimit }) // Pay attention to the room_limit key
-})
+  const name = document.getElementById("initInputName").value;
+  const description = document.getElementById("initInputDescription").value;
+  let roomLimit = document.getElementById("initInputRoomLimit").value;
+  roomLimit = parseInt(roomLimit); // Convert the roomLimit to an integer
+
+  // Optional: you may want to add a check to ensure that the conversion was successful
+  if (!Number.isInteger(roomLimit) || roomLimit < 1) {
+    alert("Please enter a valid room limit!");
+    return;
+  }
+
+  fetch('/api/rooms', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, description, room_limit: roomLimit }) // Pay attention to the room_limit key
+  })
 .then((response) => response.json())
 .then((data) => {
   if (data.success) {
