@@ -235,6 +235,7 @@ app.get('/api/rooms', (req, res) => {
 // ... rest of the code
 
 app.post('/api/rooms', async (req, res) => {
+    console.log("Request Body:", req.body); // log the entire request body
   const { description, room_limit } = req.body;
   var roomLimit = parseInt(room_limit);
   if (!Number.isInteger(roomLimit) || roomLimit < 1) {
@@ -248,13 +249,13 @@ app.post('/api/rooms', async (req, res) => {
   let worker = await getMediasoupWorker();
 
   // Create an instance of the Room class
-  const room = new Room(id, worker, io, description, room_limit); // use roomLimit here
+  const room = new Room(id, worker, io, description, roomLimit); // use roomLimit here
 
   // Add the room to the roomList
   roomList.set(id, room);
 
   // Respond to client
-  res.json({ success: true, room: { id: id, description: description, room_limit: room_limit } });
+  res.json({ success: true, room: { id: id, description: description, room_limit: roomLimit } });
 });
 
 
