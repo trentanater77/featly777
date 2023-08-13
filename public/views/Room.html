@@ -163,6 +163,7 @@
                 </script> 
 
 <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
 document.querySelector('form').addEventListener('submit', (event) => {
   event.preventDefault();
 
@@ -170,19 +171,20 @@ document.querySelector('form').addEventListener('submit', (event) => {
   const description = document.getElementById("initInputDescription").value;
   let roomLimit = document.getElementById("initInputRoomLimit").value;
   roomLimit = parseInt(roomLimit); // Convert the roomLimit to an integer
-
+console.log('Room Limit (after parsing):', roomLimit);
   // Optional: you may want to add a check to ensure that the conversion was successful
   if (!Number.isInteger(roomLimit) || roomLimit < 1) {
     alert("Please enter a valid room limit!");
     return;
   }
+    const payload = { name, description, room_limit: roomLimit }; // Pay attention to the room_limit key
 
   fetch('/api/rooms', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, description, room_limit: roomLimit }) // Pay attention to the room_limit key
+    body: JSON.stringify( payload ) // Pay attention to the room_limit key
   })
 .then((response) => response.json())
 .then((data) => {
@@ -198,7 +200,10 @@ document.querySelector('form').addEventListener('submit', (event) => {
   console.error('Error:', error);
   alert('An unexpected error occurred. Please try again.'); // Displaying a generic error message using an alert
 });
-    }); </script>
+    });
+        }); // Closing bracket for the 'DOMContentLoaded' event listener
+        
+                              </script>
 
 
 
