@@ -31,7 +31,7 @@
   roomLink.textContent = `Join Room ${room.id}`;
 
   const roomDescription = document.createElement('p');
-  roomDescription.textContent = room.description;
+  roomDescription.textContent = `Description: ${room.description}`; // Added "Description: " at the beginning
 
   const roomLimit = document.createElement('p'); // Create paragraph element for room limit
   roomLimit.textContent = `Room Limit: ${room.room_limit}`; // Set the text to the room's limit
@@ -51,4 +51,3 @@
 
 </body>
 </html>
-
