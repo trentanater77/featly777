@@ -31,7 +31,7 @@ const surveyActive = true;
 
 const url = {
     ipLookup: 'https://extreme-ip-lookup.com/json/?key=demo2',
-    survey: 'https://questionpro.com/t/AXMypZwn2r',
+    survey: 'https://forms.gle/fL2HPXAL3buu4doK8',
 };
 
 const _PEER = {
@@ -1802,7 +1802,7 @@ function leaveFeedback() {
         background: swalBackground,
         // imageUrl: image.feedback,
         title: 'Leave a feedback',
-        text: 'Do you want to rate your FeatlyTalk experience?',
+        text: 'Would you like to give us feedback on your experience so we can improve?',
         confirmButtonText: `Yes`,
         denyButtonText: `No`,
         showClass: {
