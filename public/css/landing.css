@@ -73,3 +73,24 @@ a:hover {
     margin: 20px auto; /* Adds some margin to separate the section from others */
     max-width: 800px; /* Controls the width of the content */
 }
+
+/* Container for Logos */
+.hero-logo {
+    display: flex; /* Enables Flexbox */
+    justify-content: center; /* Centers the logos horizontally */
+    align-items: center; /* Vertically centers the logos */
+    background-color: #00BFFF; /* Deep Sky Blue for the logo section */
+}
+
+/* Individual Logo Style */
+.logo {
+    margin: 0 10px; /* Adds some space between logos */
+}
+
+/* Logo Image Style */
+.header-logo-image {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintains aspect ratio */
+}
+
+
