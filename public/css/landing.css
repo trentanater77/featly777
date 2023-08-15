@@ -78,6 +78,7 @@ a:hover {
 .hero-logo {
     display: flex; /* Enables Flexbox */
     background-color: #00BFFF; /* Deep Sky Blue for the logo section */
+    align-items: center;
 }
 
 /* Individual Logo Style */
