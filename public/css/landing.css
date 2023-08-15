@@ -77,8 +77,6 @@ a:hover {
 /* Container for Logos */
 .hero-logo {
     display: flex; /* Enables Flexbox */
-    justify-content: center; /* Centers the logos horizontally */
-    align-items: center; /* Vertically centers the logos */
     background-color: #00BFFF; /* Deep Sky Blue for the logo section */
 }
 
@@ -89,7 +87,7 @@ a:hover {
 
 /* Logo Image Style */
 .header-logo-image {
-    width: 100px; /* Adjust the width as needed */
+    width: 1000px; /* Adjust the width as needed */
     height: auto; /* Maintains aspect ratio */
 }
 
