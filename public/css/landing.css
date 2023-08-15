@@ -87,8 +87,8 @@ a:hover {
 
 /* Logo Image Style */
 .header-logo-image {
-    width: 400px; /* Adjust the width as needed */
-    height: auto; /* Maintains aspect ratio */
+    width: 400px; /* Set the width */
+    height: 400px; /* Set the height */
 }
 
 
