@@ -175,6 +175,7 @@ document.querySelector('form').addEventListener('submit', (event) => {
   const name = document.getElementById("initInputName").value;
   const description = document.getElementById("initInputDescription").value;
   let roomLimit = document.getElementById("initInputRoomLimit").value;
+    console.log('Initial Room Limit:', roomLimit); // Log the initial value
   roomLimit = parseInt(roomLimit); // Convert the roomLimit to an integer
 console.log('Room Limit (after parsing):', roomLimit);
   // Optional: you may want to add a check to ensure that the conversion was successful
