@@ -179,58 +179,49 @@
 
             
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-document.querySelector('form').addEventListener('submit', (event) => {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
 
-  const name = document.getElementById("initInputName").value;
-  const description = document.getElementById("initInputDescription").value;
-  let roomLimit = document.getElementById("initInputRoomLimit").value;
+            const name = document.getElementById("initInputName").value;
+            const description = document.getElementById("initInputDescription").value;
+            const roomLimit = document.getElementById("initInputRoomLimit").value; // Keep it as a string
 
-if (typeof newrelic !== 'undefined') {
-      newrelic.addPageAction('FormSubmission', {
-        name: name,
-        description: description,
-        room_limit: roomLimit
-      });
-    }
+            if (typeof newrelic !== 'undefined') {
+                newrelic.addPageAction('FormSubmission', {
+                    name: name,
+                    description: description,
+                    room_limit: roomLimit
+                });
+            }
+
+            const payload = { name, description, room_limit: roomLimit }; // Keep room_limit as a string
+
+            fetch('/api/rooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert('Room created successfully!');
+                } else {
+                    alert('Error creating room: ' + data.error);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred. Please try again.');
+            });
+        });
+    });
+
 
 
     
-    console.log('Initial Room Limit:', roomLimit); // Log the initial value
-  roomLimit = parseInt(roomLimit); // Convert the roomLimit to an integer
-console.log('Room Limit (after parsing):', roomLimit);
-  // Optional: you may want to add a check to ensure that the conversion was successful
-  if (!Number.isInteger(roomLimit) || roomLimit < 1) {
-    alert("Please enter a valid room limit!");
-    return;
-  }
-    const payload = { name, description, room_limit: roomLimit }; // Pay attention to the room_limit key
-
-  fetch('/api/rooms', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify( payload ) // Pay attention to the room_limit key
-  })
-.then((response) => response.json())
-.then((data) => {
-  if (data.success) {
-    // Handle success - e.g., navigate to a new page, show a success message, etc.
-    alert('Room created successfully!'); // Displaying a success message using an alert
-  } else {
-    // Handle error - e.g., show an error message
-    alert('Error creating room: ' + data.error); // Displaying an error message using an alert, assuming the error is contained in data.error
-  }
-})
-.catch((error) => {
-  console.error('Error:', error);
-  alert('An unexpected error occurred. Please try again.'); // Displaying a generic error message using an alert
-});
-    });
-        }); // Closing bracket for the 'DOMContentLoaded' event listener
-        
                               </script>
 
 
