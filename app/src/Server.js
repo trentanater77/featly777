@@ -237,13 +237,10 @@ app.get('/api/rooms', (req, res) => {
 app.post('/api/rooms', async (req, res) => {
     console.log("Request Body:", req.body); // log the entire request body
   const { description, room_limit } = req.body;
-  var roomLimit = parseInt(room_limit);
-    console.log("Parsed room limit:", roomLimit);
+  var roomLimit = room_limit
+    console.log(" Room limit:", roomLimit);
 
-  if (!Number.isInteger(roomLimit) || roomLimit < 1) {
-    res.status(400).send("Invalid room limit");
-    return;
-  }
+ 
 
   const id = uuidv4();
 
