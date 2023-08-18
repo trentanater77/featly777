@@ -1185,5 +1185,5 @@ io.on('connection', (socket) => {
                 log.debug('Remove IP from auth', { ip: ip });
             }
         }
-    }//added extra parenthisis and bracket on 1189 then removed
-}  
+    }//added extra parenthisis and bracket on 1189 then removed only added when adding that bothersome roomlimit feature to allow users to get kicked out when too many users in one room
+})}  
