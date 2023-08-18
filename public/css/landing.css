@@ -128,3 +128,8 @@ a:hover {
   background-color: #f3f3f3;
   border-radius: 5px;
 }
+
+.room-content {
+  height: 100%; /* Fill the height of the circular container */
+  overflow-y: auto; /* Allow vertical scrolling if needed */
+}
