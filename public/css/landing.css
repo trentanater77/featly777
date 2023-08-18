@@ -101,7 +101,7 @@ a:hover {
       border-radius: 50%; /* This will make the div circular */
       width: 200px; /* Set the width and height as needed */
       height: 200px;
-      border: 2px solid #000; /* Border for the circle */
+      border: 2px solid #00BFFF; /* Border for the circle */
       padding: 10px;
       overflow: hidden; /* Hide overflowing content */
       text-align: center; /* Center the text */
