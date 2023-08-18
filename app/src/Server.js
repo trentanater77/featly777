@@ -623,13 +623,20 @@ app.post('/api/rooms', async (req, res) => {
     // ####################################################
     // SOCKET IO
     // ####################################################
-//added this new
 io.on('connection', (socket) => {
     console.log('A user connected');
 
     socket.on('createRoom', async ({ room_id, description, room_limit }, callback) => {
         console.log('Room limit received in createRoom:', room_limit); // Log the room_limit
         socket.room_id = room_id;
+
+
+
+
+
+
+
+        
 
         if (roomList.has(socket.room_id)) {
             callback({ error: 'already exists' });
@@ -639,28 +646,15 @@ io.on('connection', (socket) => {
             roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description, room_limit));
             callback({ room_id: socket.room_id });
         }
+
+
+
+
+
+        
     });
 
-    // Add the joinRoom handler here
-    socket.on('joinRoom', (roomId, callback) => {
-        const room = roomList.get(roomId);
-        if (!room) {
-            callback({ error: 'Room not found.' });
-            return;
-        }
 
-        const roomLimit = room.getRoomLimit();
-        const currentUsers = room.getPeersCount(); // Use the getPeersCount() method
-
-        if (currentUsers >= roomLimit) {
-            callback({ error: 'Room is too full.' });
-            return;
-        }
-    });
-
-    // Other socket handlers can be added here
-});
-//added this new
 
 
 
@@ -1149,7 +1143,7 @@ io.on('connection', (socket) => {
             let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
         }
-    };//add parenthis here when revert back to old code
+    });//add parenthis here when revert back to old code
 
     function getIP(req) {
         return req.headers['x-forwarded-for'] || req.socket.remoteAddress;
