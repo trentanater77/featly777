@@ -221,6 +221,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 
+
+
+//added
+
+    const socket = io.connect('https://chatspheres.com/');
+
+// Function to join a room when user clicks a button or takes some other action
+function joinRoom(roomId) {
+  socket.emit('joinRoom', roomId, (response) => {
+    if (response.error) {
+      if (response.error === 'Room is too full.') {
+        alert('This room is too full. Please try another room.');
+        return;
+      }
+      alert('An error occurred: ' + response.error);
+      return;
+    }
+
+    // Continue with joining room, update the UI, or navigate to the room page
+  });
+}
+
+// Example usage:
+// const roomId = 'some-room-id';
+// joinRoom(roomId);
+
+
+
+
+
+    
+
     
                               </script>
 
