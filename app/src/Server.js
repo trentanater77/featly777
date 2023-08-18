@@ -225,7 +225,8 @@ app.get('/api/rooms', (req, res) => {
       id: id,
       description: room.getDescription(), // Missing comma here
       room_limit: room.getRoomLimit(),
-        current_peers: room.getPeersCount() // Include current number of peers
+        current_peers: room.getPeersCount(),// Include current number of peers
+        tags:room.getTags() //added room tags here
       // other details
     });
   });
