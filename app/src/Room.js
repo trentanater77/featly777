@@ -36,6 +36,12 @@ module.exports = class Room {
         return this.description;
     }
 
+    //added code below before routa
+    isFull() {
+  return this.peers.size >= this.room_limit;
+}
+
+
     // ####################################################
     // ROUTER
     // ####################################################
