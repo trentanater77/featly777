@@ -631,6 +631,14 @@ app.post('/api/rooms', async (req, res) => {
         console.log('Room limit received in createRoom:', room_limit); // Log the room_limit
         socket.room_id = room_id;
 
+
+
+
+
+
+
+        
+
         if (roomList.has(socket.room_id)) {
             callback({ error: 'already exists' });
         } else {
@@ -639,7 +647,36 @@ app.post('/api/rooms', async (req, res) => {
             roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description, room_limit));
             callback({ room_id: socket.room_id });
         }
+
+
+
+
+
+        
     });
+
+
+//added 
+      // Add the joinRoom handler here
+    socket.on('joinRoom', (roomId, callback) => {
+        const room = roomList.get(roomId);
+        if (!room) {
+            callback({ error: 'Room not found.' });
+            return;
+        }
+
+        const roomLimit = room.getRoomLimit();
+        const currentUsers = room.getPeersCount(); // Use the getPeersCount() method
+
+        if (currentUsers >= roomLimit) {
+            callback({ error: 'Room is too full.' });
+            return;
+        }
+//above is added recently
+
+      
+
+      
 
 
         socket.on('startRecordingMessage', (peer_id) => {
@@ -1140,4 +1177,4 @@ app.post('/api/rooms', async (req, res) => {
             }
         }
     }
-}
+})} //added the parenthisis and the bracket at end of last bracket
