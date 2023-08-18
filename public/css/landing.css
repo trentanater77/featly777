@@ -93,3 +93,32 @@ a:hover {
 }
 
 
+
+/* BELOW IS FOR SPECIFIC TO CHAT SPHERES ONLY CHANGE THE TAGS DESCRIPTION AND H1 NOT IMAGES IMAGES AND LOGO CHANGED ABOVE THIS BUT BELOW COMMENT IS ROOM LIMIT TAGS EXETERA */
+
+
+.room {
+      border-radius: 50%; /* This will make the div circular */
+      width: 200px; /* Set the width and height as needed */
+      height: 200px;
+      border: 2px solid #000; /* Border for the circle */
+      padding: 10px;
+      overflow: hidden; /* Hide overflowing content */
+      text-align: center; /* Center the text */
+      margin: 10px; /* Space between circles */
+      display: inline-block; /* Display rooms side by side */
+    }
+
+
+.tag {
+      margin: 2px;
+      padding: 2px 5px;
+      background-color: #f3f3f3;
+      border-radius: 5px;
+    }
+
+
+
+
+
+
