@@ -684,7 +684,7 @@ io.on('connection', (socket) => {
             return;
         }
     
-
+)} //added extra here 
 
 
 
@@ -1185,5 +1185,5 @@ io.on('connection', (socket) => {
                 log.debug('Remove IP from auth', { ip: ip });
             }
         }
-    }//added extra parenthisis and bracket on 1189
-})}  
+    }//added extra parenthisis and bracket on 1189 then removed
+}  
