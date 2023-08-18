@@ -127,20 +127,18 @@
 
     const roomList = document.getElementById('room-list');
 
-    data.rooms.forEach(room => {
-  const roomContainer = document.createElement('div');
-  roomContainer.className = 'room-container'; // Apply the container class
+   data.rooms.forEach(room => {
+  const roomContainer = document.createElement('a'); // Change this to an anchor element
+  roomContainer.className = 'room-container';
+  roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
 
   const roomElement = document.createElement('div');
   roomElement.className = 'room'; // Apply the circular element class
 
-  const roomLink = document.createElement('a');
-  roomLink.href = `https://chatspheres.com/join/${room.id}`;
-
-
   // Truncate the room ID if it's too long
-  const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 8 to your preferred length
-  roomLink.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
+  const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
+  const roomLinkText = document.createElement('div'); // Use a div for the text
+  roomLinkText.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
 
   const roomDescription = document.createElement('p');
   roomDescription.textContent = `Description: ${room.description}`;
@@ -159,14 +157,15 @@
     tagsContainer.appendChild(tagElement); // Append the tag element to the container
   });
 
-  roomElement.appendChild(roomLink);
+  roomElement.appendChild(roomLinkText);
   roomElement.appendChild(roomDescription);
   roomElement.appendChild(roomLimit);
-  roomElement.appendChild(tagsContainer); // Append the container of tags to the room element
+  roomElement.appendChild(tagsContainer);
 
   roomContainer.appendChild(roomElement); // Append the room element to the container
   roomList.appendChild(roomContainer); // Append the container to the room list
 });
+
 
   })
   .catch(error => {
