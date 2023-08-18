@@ -214,19 +214,21 @@ class RoomClient {
         // CREATE ROOM AND JOIN
         // ####################################################
 
-        this.createRoom(this.room_id, this.getRoomLimit()).then(
-            async function () {
-                let data = {
-                    room_id: this.room_id,
-                    peer_info: this.peer_info,
-                    peer_geo: this.peer_geo,
-                };
-                await this.join(data);
-                this.initSockets();
-                this._isConnected = true;
-                successCallback();
-            }.bind(this),
-        );
+      this.createRoom(this.room_id, this.getRoomLimit(), this.getTags()).then(
+    async function () {
+        let data = {
+            room_id: this.room_id,
+            peer_info: this.peer_info,
+            peer_geo: this.peer_geo,
+            // Optionally, include other parameters like description and room limit here
+        };
+        await this.join(data);
+        this.initSockets();
+        this._isConnected = true;
+        successCallback();
+    }.bind(this),
+);
+
     }
 
     getDescription() {
@@ -248,17 +250,24 @@ class RoomClient {
         return this.peers.size; // Or replace with the appropriate way to get the number of connected peers.
     }
 
+    getTags() {
+    // Assuming you have an input field with id 'initInputTags'
+    return document.getElementById('initInputTags').value.split(','); // Split by comma if tags are comma-separated
+}
+
+
     // ####################################################
     // GET STARTED
     // ####################################################
 //added roomLimit here
-  async createRoom(room_id, roomLimit) {
+  async createRoom(room_id, roomLimit, tags) {
     const description = this.getDescription();
     await this.socket
         .request('createRoom', {
             room_id,
             description,
-            room_limit: roomLimit
+            room_limit: roomLimit,
+            tags
         })
         .catch((err) => {
             console.log('Create room error:', err);
