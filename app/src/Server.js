@@ -1177,4 +1177,4 @@ app.post('/api/rooms', async (req, res) => {
             }
         }
     }
-})} //added the parenthisis and the bracket at end of last bracket
+})} 
