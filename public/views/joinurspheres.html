@@ -137,6 +137,7 @@
 
     data.rooms.forEach(room => {
       const roomElement = document.createElement('div');
+     roomElement.className = 'room';
       const roomLink = document.createElement('a');
       roomLink.href = `https://chatspheres.com/join/${room.id}`;
       roomLink.textContent = `Join Room ${room.id}`;
