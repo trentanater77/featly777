@@ -27,23 +27,30 @@
 
     const roomList = document.getElementById('room-list');
 
-   data.rooms.forEach(room => {
+  data.rooms.forEach(room => {
   const roomElement = document.createElement('div');
+
   const roomLink = document.createElement('a');
-  roomLink.href = `https://chatspheres.com/join/${room.id}`;
-  roomLink.textContent = `Join Room ${room.id}`;
+ roomLink.href = room.current_peers >= room.room_limit ? '#' : `https://chatspheres.com/join/${room.id}`;
+
+  roomLink.textContent = room.current_peers >= room.room_limit ? 'Room is Full' : `Join Room ${room.id}`; // Check if the room is full
 
   const roomDescription = document.createElement('p');
-  roomDescription.textContent = `Description: ${room.description}`; // Added "Description: " at the beginning
+  roomDescription.textContent = `Description: ${room.description}`;
 
-  const roomLimit = document.createElement('p'); // Create paragraph element for room limit
-  roomLimit.textContent = `Room Limit: ${room.room_limit}`; // Set the text to the room's limit
+  const roomLimit = document.createElement('p');
+  roomLimit.textContent = `Room Limit: ${room.room_limit}`;
+
+  const currentPeers = document.createElement('p'); // Create paragraph element for current peers
+  currentPeers.textContent = `Current Peers: ${room.current_peers}`; // Set the text to the current number of peers
 
   roomElement.appendChild(roomLink);
   roomElement.appendChild(roomDescription);
-  roomElement.appendChild(roomLimit); // Append the room limit to the div
+  roomElement.appendChild(roomLimit);
+  roomElement.appendChild(currentPeers); // Append the current peers to the div
   roomList.appendChild(roomElement);
 });
+
 
   })
   .catch(error => {
