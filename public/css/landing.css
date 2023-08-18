@@ -35,7 +35,7 @@ a:hover {
 /* Hero Term Info Section */
 .hero-term-info {
     background-color: #FF6F61; /* Coral for the terms info section */
-    color: #FFFFFF; /* White for the text color */
+    color: #333; /* black for the text color */
     position: absolute; /* Absolute positioning */
     bottom: 0; /* Aligns to the bottom of the parent (body) element */
     width: 100%; /* Full width */
