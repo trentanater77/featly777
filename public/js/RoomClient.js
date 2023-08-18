@@ -237,6 +237,17 @@ class RoomClient {
         return document.getElementById('initInputRoomLimit').value;
     }
 
+     isFull() {
+        // You can check if the room is full by comparing the number of connected peers
+        // with the room limit.
+        return this.getCurrentNumberOfPeers() >= this.getRoomLimit();
+    }
+
+     getCurrentNumberOfPeers() {
+        // Assuming you have a property that tracks connected peers. Modify this line according to your actual implementation.
+        return this.consumers.size; // Or replace with the appropriate way to get the number of connected peers.
+    }
+
     // ####################################################
     // GET STARTED
     // ####################################################
