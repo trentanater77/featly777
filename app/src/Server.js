@@ -628,7 +628,7 @@ app.post('/api/rooms', async (req, res) => {
 io.on('connection', (socket) => {
     console.log('A user connected');
 
-    socket.on('createRoom', async ({ room_id, description, room_limit }, callback) => {
+    socket.on('createRoom', async ({ room_id, description, room_limit, tags }, callback) => {
         console.log('Room limit received in createRoom:', room_limit); // Log the room_limit
         socket.room_id = room_id;
 
@@ -643,9 +643,9 @@ io.on('connection', (socket) => {
         if (roomList.has(socket.room_id)) {
             callback({ error: 'already exists' });
         } else {
-            log.debug('Created room', { room_id: socket.room_id, description: description, room_limit: room_limit });
+            log.debug('Created room', { room_id: socket.room_id, description: description, room_limit: room_limit, tags: tags });
             let worker = await getMediasoupWorker();
-            roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description, room_limit));
+            roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description, room_limit, tags));
             callback({ room_id: socket.room_id });
         }
 
