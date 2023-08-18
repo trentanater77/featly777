@@ -1,18 +1,25 @@
 <html>
 <head>
   <title>JoinUrSpheres Rooms</title>
+  <style>
+    /* Optional: Add some CSS to style the tags */
+    .tag {
+      margin: 2px;
+      padding: 2px 5px;
+      background-color: #f3f3f3;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
 
   <h1>Available Rooms</h1>
-<h2>keep in mind upon joining the room link it will ask for description and room limit just put anything only if you are joining a room not creating it!</h2>
-
-  
+  <h2>keep in mind upon joining the room link it will ask for description and room limit just put anything only if you are joining a room not creating it!</h2>
 
   <div id="room-list">
   </div>
 <script>
-   fetch('https://chatspheres.com/api/rooms')
+  fetch('https://chatspheres.com/api/rooms')
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -27,37 +34,40 @@
 
     const roomList = document.getElementById('room-list');
 
-  data.rooms.forEach(room => {
-  const roomElement = document.createElement('div');
+    data.rooms.forEach(room => {
+      const roomElement = document.createElement('div');
+      const roomLink = document.createElement('a');
+      roomLink.href = `https://chatspheres.com/join/${room.id}`;
+      roomLink.textContent = `Join Room ${room.id}`;
 
-  const roomLink = document.createElement('a');
- roomLink.href = room.current_peers >= room.room_limit ? '#' : `https://chatspheres.com/join/${room.id}`;
+      const roomDescription = document.createElement('p');
+      roomDescription.textContent = `Description: ${room.description}`;
 
-  roomLink.textContent = room.current_peers >= room.room_limit ? 'Room is Full' : `Join Room ${room.id}`; // Check if the room is full
+      const roomLimit = document.createElement('p');
+      roomLimit.textContent = `Room Limit: ${room.room_limit}`;
 
-  const roomDescription = document.createElement('p');
-  roomDescription.textContent = `Description: ${room.description}`;
+      // Create a container for the tags
+      const tagsContainer = document.createElement('div');
 
-  const roomLimit = document.createElement('p');
-  roomLimit.textContent = `Room Limit: ${room.room_limit}`;
+      // Iterate over each tag in the room's tags array
+      (room.tags || []).forEach(tag => {
+        const tagElement = document.createElement('span'); // Create an element for the tag
+        tagElement.className = 'tag'; // Optional: add a class for styling
+        tagElement.textContent = tag; // Set the text of the tag element
+        tagsContainer.appendChild(tagElement); // Append the tag element to the container
+      });
 
-  const currentPeers = document.createElement('p'); // Create paragraph element for current peers
-  currentPeers.textContent = `Current Peers: ${room.current_peers}`; // Set the text to the current number of peers
-
-  roomElement.appendChild(roomLink);
-  roomElement.appendChild(roomDescription);
-  roomElement.appendChild(roomLimit);
-  roomElement.appendChild(currentPeers); // Append the current peers to the div
-  roomList.appendChild(roomElement);
-});
-
-
+      roomElement.appendChild(roomLink);
+      roomElement.appendChild(roomDescription);
+      roomElement.appendChild(roomLimit);
+      roomElement.appendChild(tagsContainer); // Append the container of tags to the room element
+      roomList.appendChild(roomElement);
+    });
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
   });
 </script>
-
-
 </body>
 </html>
+
