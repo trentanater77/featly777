@@ -153,26 +153,33 @@
         <label>Room Limit</label>
     </div>
 
+          <div class="input-box">
+    <input id="initInputTags" required type="text" name="tags" class="init-common" onkeyup="checkFields()" />
+    <label>Tags (separate by commas)</label>
+</div>
+      
+                
+
    <script>
         window.onload = function() {
             initClient(); // Call this first if it's needed for initialization
             checkFields(); // Then check the fields
         }
 
-        function checkFields() {
-            const name = document.getElementById("initInputName").value;
-            const description = document.getElementById("initInputDescription").value;
-            const roomLimit = document.getElementById("initInputRoomLimit").value;
-        
-            // Check if all fields have been filled out
-            if (name && description && roomLimit) {
-                document.getElementById("initSubmitButton").disabled = false;
-            } else {
-                document.getElementById("initSubmitButton").disabled = true;
-            }
-        }
+       function checkFields() {
+    const name = document.getElementById("initInputName").value;
+    const description = document.getElementById("initInputDescription").value;
+    const roomLimit = document.getElementById("initInputRoomLimit").value;
+    const tags = document.getElementById("initInputTags").value; // Get tags value
 
-        // Other scripts go here...
+    // Check if all fields have been filled out
+    if (name && description && roomLimit && tags) { // Include tags in the check
+        document.getElementById("initSubmitButton").disabled = false;
+    } else {
+        document.getElementById("initSubmitButton").disabled = true;
+    }
+}
+
     </script>
 
 
@@ -180,45 +187,46 @@
             
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelector('form').addEventListener('submit', (event) => {
-            event.preventDefault();
+    document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
 
-            const name = document.getElementById("initInputName").value;
-            const description = document.getElementById("initInputDescription").value;
-            const roomLimit = document.getElementById("initInputRoomLimit").value; // Keep it as a string
+        const name = document.getElementById("initInputName").value;
+        const description = document.getElementById("initInputDescription").value;
+        const roomLimit = document.getElementById("initInputRoomLimit").value;
+        const tags = document.getElementById("initInputTags").value; // Extract tags value
 
-            if (typeof newrelic !== 'undefined') {
-                newrelic.addPageAction('FormSubmission', {
-                    name: name,
-                    description: description,
-                    room_limit: roomLimit
-                });
-            }
-
-            const payload = { name, description, room_limit: roomLimit }; // Keep room_limit as a string
-
-            fetch('/api/rooms', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload)
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    alert('Room created successfully!');
-                } else {
-                    alert('Error creating room: ' + data.error);
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('An unexpected error occurred. Please try again.');
+        if (typeof newrelic !== 'undefined') {
+            newrelic.addPageAction('FormSubmission', {
+                name: name,
+                description: description,
+                room_limit: roomLimit,
+                tags: tags // Include tags
             });
+        }
+
+        const payload = { name, description, room_limit: roomLimit, tags }; // Include tags in payload
+
+        fetch('/api/rooms', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert('Room created successfully!');
+            } else {
+                alert('Error creating room: ' + data.error);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An unexpected error occurred. Please try again.');
         });
     });
-
+});
 
 
 
