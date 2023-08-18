@@ -2544,7 +2544,7 @@ async function getParticipantsTable(peers) {
       <button
           id="inviteParticipants"
           onclick="shareRoom(true);"
-      ><i class="fa-solid fa-plus"></i>&nbsp; Invite to a feat</button>
+      ><i class="fa-solid fa-plus"></i>&nbsp; Invite to a sphere</button>
       </div> </div>`;
     return table;
 }
