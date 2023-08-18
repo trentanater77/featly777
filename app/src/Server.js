@@ -656,23 +656,6 @@ app.post('/api/rooms', async (req, res) => {
     });
 
 
-//added 
-      // Add the joinRoom handler here
-    socket.on('joinRoom', (roomId, callback) => {
-        const room = roomList.get(roomId);
-        if (!room) {
-            callback({ error: 'Room not found.' });
-            return;
-        }
-
-        const roomLimit = room.getRoomLimit();
-        const currentUsers = room.getPeersCount(); // Use the getPeersCount() method
-
-        if (currentUsers >= roomLimit) {
-            callback({ error: 'Room is too full.' });
-            return;
-        }
-//above is added recently
 
       
 
