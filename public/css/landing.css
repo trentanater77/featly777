@@ -99,8 +99,8 @@ a:hover {
 
   .room {
       border-radius: 50%; /* This will make the div circular */
-      width: 700px; /* Set the width and height as needed */
-      height: 700px;
+      width: 400px; /* Set the width and height as needed */
+      height: 400px;
       border: 2px solid #00BFFF; /* Border for the circle */
       padding: 10px;
       overflow: hidden; /* Hide overflowing content */
