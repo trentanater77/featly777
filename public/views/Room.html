@@ -169,16 +169,26 @@
 function checkFields() {
     const name = document.getElementById("initInputName").value;
     const description = document.getElementById("initInputDescription").value;
-    const roomLimit = parseInt(document.getElementById("initInputRoomLimit").value); // Parsing to integer
+    const roomLimitElement = document.getElementById("initInputRoomLimit"); // Get the input element
+    const roomLimit = parseInt(roomLimitElement.value); // Parsing to integer
     const tags = document.getElementById("initInputTags").value; // Get tags value
 
-    // Check if all fields have been filled out, and roomLimit is between 1 and 10
-    if (name && description && roomLimit >= 1 && roomLimit <= 10 && tags) { // Include roomLimit validation in the check
+    // Check if the room limit is outside the required range
+    if (roomLimit < 1 || roomLimit > 10) {
+        alert('Please enter a room limit between 1 and 10.');
+        roomLimitElement.value = ""; // Clear the invalid input
+        document.getElementById("initSubmitButton").disabled = true;
+        return; // Return early to prevent further execution
+    }
+
+    // Check if all fields have been filled out
+    if (name && description && roomLimit >= 1 && roomLimit <= 10 && tags) {
         document.getElementById("initSubmitButton").disabled = false;
     } else {
         document.getElementById("initSubmitButton").disabled = true;
     }
 }
+
 
 
     </script>
