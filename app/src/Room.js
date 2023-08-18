@@ -5,7 +5,7 @@ const Logger = require('./Logger');
 const log = new Logger('Room');
 
 module.exports = class Room {
-    constructor(room_id, worker, io, description, room_limit) { // add description parameter
+    constructor(room_id, worker, io, description, room_limit, tags) { // add description parameter
          console.log('Room limit received in constructor:', room_limit); // Log the room_limit
         this.id = room_id;
         this.worker = worker;
@@ -19,6 +19,7 @@ module.exports = class Room {
         this._roomPassword = null;
         this.description = description; // add description property
         this.room_limit = room_limit; //added room_limit
+        this.tags = tags; // Add tags property
         this.peers = new Map();
         this.createTheRouter();
     }
@@ -36,6 +37,14 @@ module.exports = class Room {
         return this.description;
     }
 
+
+
+    getTags() { // Method to get the tags
+        return this.tags;
+    }
+
+
+    
     //added code below before routa
     isFull() {
   return this.peers.size >= this.room_limit;
