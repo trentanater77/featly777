@@ -813,7 +813,7 @@ io.on('connection', (socket) => {
             roomList.get(socket.room_id).getPeers().get(socket.id).updatePeerInfo(data);
             roomList.get(socket.room_id).broadCast(socket.id, 'updatePeerInfo', data);
         });
-
+}); // closes 'connection' //I TRENTON ADDED THIS BY CHAT GPT 
         socket.on('fileInfo', (data) => {
             if (!roomList.has(socket.room_id)) return;
 
@@ -1186,4 +1186,4 @@ io.on('connection', (socket) => {
             }
         }
     }//added extra parenthisis and bracket on 1189 then removed only added when adding that bothersome roomlimit feature to allow users to get kicked out when too many users in one room
-})}  
+}  
