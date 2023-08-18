@@ -668,6 +668,31 @@ io.on('connection', (socket) => {
             io.emit('showStartRecordingMessage', peer_id);
         });
 
+//added below
+
+
+
+
+    socket.on('joinRoom', (roomId, callback) => {
+        const room = roomList.get(roomId);
+        if (!room) {
+            callback({ error: 'Room not found.' });
+            return;
+        }
+        if (room.isFull()) { // Make sure the isFull method is implemented in Room class
+            callback({ error: 'Room is too full.' });
+            return;
+        }
+    
+
+
+
+
+    //added above
+
+
+    
+
         socket.on('resetCountdownTimer', () => {
             if (!roomList.has(socket.room_id)) return;
             resetCountdown();
