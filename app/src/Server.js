@@ -1149,7 +1149,7 @@ io.on('connection', (socket) => {
             let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
         }
-    });
+    };//add parenthis here when revert back to old code
 
     function getIP(req) {
         return req.headers['x-forwarded-for'] || req.socket.remoteAddress;
