@@ -136,7 +136,11 @@
 
   const roomLink = document.createElement('a');
   roomLink.href = `https://chatspheres.com/join/${room.id}`;
-  roomLink.textContent = `Join Room ${room.id}`;
+
+
+  // Truncate the room ID if it's too long
+  const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 8 to your preferred length
+  roomLink.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
 
   const roomDescription = document.createElement('p');
   roomDescription.textContent = `Description: ${room.description}`;
