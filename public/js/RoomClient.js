@@ -243,9 +243,9 @@ class RoomClient {
         return this.getCurrentNumberOfPeers() >= this.getRoomLimit();
     }
 
-     getCurrentNumberOfPeers() {
+     getPeersCount() {
         // Assuming you have a property that tracks connected peers. Modify this line according to your actual implementation.
-        return this.consumers.size; // Or replace with the appropriate way to get the number of connected peers.
+        return this.peers.size; // Or replace with the appropriate way to get the number of connected peers.
     }
 
     // ####################################################
