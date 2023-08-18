@@ -214,7 +214,7 @@ class RoomClient {
         // CREATE ROOM AND JOIN
         // ####################################################
 
-        this.createRoom(this.room_id).then(
+        this.createRoom(this.room_id, this.getRoomLimit()).then(
             async function () {
                 let data = {
                     room_id: this.room_id,
@@ -233,16 +233,21 @@ class RoomClient {
     return document.getElementById('initInputDescription').value;
 }
 
+     getRoomLimit() {
+        return document.getElementById('initInputRoomLimit').value;
+    }
+
     // ####################################################
     // GET STARTED
     // ####################################################
-
-  async createRoom(room_id) {
+//added roomLimit here
+  async createRoom(room_id, roomLimit) {
     const description = this.getDescription();
     await this.socket
         .request('createRoom', {
             room_id,
-            description
+            description,
+            room_limit: roomLimit
         })
         .catch((err) => {
             console.log('Create room error:', err);
