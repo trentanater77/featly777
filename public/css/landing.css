@@ -1,6 +1,6 @@
 /* Base Colors */
 body {
-    background-color: #d9d9d9; /* Cool Grey for the background */
+    background-color: #ffffff; /* Cool Grey for the background */
     color: #00BFFF; /* Deep Sky Blue for the text color */
     position: relative; /* Allows child elements to be positioned relative to the body */
     min-height: 100vh; /* Ensures full viewport height */
