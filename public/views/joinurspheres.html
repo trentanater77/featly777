@@ -134,7 +134,10 @@
 
   const roomElement = document.createElement('div');
   roomElement.className = 'room'; // Apply the circular element class
+const roomContent = document.createElement('div');
+roomContent.className = 'room-content';
 
+    
   // Truncate the room ID if it's too long
   const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
   const roomLinkText = document.createElement('div'); // Use a div for the text
@@ -157,13 +160,23 @@
     tagsContainer.appendChild(tagElement); // Append the tag element to the container
   });
 
-  roomElement.appendChild(roomLinkText);
-  roomElement.appendChild(roomDescription);
-  roomElement.appendChild(roomLimit);
-  roomElement.appendChild(tagsContainer);
+  roomContent.appendChild(roomLinkText);
+  roomContent.appendChild(roomDescription);
+  roomContent.appendChild(roomLimit);
+  roomContent.appendChild(tagsContainer);
+    roomElement.appendChild(roomContent);
 
   roomContainer.appendChild(roomElement); // Append the room element to the container
   roomList.appendChild(roomContainer); // Append the container to the room list
+    
+
+
+
+
+
+
+
+
 });
 
 
