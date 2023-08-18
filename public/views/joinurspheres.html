@@ -30,14 +30,20 @@
 
     for (const roomElement of roomElements) {
       const roomLink = roomElement.querySelector('a').textContent.toLowerCase();
-      if (roomLink.includes(searchQuery)) {
+      const roomDescription = roomElement.querySelector('p').textContent.toLowerCase();
+      const roomLimit = roomElement.querySelectorAll('p')[1].textContent.toLowerCase();
+      const tags = Array.from(roomElement.querySelectorAll('.tag')).map(el => el.textContent.toLowerCase());
+
+      if (roomLink.includes(searchQuery) || 
+          roomDescription.includes(searchQuery) || 
+          roomLimit.includes(searchQuery) ||
+          tags.some(tag => tag.includes(searchQuery))) {
         roomElement.style.display = ''; // Show the room if it matches the query
       } else {
         roomElement.style.display = 'none'; // Hide the room if it doesn't match the query
       }
     }
   }
-
 
 
   
