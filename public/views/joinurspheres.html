@@ -15,10 +15,32 @@
 
   <h1>Available Rooms</h1>
   <h2>keep in mind upon joining the room link it will ask for description and room limit just put anything only if you are joining a room not creating it!</h2>
+<div>
+    <input type="text" id="searchBar" placeholder="Search for rooms..." onkeyup="searchRooms()">
+  </div>
 
+  
   <div id="room-list">
   </div>
 <script>
+
+ function searchRooms() {
+    const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+    const roomElements = document.getElementById('room-list').children;
+
+    for (const roomElement of roomElements) {
+      const roomLink = roomElement.querySelector('a').textContent.toLowerCase();
+      if (roomLink.includes(searchQuery)) {
+        roomElement.style.display = ''; // Show the room if it matches the query
+      } else {
+        roomElement.style.display = 'none'; // Hide the room if it doesn't match the query
+      }
+    }
+  }
+
+
+
+  
   fetch('https://chatspheres.com/api/rooms')
   .then(response => {
     if (!response.ok) {
