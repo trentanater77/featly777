@@ -623,21 +623,13 @@ app.post('/api/rooms', async (req, res) => {
     // ####################################################
     // SOCKET IO
     // ####################################################
-
-  io.on('connection', (socket) => {
+//added this new
+io.on('connection', (socket) => {
     console.log('A user connected');
 
     socket.on('createRoom', async ({ room_id, description, room_limit }, callback) => {
         console.log('Room limit received in createRoom:', room_limit); // Log the room_limit
         socket.room_id = room_id;
-
-
-
-
-
-
-
-        
 
         if (roomList.has(socket.room_id)) {
             callback({ error: 'already exists' });
@@ -647,13 +639,28 @@ app.post('/api/rooms', async (req, res) => {
             roomList.set(socket.room_id, new Room(socket.room_id, worker, io, description, room_limit));
             callback({ room_id: socket.room_id });
         }
-
-
-
-
-
-        
     });
+
+    // Add the joinRoom handler here
+    socket.on('joinRoom', (roomId, callback) => {
+        const room = roomList.get(roomId);
+        if (!room) {
+            callback({ error: 'Room not found.' });
+            return;
+        }
+
+        const roomLimit = room.getRoomLimit();
+        const currentUsers = room.getPeersCount(); // Use the getPeersCount() method
+
+        if (currentUsers >= roomLimit) {
+            callback({ error: 'Room is too full.' });
+            return;
+        }
+    });
+
+    // Other socket handlers can be added here
+});
+//added this new
 
 
 
