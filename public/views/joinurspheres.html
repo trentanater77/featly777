@@ -90,25 +90,26 @@
 <script>
 
  function searchRooms() {
-    const searchQuery = document.getElementById('searchBar').value.toLowerCase();
-    const roomElements = document.getElementById('room-list').children;
+  const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+  const roomElements = document.getElementById('room-list').children;
 
-    for (const roomElement of roomElements) {
-      const roomLink = roomElement.querySelector('a').textContent.toLowerCase();
-      const roomDescription = roomElement.querySelector('p').textContent.toLowerCase();
-      const roomLimit = roomElement.querySelectorAll('p')[1].textContent.toLowerCase();
-      const tags = Array.from(roomElement.querySelectorAll('.tag')).map(el => el.textContent.toLowerCase());
+  for (const roomElement of roomElements) {
+    const roomLink = roomElement.querySelector('.room-link').textContent.toLowerCase();
+    const roomDescription = roomElement.querySelector('.room-description').textContent.toLowerCase();
+    const roomLimit = roomElement.querySelector('.room-limit').textContent.toLowerCase();
+    const tags = Array.from(roomElement.querySelectorAll('.tag')).map(el => el.textContent.toLowerCase());
 
-      if (roomLink.includes(searchQuery) || 
-          roomDescription.includes(searchQuery) || 
-          roomLimit.includes(searchQuery) ||
-          tags.some(tag => tag.includes(searchQuery))) {
-        roomElement.style.display = ''; // Show the room if it matches the query
-      } else {
-        roomElement.style.display = 'none'; // Hide the room if it doesn't match the query
-      }
+    if (roomLink.includes(searchQuery) || 
+        roomDescription.includes(searchQuery) || 
+        roomLimit.includes(searchQuery) ||
+        tags.some(tag => tag.includes(searchQuery))) {
+      roomElement.style.display = ''; // Show the room if it matches the query
+    } else {
+      roomElement.style.display = 'none'; // Hide the room if it doesn't match the query
     }
   }
+}
+
 
 
   
@@ -141,12 +142,15 @@ roomContent.className = 'room-content';
   // Truncate the room ID if it's too long
   const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
   const roomLinkText = document.createElement('div'); // Use a div for the text
+    roomLinkText.className = 'room-link'; 
   roomLinkText.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
 
   const roomDescription = document.createElement('p');
+    roomDescription.className = 'room-description'; 
   roomDescription.textContent = `Description: ${room.description}`;
 
   const roomLimit = document.createElement('p');
+    roomLimit.className = 'room-limit'; // Add a class for the room limit
   roomLimit.textContent = `Room Limit: ${room.room_limit}`;
 
   // Create a container for the tags
