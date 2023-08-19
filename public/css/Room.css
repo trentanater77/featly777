@@ -2208,7 +2208,7 @@ em-emoji-picker {
 .swal2-confirm {
     height: 56px !important;
     width: fit-content !important;
-    background: linear-gradient(105.88deg, #4f22c8 0%, #8c6be6 100%, #8c6be6 100%), #2e2e36 !important;
+  background: linear-gradient(105.88deg, #FF6F61 0%, #FF6F61 100%, #FF6F61 100%) !important; /* changed  background: linear-gradient(105.88deg, #4f22c8 0%, #8c6be6 100%, #8c6be6 100%), #2e2e36 !important; */
     border-radius: 12px !important;
     padding: 13px 18px !important;
     white-space: nowrap !important;
