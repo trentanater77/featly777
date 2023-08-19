@@ -176,7 +176,10 @@ roomContent.className = 'room-content';
 
 
 
-
+if (room.current_peers >= room.room_limit) {
+  roomContainer.style.pointerEvents = 'none';
+  roomContainer.style.opacity = '0.5'; // or some other styling to indicate that the room is full
+}
 
 
 
