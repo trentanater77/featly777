@@ -151,7 +151,7 @@ roomContent.className = 'room-content';
 
   const roomLimit = document.createElement('p');
     roomLimit.className = 'room-limit'; // Add a class for the room limit
-  roomLimit.textContent = `Room Limit: ${room.room_limit}`;
+ roomLimit.textContent = `Room Limit: ${room.room_limit} / Current Peers: ${room.current_peers}`;
 
   // Create a container for the tags
   const tagsContainer = document.createElement('div');
