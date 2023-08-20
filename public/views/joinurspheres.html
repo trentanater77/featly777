@@ -133,6 +133,12 @@
   roomContainer.className = 'room-container';
   roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
 
+ roomContainer.addEventListener('click', function() {
+    initClient(); // Call the initClient function    //ADDED INIT CLIENT TEST
+  });
+
+
+    
   const roomElement = document.createElement('div');
   roomElement.className = 'room'; // Apply the circular element class
 const roomContent = document.createElement('div');
