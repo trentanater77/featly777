@@ -3,7 +3,7 @@
 if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.href.substr(4, location.href.length - 4);
 
 if (location.href.includes('?invite')) {
-    initSubmitButton.innerText = 'Join to Feat';
+    initSubmitButton.innerText = 'Join to Sphere';
 }
 
 /**
