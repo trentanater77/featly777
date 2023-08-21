@@ -131,8 +131,7 @@
 
 
 
-  
-  fetch('https://chatspheres.com/api/rooms')
+fetch('https://chatspheres.com/api/rooms')
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -147,74 +146,70 @@
 
     const roomList = document.getElementById('room-list');
 
-   data.rooms.forEach(room => {
-  const roomContainer = document.createElement('a'); // Change this to an anchor element
-  roomContainer.className = 'room-container';
-  roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
-roomContainer.dataset.roomId = room.id;
- roomContainer.addEventListener('click', function() {
- });
+    data.rooms.forEach(room => {
+      const roomContainer = document.createElement('a'); // Change this to an anchor element
+      roomContainer.className = 'room-container';
+      roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
+      roomContainer.dataset.roomId = room.id;
+      roomContainer.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default click behavior
+        const userName = document.getElementById('userName').value;
+        if (userName) {
+          joinRoom(room.id, userName);
+        } else {
+          alert('Please enter your name before joining a room.');
+        }
+      });
 
+      const roomElement = document.createElement('div');
+      roomElement.className = 'room'; // Apply the circular element class
+      const roomContent = document.createElement('div');
+      roomContent.className = 'room-content';
 
-    
-  const roomElement = document.createElement('div');
-  roomElement.className = 'room'; // Apply the circular element class
-const roomContent = document.createElement('div');
-roomContent.className = 'room-content';
+      // Truncate the room ID if it's too long
+      const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
+      const roomLinkText = document.createElement('div'); // Use a div for the text
+      roomLinkText.className = 'room-link';
+      roomLinkText.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
 
-    
-  // Truncate the room ID if it's too long
-  const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
-  const roomLinkText = document.createElement('div'); // Use a div for the text
-    roomLinkText.className = 'room-link'; 
-  roomLinkText.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
+      const roomDescription = document.createElement('p');
+      roomDescription.className = 'room-description';
+      roomDescription.textContent = `Description: ${room.description}`;
 
-  const roomDescription = document.createElement('p');
-    roomDescription.className = 'room-description'; 
-  roomDescription.textContent = `Description: ${room.description}`;
+      const roomLimit = document.createElement('p');
+      roomLimit.className = 'room-limit'; // Add a class for the room limit
+      roomLimit.textContent = `Room Limit: ${room.room_limit} / Current Peers: ${room.current_peers}`;
 
-  const roomLimit = document.createElement('p');
-    roomLimit.className = 'room-limit'; // Add a class for the room limit
- roomLimit.textContent = `Room Limit: ${room.room_limit} / Current Peers: ${room.current_peers}`;
+      // Create a container for the tags
+      const tagsContainer = document.createElement('div');
 
-  // Create a container for the tags
-  const tagsContainer = document.createElement('div');
+      // Iterate over each tag in the room's tags array
+      (room.tags || []).forEach(tag => {
+        const tagElement = document.createElement('span'); // Create an element for the tag
+        tagElement.className = 'tag'; // Optional: add a class for styling
+        tagElement.textContent = tag; // Set the text of the tag element
+        tagsContainer.appendChild(tagElement); // Append the tag element to the container
+      });
 
-  // Iterate over each tag in the room's tags array
-  (room.tags || []).forEach(tag => {
-    const tagElement = document.createElement('span'); // Create an element for the tag
-    tagElement.className = 'tag'; // Optional: add a class for styling
-    tagElement.textContent = tag; // Set the text of the tag element
-    tagsContainer.appendChild(tagElement); // Append the tag element to the container
-  });
+      roomContent.appendChild(roomLinkText);
+      roomContent.appendChild(roomDescription);
+      roomContent.appendChild(roomLimit);
+      roomContent.appendChild(tagsContainer);
+      roomElement.appendChild(roomContent);
 
-  roomContent.appendChild(roomLinkText);
-  roomContent.appendChild(roomDescription);
-  roomContent.appendChild(roomLimit);
-  roomContent.appendChild(tagsContainer);
-    roomElement.appendChild(roomContent);
+      roomContainer.appendChild(roomElement); // Append the room element to the container
+      roomList.appendChild(roomContainer); // Append the container to the room list
 
-  roomContainer.appendChild(roomElement); // Append the room element to the container
-  roomList.appendChild(roomContainer); // Append the container to the room list
-    
-
-
-
-if (room.current_peers >= room.room_limit) {
-  roomContainer.style.pointerEvents = 'none';
-  roomContainer.style.opacity = '0.5'; // or some other styling to indicate that the room is full
-}
-
-
-
-
-});
-
-
+      if (room.current_peers >= room.room_limit) {
+        roomContainer.style.pointerEvents = 'none';
+        roomContainer.style.opacity = '0.5'; // or some other styling to indicate that the room is full
+      }
+    });
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
   });
+
 </script>
 <script>
 
