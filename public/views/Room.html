@@ -1176,11 +1176,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
 </script>
 <script>
-    $(document).ready(function() {
-      $(':input').on('input propertychange', function() {
-        checkFields();
+   $(document).ready(function() {
+  $(':input').on('input propertychange', function() {
+    checkFields();
+  });
+
+  // Only set up the interval if the form is visible
+  if ($('#inviteForm').is(':visible')) {
+    let previousValues = {}; // Store previous values to detect changes
+
+    let checkAutofillInterval = setInterval(function() {
+      $(':input').each(function() {
+        let id = $(this).attr('id');
+        let currentValue = $(this).val();
+        if (currentValue !== previousValues[id]) {
+          checkFields(); // Recheck the fields if values have changed
+          previousValues[id] = currentValue; // Update stored value
+        }
       });
+    }, 1000); // Run every second
+
+    // Clear interval when the user navigates away or under other relevant conditions
+    $(window).on('unload', function() {
+      clearInterval(checkAutofillInterval);
     });
+  }
+});
+
   </script>
 
         
