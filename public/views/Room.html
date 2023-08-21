@@ -164,28 +164,32 @@
       
 
        //added
-
 function checkFields() {
-    const name = document.getElementById("initInputName").value;
-    const description = document.getElementById("initInputDescription").value;
-    const roomLimitElement = document.getElementById("initInputRoomLimit"); // Get the input element
-    const roomLimit = parseInt(roomLimitElement.value); // Parsing to integer
-    const tags = document.getElementById("initInputTags").value; // Get tags value
+  const inviteLink = checkForInvite();
+  const name = document.getElementById("initInputName").value;
 
-    // Check if the room limit is outside the required range
-    if (roomLimit < 1 || roomLimit > 10) {
-        alert('Please enter a room limit between 1 and 10.');
-        roomLimitElement.value = ""; // Clear the invalid input
-        document.getElementById("initSubmitButton").disabled = true;
-        return; // Return early to prevent further execution
-    }
+  if (inviteLink && name) {
+    document.getElementById("initSubmitButton").disabled = false;
+    return; // Return early if the invite link is used, and name is filled out
+  }
 
-    // Check if all fields have been filled out
-    if (name && description && roomLimit >= 1 && roomLimit <= 10 && tags) {
-        document.getElementById("initSubmitButton").disabled = false;
-    } else {
-        document.getElementById("initSubmitButton").disabled = true;
-    }
+  const description = document.getElementById("initInputDescription").value;
+  const roomLimitElement = document.getElementById("initInputRoomLimit");
+  const roomLimit = parseInt(roomLimitElement.value);
+  const tags = document.getElementById("initInputTags").value;
+
+  if (roomLimit < 1 || roomLimit > 10) {
+    alert('Please enter a room limit between 1 and 10.');
+    roomLimitElement.value = "";
+    document.getElementById("initSubmitButton").disabled = true;
+    return;
+  }
+
+  if (name && description && roomLimit >= 1 && roomLimit <= 10 && tags) {
+    document.getElementById("initSubmitButton").disabled = false;
+  } else {
+    document.getElementById("initSubmitButton").disabled = true;
+  }
 }
 
 
@@ -197,46 +201,45 @@ function checkFields() {
             
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.querySelector('form').addEventListener('submit', (event) => {
-        event.preventDefault();
+  document.querySelector('form').addEventListener('submit', (event) => {
+    event.preventDefault();
 
-        const name = document.getElementById("initInputName").value;
-        const description = document.getElementById("initInputDescription").value;
-        const roomLimit = document.getElementById("initInputRoomLimit").value;
-        const tags = document.getElementById("initInputTags").value; // Extract tags value
+    const name = document.getElementById("initInputName").value;
+    const payload = { name };
 
-        if (typeof newrelic !== 'undefined') {
-            newrelic.addPageAction('FormSubmission', {
-                name: name,
-                description: description,
-                room_limit: roomLimit,
-                tags: tags // Include tags
-            });
-        }
+    if (!checkForInvite()) {
+      const description = document.getElementById("initInputDescription").value;
+      const roomLimit = document.getElementById("initInputRoomLimit").value;
+      const tags = document.getElementById("initInputTags").value;
+      Object.assign(payload, { description, room_limit: roomLimit, tags });
+    }
 
-        const payload = { name, description, room_limit: roomLimit, tags }; // Include tags in payload
+    if (typeof newrelic !== 'undefined') {
+      newrelic.addPageAction('FormSubmission', payload);
+    }
 
-        fetch('/api/rooms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                alert('Room created successfully!');
-            } else {
-                alert('Error creating room: ' + data.error);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('An unexpected error occurred. Please try again.');
-        });
+    fetch('/api/rooms', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        alert('Room created successfully!');
+      } else {
+        alert('Error creating room: ' + data.error);
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('An unexpected error occurred. Please try again.');
     });
+  });
 });
+
 
 
 
@@ -1139,6 +1142,24 @@ window.onload = function() {
     checkFields(); // Then check the fields
 
 };
+
+
+// Check for the "invite" parameter in the URL
+function checkForInvite() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.has('invite');
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  if (checkForInvite()) {
+    // If "invite" parameter is found, hide all fields except for the name field
+    document.getElementById('initInputDescription').parentElement.style.display = 'none';
+    document.getElementById('initInputRoomLimit').parentElement.style.display = 'none';
+    document.getElementById('initInputTags').parentElement.style.display = 'none';
+  }
+});
+
+
 
 
 
