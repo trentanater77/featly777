@@ -139,7 +139,7 @@
                 <button id="initSettingButton" class="fa-solid fa-gear circle-button"></button>
             </div>
 
-            <form class="init-input-error-box">
+            <form id="inviteForm" class="init-input-error-box" class="init-input-error-box">
                 <div class="input-box">
                     <input id="initInputName" required type="text" name="name" class="init-common" />
                     <label>Your name</label>
@@ -161,10 +161,21 @@
                 
 
    <script>
-        window.onload = function() {
-            initClient(); // Call this first if it's needed for initialization
-            checkFields(); // Then check the fields
-        }
+       //added also added id inviteForm thats all i changed here newly i think
+     window.onload = function() {
+    initClient(); // Call this first if it's needed for initialization
+    checkFields(); // Then check the fields
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const invite = urlParams.get('invite');
+
+    // If the invite parameter is set to "true", hide the form
+    if (invite === 'true') {
+        document.getElementById('inviteForm').style.display = 'none';
+    }
+};
+
+       //added
 
 function checkFields() {
     const name = document.getElementById("initInputName").value;
