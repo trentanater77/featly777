@@ -1133,20 +1133,38 @@ function joinRoom(roomId) {
         </section>
 
 <script>
+
 window.onload = function() {
     initClient(); // Call this first if it's needed for initialization
     checkFields(); // Then check the fields
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const room = urlParams.get('room'); // Get the 'room' parameter from the URL
+    const urlPathSegments = window.location.pathname.split('/');
+    const roomId = urlPathSegments[urlPathSegments.length - 1];
 
-    // If the 'room' parameter is present, hide the form and add 'invite-link' class to the body
-    if (room) {
-        document.getElementById('inviteForm').style.display = 'none';
-        document.body.classList.add('invite-link'); // Add 'invite-link' class to the body
+    // If the 'roomId' is present, customize the form for invite link
+    if (roomId) {
+        // Hide unnecessary fields
+        document.getElementById('initInputDescription').parentElement.style.display = 'none';
+        document.getElementById('initInputRoomLimit').parentElement.style.display = 'none';
+        document.getElementById('initInputTags').parentElement.style.display = 'none';
+
+        // Modify the submit button text
+        document.getElementById('initSubmitButton').innerText = "Join Room";
+        
+        // Change the form's submit event
+        document.querySelector('form').onsubmit = function(event) {
+            event.preventDefault();
+            const name = document.getElementById("initInputName").value;
+            
+            // Continue with the logic to join the room, using 'name' and 'roomId'
+            joinRoom(roomId, name); // Make sure the 'joinRoom' function handles 'roomId' appropriately
+        }
     }
 };
 
+
+
+    
 </script>
 
 
