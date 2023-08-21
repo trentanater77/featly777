@@ -232,18 +232,19 @@ function enableRooms() {
     link.style.pointerEvents = 'auto';
   });
 }
-
+//commented out as texst
 function joinRoom(roomID, userName) {
-  const password = "1234";
-  const audio = "1";
-  const video = "1";
-  const screen = "1";
-  const notify = "1";
+  //const password = "1234";
+  //const audio = "1";
+ // const video = "1";
+  //const screen = "1";
+  //const notify = "1";
 
-  const joinURL = `https://chatspheres.com/join/?room=${roomID}&password=${password}&name=${userName}&audio=${audio}&video=${video}&screen=${screen}&notify=${notify}`;
+ // const joinURL = `https://chatspheres.com/join/?room=${roomID}&password=${password}&name=${userName}&audio=${audio}&video=${video}&screen=${screen}&notify=${notify}`;
 
   // Redirect to the join URL
-  window.location.href = joinURL;
+ // window.location.href = joinURL;
+  console.log('joinRoom called with roomID:', roomID, 'and userName:', userName);
 }
 
 // Initially disable room links:
