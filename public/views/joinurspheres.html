@@ -97,7 +97,7 @@
  <div>
   <label for="userName">Enter your name:</label>
   <input type="text" id="userName" placeholder="Your Name">
-  <button onclick="enableRooms()">Submit Name</button>
+  <button id="submitNameButton" onclick="enableRooms()">Submit Name</button>
 </div>
 
 <div id="room-list">
@@ -265,10 +265,32 @@ document.querySelectorAll('.room-container').forEach(link => {
 
  //added
 
+//also added 
+</script>
+
+<script>
+  // You can place the code snippet here, at the end of the body
+  document.getElementById('submitNameButton').addEventListener('click', function() {
+    const userName = document.getElementById('userName').value;
+    if (userName) {
+      enableRooms();
+    } else {
+      alert('Please enter your name before joining a room.');
+    }
+  });
+</script>
+
+
+
 
 
  
-</script>
+ //also added
+
+ 
+
+ 
+
 
  
 </body>
