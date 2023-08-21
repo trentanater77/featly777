@@ -1140,11 +1140,13 @@ window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const room = urlParams.get('room'); // Get the 'room' parameter from the URL
 
-    // If the 'room' parameter is present, hide the form
+    // If the 'room' parameter is present, hide the form and add 'invite-link' class to the body
     if (room) {
         document.getElementById('inviteForm').style.display = 'none';
+        document.body.classList.add('invite-link'); // Add 'invite-link' class to the body
     }
 };
+
 </script>
 
 
