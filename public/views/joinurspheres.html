@@ -36,17 +36,6 @@
 <h1>Available Rooms Click a Circle To Join Rooms Others Create!</h1>
   <h2>keep in mind upon joining the room link it will ask for description and room limit just put anything only if you are joining a room not creating it!</h2>
 <div>
-
-
-
- 
-
-
-
-
-
-
- 
     <input type="text" id="searchBar" placeholder="Search for rooms..." onkeyup="searchRooms()">
   </div>
 
@@ -94,17 +83,9 @@
 
 
 
- <div>
-  <label for="userName">Enter your name:</label>
-  <input type="text" id="userName" placeholder="Your Name">
-  <button id="submitNameButton" onclick="enableRooms()">Submit Name</button>
-</div>
-
-<div id="room-list">
-  <!-- Rooms will be added here -->
-</div>
+ 
   
-
+  <div id="room-list">
   </div>
 <script>
 
@@ -131,7 +112,8 @@
 
 
 
-fetch('https://chatspheres.com/api/rooms')
+  
+  fetch('https://chatspheres.com/api/rooms')
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -146,150 +128,69 @@ fetch('https://chatspheres.com/api/rooms')
 
     const roomList = document.getElementById('room-list');
 
-    data.rooms.forEach(room => {
-      const roomContainer = document.createElement('a'); // Change this to an anchor element
-      roomContainer.className = 'room-container';
-      roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
-      roomContainer.dataset.roomId = room.id;
-      roomContainer.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default click behavior
-        const userName = document.getElementById('userName').value;
-       //reomved the below 
-       if (userName) {
-          joinRoom(room.id, userName);
-        } else {
-          alert('Please enter your name before joining a room.');
-        }
-      });
-//removed the above look in fealty notes to add again
-      const roomElement = document.createElement('div');
-      roomElement.className = 'room'; // Apply the circular element class
-      const roomContent = document.createElement('div');
-      roomContent.className = 'room-content';
+   data.rooms.forEach(room => {
+  const roomContainer = document.createElement('a'); // Change this to an anchor element
+  roomContainer.className = 'room-container';
+  roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
 
-      // Truncate the room ID if it's too long
-      const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
-      const roomLinkText = document.createElement('div'); // Use a div for the text
-      roomLinkText.className = 'room-link';
-      roomLinkText.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
+  const roomElement = document.createElement('div');
+  roomElement.className = 'room'; // Apply the circular element class
+const roomContent = document.createElement('div');
+roomContent.className = 'room-content';
 
-      const roomDescription = document.createElement('p');
-      roomDescription.className = 'room-description';
-      roomDescription.textContent = `Description: ${room.description}`;
+    
+  // Truncate the room ID if it's too long
+  const truncatedRoomId = room.id.length > 4 ? room.id.slice(0, 4) + '...' : room.id; // Adjust the number 4 to your preferred length
+  const roomLinkText = document.createElement('div'); // Use a div for the text
+    roomLinkText.className = 'room-link'; 
+  roomLinkText.textContent = `Join Room ${truncatedRoomId}`; // Set the text content with the truncated ID
 
-      const roomLimit = document.createElement('p');
-      roomLimit.className = 'room-limit'; // Add a class for the room limit
-      roomLimit.textContent = `Room Limit: ${room.room_limit} / Current Peers: ${room.current_peers}`;
+  const roomDescription = document.createElement('p');
+    roomDescription.className = 'room-description'; 
+  roomDescription.textContent = `Description: ${room.description}`;
 
-      // Create a container for the tags
-      const tagsContainer = document.createElement('div');
+  const roomLimit = document.createElement('p');
+    roomLimit.className = 'room-limit'; // Add a class for the room limit
+ roomLimit.textContent = `Room Limit: ${room.room_limit} / Current Peers: ${room.current_peers}`;
 
-      // Iterate over each tag in the room's tags array
-      (room.tags || []).forEach(tag => {
-        const tagElement = document.createElement('span'); // Create an element for the tag
-        tagElement.className = 'tag'; // Optional: add a class for styling
-        tagElement.textContent = tag; // Set the text of the tag element
-        tagsContainer.appendChild(tagElement); // Append the tag element to the container
-      });
+  // Create a container for the tags
+  const tagsContainer = document.createElement('div');
 
-      roomContent.appendChild(roomLinkText);
-      roomContent.appendChild(roomDescription);
-      roomContent.appendChild(roomLimit);
-      roomContent.appendChild(tagsContainer);
-      roomElement.appendChild(roomContent);
+  // Iterate over each tag in the room's tags array
+  (room.tags || []).forEach(tag => {
+    const tagElement = document.createElement('span'); // Create an element for the tag
+    tagElement.className = 'tag'; // Optional: add a class for styling
+    tagElement.textContent = tag; // Set the text of the tag element
+    tagsContainer.appendChild(tagElement); // Append the tag element to the container
+  });
 
-      roomContainer.appendChild(roomElement); // Append the room element to the container
-      roomList.appendChild(roomContainer); // Append the container to the room list
+  roomContent.appendChild(roomLinkText);
+  roomContent.appendChild(roomDescription);
+  roomContent.appendChild(roomLimit);
+  roomContent.appendChild(tagsContainer);
+    roomElement.appendChild(roomContent);
 
-      if (room.current_peers >= room.room_limit) {
-        roomContainer.style.pointerEvents = 'none';
-        roomContainer.style.opacity = '0.5'; // or some other styling to indicate that the room is full
-      }
-    });
+  roomContainer.appendChild(roomElement); // Append the room element to the container
+  roomList.appendChild(roomContainer); // Append the container to the room list
+    
+
+
+
+if (room.current_peers >= room.room_limit) {
+  roomContainer.style.pointerEvents = 'none';
+  roomContainer.style.opacity = '0.5'; // or some other styling to indicate that the room is full
+}
+
+
+
+
+});
+
+
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
   });
-
 </script>
-<script>
-
-//added
-
-function enableRooms() {
-  const userName = document.getElementById('userName').value;
-  if (!userName) {
-    alert('Please enter your name before joining a room.');
-    return;
-  }
-
-  // Enable room links here, for example:
-  const roomLinks = document.querySelectorAll('.room-container');
-  roomLinks.forEach(link => {
-    link.onclick = function() {
-      joinRoom(link.dataset.roomId, userName); // Assuming room ID is stored in a data attribute
-    };
-    link.style.pointerEvents = 'auto';
-  });
-}
-//commented out as texst
-function joinRoom(roomID, userName) {
-  const password = "1234";
-  const audio = "1";
-  const video = "1";
-  const screen = "1";
-  const notify = "1";
-
-  const joinURL = `https://chatspheres.com/join/?room=${roomID}&password=${password}&name=${userName}&audio=${audio}&video=${video}&screen=${screen}&notify=${notify}`;
-
-  // Redirect to the join URL
-  window.location.href = joinURL;
-  console.log('joinRoom called with roomID:', roomID, 'and userName:', userName);
-}
-
-// Initially disable room links:
-document.querySelectorAll('.room-container').forEach(link => {
-  link.style.pointerEvents = 'none';
-});
-
-
-
-
-
-
-
-
-
- //added
-
-//also added 
-</script>
-
-<script>
-  // You can place the code snippet here, at the end of the body
-  document.getElementById('submitNameButton').addEventListener('click', function() {
-    const userName = document.getElementById('userName').value;
-    if (userName) {
-      enableRooms();
-    } else {
-      alert('Please enter your name before joining a room.');
-    }
-  });
-</script>
-
-
-
-
-
- 
- 
-
- 
-
- 
-
-
- 
 </body>
 </html>
-
