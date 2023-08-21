@@ -131,7 +131,8 @@
    data.rooms.forEach(room => {
   const roomContainer = document.createElement('a'); // Change this to an anchor element
   roomContainer.className = 'room-container';
-  roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
+ roomContainer.href = `https://chatspheres.com/join/${room.id}?invite`; // Set the href attribute to the room link with invite parameter
+
 
   const roomElement = document.createElement('div');
   roomElement.className = 'room'; // Apply the circular element class
