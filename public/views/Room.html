@@ -141,7 +141,8 @@
 
             <form id="inviteForm" class="init-input-error-box" class="init-input-error-box">
                 <div class="input-box">
-                    <input id="initInputName" required type="text" name="name" class="init-common" />
+                   <input id="initInputName" required type="text" name="name" class="init-common" onkeyup="checkFields()" />
+
                     <label>Your name</label>
                 </div>
 <div class="input-box"> <!-- Add this div for the description input -->
@@ -168,9 +169,13 @@ function checkFields() {
   const inviteLink = checkForInvite();
   const name = document.getElementById("initInputName").value;
 
-  if (inviteLink && name) {
-    document.getElementById("initSubmitButton").disabled = false;
-    return; // Return early if the invite link is used, and name is filled out
+  if (inviteLink) {
+    if (name) {
+      document.getElementById("initSubmitButton").disabled = false;
+    } else {
+      document.getElementById("initSubmitButton").disabled = true;
+    }
+    return; // Return early if the invite link is used
   }
 
   const description = document.getElementById("initInputDescription").value;
@@ -239,7 +244,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   });
 });
-
+    
 
 
 
@@ -1157,6 +1162,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('initInputRoomLimit').parentElement.style.display = 'none';
     document.getElementById('initInputTags').parentElement.style.display = 'none';
   }
+    checkFields();
 });
 
 
