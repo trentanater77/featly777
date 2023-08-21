@@ -36,6 +36,17 @@
 <h1>Available Rooms Click a Circle To Join Rooms Others Create!</h1>
   <h2>keep in mind upon joining the room link it will ask for description and room limit just put anything only if you are joining a room not creating it!</h2>
 <div>
+
+
+
+ 
+
+
+
+
+
+
+ 
     <input type="text" id="searchBar" placeholder="Search for rooms..." onkeyup="searchRooms()">
   </div>
 
@@ -83,9 +94,17 @@
 
 
 
- 
+ <div>
+  <label for="userName">Enter your name:</label>
+  <input type="text" id="userName" placeholder="Your Name">
+  <button onclick="enableRooms()">Submit Name</button>
+</div>
+
+<div id="room-list">
+  <!-- Rooms will be added here -->
+</div>
   
-  <div id="room-list">
+
   </div>
 <script>
 
@@ -132,10 +151,9 @@
   const roomContainer = document.createElement('a'); // Change this to an anchor element
   roomContainer.className = 'room-container';
   roomContainer.href = `https://chatspheres.com/join/${room.id}`; // Set the href attribute to the room link
-
+roomContainer.dataset.roomId = room.id;
  roomContainer.addEventListener('click', function() {
-    initClient(); // Call the initClient function    //ADDED INIT CLIENT TEST
-  });
+   
 
 
     
@@ -198,6 +216,61 @@ if (room.current_peers >= room.room_limit) {
     console.error('There was a problem with the fetch operation:', error);
   });
 </script>
+<script>
+
+//added
+
+function enableRooms() {
+  const userName = document.getElementById('userName').value;
+  if (!userName) {
+    alert('Please enter your name before joining a room.');
+    return;
+  }
+
+  // Enable room links here, for example:
+  const roomLinks = document.querySelectorAll('.room-container');
+  roomLinks.forEach(link => {
+    link.onclick = function() {
+      joinRoom(link.dataset.roomId, userName); // Assuming room ID is stored in a data attribute
+    };
+    link.style.pointerEvents = 'auto';
+  });
+}
+
+function joinRoom(roomID, userName) {
+  const password = "1234";
+  const audio = "1";
+  const video = "1";
+  const screen = "1";
+  const notify = "1";
+
+  const joinURL = `https://chatspheres.com/join/?room=${roomID}&password=${password}&name=${userName}&audio=${audio}&video=${video}&screen=${screen}&notify=${notify}`;
+
+  // Redirect to the join URL
+  window.location.href = joinURL;
+}
+
+// Initially disable room links:
+document.querySelectorAll('.room-container').forEach(link => {
+  link.style.pointerEvents = 'none';
+});
+
+
+
+
+
+
+
+
+
+ //added
+
+
+
+ 
+</script>
+
+ 
 </body>
 </html>
 
