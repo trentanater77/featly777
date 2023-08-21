@@ -154,13 +154,9 @@ fetch('https://chatspheres.com/api/rooms')
       roomContainer.addEventListener('click', function(event) {
         event.preventDefault(); // Prevent the default click behavior
         const userName = document.getElementById('userName').value;
-        if (userName) {
-          joinRoom(room.id, userName);
-        } else {
-          alert('Please enter your name before joining a room.');
-        }
-      });
-
+       //reomved the below 
+       
+//removed the above look in fealty notes to add again
       const roomElement = document.createElement('div');
       roomElement.className = 'room'; // Apply the circular element class
       const roomContent = document.createElement('div');
