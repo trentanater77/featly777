@@ -444,4 +444,24 @@ input[type='range'] {
     left: 0 !important;
     top: 0 !important;
 }
-/* } */
+
+
+
+
+/* } added */
+/* Specific styles when the invite link is used */
+.invite-link .video-container-box {
+    /* Add specific styles for the video container when the invite link is active */
+    background-color: #f0f0f0; /* Example: changing the background color */
+}
+
+.invite-link #videoMediaContainer {
+    /* Add specific styles for the video media container when the invite link is active */
+    border: 2px solid #FF6F61; /* Example: adding a border */
+}
+
+/* You can add more rules for other elements as needed */
+
+
+
+/*added  */
