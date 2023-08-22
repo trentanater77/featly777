@@ -32,7 +32,7 @@ module.exports = {
     hostPassword: 'password',
     // app listen on
     listenIp: '18.216.69.148',
-    listenPort: process.env.PORT || 443,
+    listenPort: process.env.PORT || 333, //changed from 443 to 333
     // ssl/README.md
   sslCrt: '/etc/letsencrypt/live/chatspheres.com/fullchain.pem',
 sslKey: '/etc/letsencrypt/live/chatspheres.com/privkey.pem',
