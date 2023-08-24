@@ -32,6 +32,7 @@ a {
     background-color: #000000; /* Deep black for the logo section */
 }
 
+
 /* Hero Term Info Section */
 .hero-term-info {
     background-color: #FF726A; /* Coral for the terms info section */
@@ -44,6 +45,25 @@ a {
     line-height: 80px; /* Vertically centers the text */
     font-size: 20px; /* Increase terms info text size */
 }
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .hero-term-info {
+        font-size: 16px; /* Reduce font size on small screens */
+        height: 60px; /* Reduce height on small screens */
+        line-height: 60px; /* Vertically centers the text with adjusted height */
+    }
+}
+
+
+
+
+
+
+
+
+
+
 .termslink{
     color: #FFFFFF
 }
