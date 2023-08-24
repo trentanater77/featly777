@@ -44,6 +44,12 @@ a {
     line-height: 80px; /* Vertically centers the text */
     font-size: 20px; /* Increase terms info text size */
 }
+.termslink{
+    color: #FFFFFF
+}
+
+
+
 
 /* Main Button */
 .button-make-feat {
