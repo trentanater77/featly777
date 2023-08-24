@@ -1,7 +1,7 @@
 /* Base Colors */
 body {
     background-color: #000000; /* Cool black for the background */
-    color: #FF6F61; /* coral for text  */
+    color: #FFFFFF; /* coral for text  */
     position: relative; /* Allows child elements to be positioned relative to the body */
     min-height: 100vh; /* Ensures full viewport height */
     margin: 0; /* Removes default margin */
@@ -114,7 +114,7 @@ a:hover {
   border-radius: 50%; /* This will make the div circular */
   width: 200px; /* Adjust the width and height as needed */
   height: 200px;
-  border: 2px solid #00BFFF; /* Border for the circle */
+  border: 2px solid #FF726A; /* Border for the circle */
   padding: 10px;
   overflow: hidden; /* Hide overflowing content */
   text-align: center; /* Center the text */
