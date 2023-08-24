@@ -11,7 +11,7 @@ body {
 
 /* Primary Color - Deep Sky Blue */
 .hero-title {
-    color: #FF6F61; /*coral for the hero title */
+    color: #FFFFFF; /*white for the hero title */
     font-size: 36px; /* Increase hero title size */
     font-weight: 600; /* Bold hero title */
     line-height: 1.2; /* Spacing between hero title lines */
