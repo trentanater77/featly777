@@ -1,7 +1,7 @@
 /* Base Colors */
 body {
-    background-color: #ffffff; /* Cool Grey for the background */
-    color: #00BFFF; /* Deep Sky Blue for the text color */
+    background-color: #000000; /* Cool black for the background */
+    color: #FF6F61; /* coral for text  */
     position: relative; /* Allows child elements to be positioned relative to the body */
     min-height: 100vh; /* Ensures full viewport height */
     margin: 0; /* Removes default margin */
@@ -11,31 +11,31 @@ body {
 
 /* Primary Color - Deep Sky Blue */
 .hero-title {
-    color: #00BFFF; /* Deep Sky Blue for the hero title */
+    color: #FF6F61; /*coral for the hero title */
     font-size: 36px; /* Increase hero title size */
     font-weight: 600; /* Bold hero title */
     line-height: 1.2; /* Spacing between hero title lines */
 }
 
 .button-make-feat, a {
-    color: #00BFFF; /* Deep Sky Blue for buttons and links */
+    color: #FF6F61; /* coral for buttons and links */
     font-size: 18px; /* Increase button and link size */
 }
 
 /* Secondary Color - Coral */
 a:hover {
-    color: #00BFFF; /* Coral for the hover color on links */
+   color: #FF726A;  /* Coral for the hover color on links */
 }
 
 /* Hero Logo Section */
 .hero-logo {
-    background-color: #00BFFF; /* Deep Sky Blue for the logo section */
+    background-color: #000000; /* Deep black for the logo section */
 }
 
 /* Hero Term Info Section */
 .hero-term-info {
-    background-color: #FF6F61; /* Coral for the terms info section */
-    color: #333; /* black for the text color */
+    background-color: #FF726A; /* Coral for the terms info section */
+    color: #FFEEFF; /* white for the text color */
     position: absolute; /* Absolute positioning */
     bottom: 0; /* Aligns to the bottom of the parent (body) element */
     width: 100%; /* Full width */
@@ -47,7 +47,7 @@ a:hover {
 
 /* Main Button */
 .button-make-feat {
-    background-color: #00BFFF; /* Deep Sky Blue for the button background */
+    background-color: #FF726A; /* coral for the button background */
     border: none;
     color: white;
     padding: 20px 40px; /* Increase button padding */
@@ -60,7 +60,7 @@ a:hover {
 }
 
 .button-make-feat:hover {
-    background-color: #FF6F61; /* Coral for the button hover */
+    background-color: #FF726A; /* Coral for the button hover */
 }
 
 .description {
@@ -69,7 +69,7 @@ a:hover {
     text-align: center;
     padding: 20px;
     color: #333; /* Feel free to change this to match your site's color scheme */
-    background-color: #00BFFF; /* This provides a subtle background to set the section apart; adjust as needed */
+    background-color: ##FF726A;; /* coral This provides a subtle background to set the section apart; adjust as needed */
     margin: 20px auto; /* Adds some margin to separate the section from others */
     max-width: 800px; /* Controls the width of the content */
 }
@@ -77,7 +77,7 @@ a:hover {
 /* Container for Logos */
 .hero-logo {
     display: flex; /* Enables Flexbox */
-    background-color: #00BFFF; /* Deep Sky Blue for the logo section */
+    background-color: #000000; /* Deep Black for the logo section */
     align-items: center;
 }
 
