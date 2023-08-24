@@ -97,6 +97,18 @@ a {
     width: 400px; /* Set the width */
     height: auto; /* Set the height */
 }
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .hero-logo {
+        flex-direction: column; /* Stack logos vertically on small screens */
+        justify-content: center; /* Center the logos */
+        align-items: center;
+    }
+    
+    .header-logo-image {
+        max-width: 200px; /* Reduce the max width on small screens */
+    }
+}
 
 
 
