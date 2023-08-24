@@ -23,7 +23,7 @@ body {
 }
 
 /* Secondary Color - Coral */
-a:hover {
+a {
    color: #FF726A;  /* Coral for the hover color on links */
 }
 
