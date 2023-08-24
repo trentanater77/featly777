@@ -18,7 +18,7 @@ body {
 }
 
 .button-make-feat, a {
-    color: #FF6F61; /* coral for buttons and links */
+   
     font-size: 18px; /* Increase button and link size */
 }
 
@@ -101,6 +101,7 @@ a:hover {
   display: flex; /* Use flexbox layout */
   flex-wrap: wrap; /* Allow the items to wrap to the next line */
   justify-content: start; /* Align items to the start of the container */
+     
 }
 
 .room-container {
@@ -115,6 +116,7 @@ a:hover {
   width: 200px; /* Adjust the width and height as needed */
   height: 200px;
   border: 2px solid #FF726A; /* Border for the circle */
+    color: white;
   padding: 10px;
   overflow: hidden; /* Hide overflowing content */
   text-align: center; /* Center the text */
