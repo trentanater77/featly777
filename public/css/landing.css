@@ -51,9 +51,9 @@ a {
 
 
 
-/* Main Button */
+#joinRoomButton,
 .button-make-feat {
-    background-color: #FF726A; /* coral for the button background */
+    background-color: #FF726A; /* Coral for the button background */
     border: none;
     color: white;
     padding: 20px 40px; /* Increase button padding */
@@ -65,9 +65,11 @@ a {
     cursor: pointer;
 }
 
+#joinRoomButton:hover,
 .button-make-feat:hover {
     background-color: #FF726A; /* Coral for the button hover */
 }
+
 
 .description {
     font-size: 18px;
