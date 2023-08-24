@@ -32,11 +32,11 @@
 }
 
 html[data-theme='dark'] {
-    --body-bg: #8A9597;
+    --body-bg: #0D0E10;
 }
 
 :root {
-    --body-bg: #8A9597;
+    --body-bg: #0D0E10;
     --control-bg: #0d0e10;
     --main-color: #FF6F61;
     --error-color: #e63b2a;
